@@ -23,6 +23,8 @@ export default class KObjectCreator {
 				return this.ctx.areaCreator.create(file);
 			case KOC.EMS_EFFORT:
 				return await this.ctx.effortCreator.create(file);
+			case KOC.TMS_DN:
+				return this.ctx.dailyNoteCreator.create(file);
 			default:
 				throw new Error(`KOC '${koc}' not supported`);
 		}

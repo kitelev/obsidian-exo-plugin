@@ -5,6 +5,7 @@ import AreaLayoutDv from "./AreaLayout";
 import DvRenderer from "../../../utils/dv/DvRenderer";
 import Layout from "./Layout";
 import EffortLayout from "./EffortLayout";
+import DailyNoteLayout from "./DailyNoteLayout";
 
 export default class LayoutFactory {
 	constructor(private ctx: ExoContext) {
@@ -16,6 +17,8 @@ export default class LayoutFactory {
 				return new AreaLayoutDv(this.ctx, dvRender);
 			case KOC.EMS_EFFORT:
 				return new EffortLayout(this.ctx, dvRender);
+			case KOC.TMS_DN:
+				return new DailyNoteLayout(this.ctx, dvRender);
 			default:
 				return null;
 		}

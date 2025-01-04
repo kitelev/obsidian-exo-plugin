@@ -13,8 +13,11 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 
 	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Effort> {
 		const status: EffortStatus = fm["e-status"] as EffortStatus;
-		const started: Date | null = fm["started"] ? fm["started"] as Date : null;
-		const ended: Date | null = fm["ended"] ? fm["ended"] as Date : null;
+		const started: Date | null = fm["started"] ? new Date(fm["started"]) : null;
+		const ended: Date | null = fm["ended"] ? new Date(fm["ended"]) : null;
+		const plannedStart: Date | null = fm["planned-start"] ? new Date(fm["planned-start"]) : null;
+		const plannedEnd: Date | null = fm["planned-end"] ? new Date(fm["planned-end"]) : null;
+		const due: Date | null = fm["due"] ? new Date(fm["due"]) : null;
 
 		let area: Area | null = null;
 		const areaStr: string = fm["area"];
@@ -33,6 +36,6 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 		const votes: number = fm["votes"];
 
 		const body: string = await this.ctx.appUtils.getFileBody(file);
-		return new Effort(id, file.name.replace(".md", ""), status, started, ended, area, parent, votes, body);
+		return new Effort(id, file.name.replace(".md", ""), status, started, ended, plannedStart, plannedEnd, due, area, parent, votes, body);
 	}
 }
