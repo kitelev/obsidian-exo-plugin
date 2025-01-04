@@ -12,6 +12,7 @@ export default class Effort extends KObject {
 				public ended: Date | null,
 				public area: Area | null,
 				public parent: Effort | null,
+				public votes: number | null,
 				public body: string) {
 		super(id, KOC.EMS_EFFORT);
 	}
@@ -24,6 +25,10 @@ export default class Effort extends KObject {
 	end() {
 		this.ended = new Date();
 		this.status = EffortStatus.ENDED;
+	}
+
+	getVotes(): number {
+		return this.votes ?? 0;
 	}
 
 	isResolved(): boolean {

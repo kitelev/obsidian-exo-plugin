@@ -30,7 +30,9 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 			parent = await this.create(file);
 		}
 
+		const votes: number = fm["votes"];
+
 		const body: string = await this.ctx.appUtils.getFileBody(file);
-		return new Effort(id, file.name.replace(".md", ""), status, started, ended, area, parent, body);
+		return new Effort(id, file.name.replace(".md", ""), status, started, ended, area, parent, votes, body);
 	}
 }

@@ -42,7 +42,7 @@ export default class AreaLayout implements Layout<Area> {
                 const effortLink = this.toLink(e);
                 const aresStr = e.area?.name ?? "--"; // TODO use inherited area
                 const statusStr = e.status;
-                const votesStr = "--"; // TODO implement votes
+                const votesStr = e.getVotes();
                 return [effortLink, aresStr, statusStr, votesStr];
             });
         return await this.dvRender.table(headers, rows);
