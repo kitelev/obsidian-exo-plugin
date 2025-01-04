@@ -25,6 +25,8 @@ export default class KObjectCreator {
 				return await this.ctx.effortCreator.create(file);
 			case KOC.TMS_DN:
 				return this.ctx.dailyNoteCreator.create(file);
+			case KOC.IMS_MOC:
+				return this.ctx.mocCreator.create(file);
 			default:
 				throw new Error(`KOC '${koc}' not supported`);
 		}

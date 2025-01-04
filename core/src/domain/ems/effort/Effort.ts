@@ -1,6 +1,6 @@
-import KObject from "../KObject";
+import KObject from "../../KObject";
 import {EffortStatus} from "./EffortStatus";
-import {KOC} from "../KOC";
+import {KOC} from "../../KOC";
 import Area from "../Area";
 import {UUID} from "node:crypto";
 

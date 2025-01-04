@@ -1,6 +1,6 @@
-import KObject from "./KObject";
+import KObject from "../KObject";
 import {UUID} from "node:crypto";
-import {KOC} from "./KOC";
+import {KOC} from "../KOC";
 
 export default class DailyNote extends KObject {
 	constructor(public id: UUID,

@@ -1,7 +1,7 @@
 import CreateEffortUseCase from "../ports/input/CreateEffortUseCase";
-import Area from "../domain/Area";
-import {EffortStatus} from "../domain/effort/EffortStatus";
-import Effort from "../domain/effort/Effort";
+import Area from "../domain/ems/Area";
+import {EffortStatus} from "../domain/ems/effort/EffortStatus";
+import Effort from "../domain/ems/effort/Effort";
 import ExoContext from "../../../common/ExoContext";
 
 export default class CreateEffortService implements CreateEffortUseCase {

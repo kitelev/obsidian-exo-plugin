@@ -1,4 +1,4 @@
-import DailyNote from "../../domain/DailyNote";
+import DailyNote from "../../domain/tms/DailyNote";
 
 export default interface DailyNoteRepository {
 	findCurrent(): Promise<DailyNote | null>;

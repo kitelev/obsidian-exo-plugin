@@ -1,5 +1,5 @@
-import KObject from "./KObject";
-import {KOC} from "./KOC";
+import KObject from "../KObject";
+import {KOC} from "../KOC";
 import {UUID} from "node:crypto";
 
 export default class Area extends KObject {

@@ -1,5 +1,5 @@
 import ExoContext from "../../../common/ExoContext";
-import Effort from "../../../core/src/domain/effort/Effort";
+import Effort from "../../../core/src/domain/ems/effort/Effort";
 
 export default class EffortPathRulesHelper {
 	constructor(private ctx: ExoContext) {

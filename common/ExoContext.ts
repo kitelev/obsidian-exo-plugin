@@ -17,6 +17,8 @@ import EffortCreator from "../app/src/utils/creators/EffortCreator";
 import AreaCreator from "../app/src/utils/creators/AreaCreator";
 import LayoutFactory from "../app/src/adapters/input/layouts/LayoutFactory";
 import DvApiHolder from "../app/src/utils/dv/DvApiHolder";
+import LinksRegistry from "../app/src/utils/LinksRegistry";
+import MOCCreator from "../app/src/utils/creators/MOCCreator";
 
 export default class ExoContext {
 	public readonly utils: Utils;
@@ -25,8 +27,11 @@ export default class ExoContext {
 	public readonly dailyNoteCreator: DailyNoteCreator;
 	public readonly areaCreator: AreaCreator;
 	public readonly effortCreator: EffortCreator;
+	public readonly mocCreator: MOCCreator;
+
 	public readonly dailyNoteRepository: DailyNoteRepository;
 	public readonly kObjectUtility: KObjectUtility;
+	public readonly linksRegistry: LinksRegistry;
 
 	public readonly appUtils: AppUtils;
 	public readonly layoutFactory: LayoutFactory;
@@ -41,11 +46,13 @@ export default class ExoContext {
 		this.dvApiHolder = new DvApiHolder(this);
 		this.appUtils = new AppUtils(this.app);
 		this.layoutFactory = new LayoutFactory(this);
+		this.linksRegistry = new LinksRegistry(this);
 
 		this.dailyNoteCreator = new DailyNoteCreator(this);
 		this.areaCreator = new AreaCreator(this);
 		this.effortCreator = new EffortCreator(this);
 		this.kObjectCreator = new KObjectCreator(this);
+		this.mocCreator = new MOCCreator(this);
 
 		this.dailyNoteRepository = new DailyNotePersistenceAdapter(this.appUtils, this.dailyNoteCreator);
 		this.kObjectUtility = new KObjectUtility(this);

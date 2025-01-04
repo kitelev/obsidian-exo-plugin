@@ -1,8 +1,8 @@
 import ExoContext from "../../../../../common/ExoContext";
-import Area from "../../../../../core/src/domain/Area";
+import Area from "../../../../../core/src/domain/ems/Area";
 import DvRenderer from "../../../utils/dv/DvRenderer";
-import Effort from "../../../../../core/src/domain/effort/Effort";
-import {EffortStatusComparator} from "../../../../../core/src/domain/effort/EffortStatus";
+import Effort from "../../../../../core/src/domain/ems/effort/Effort";
+import {EffortStatusComparator} from "../../../../../core/src/domain/ems/effort/EffortStatus";
 import Comparator from "../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
 

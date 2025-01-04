@@ -1,4 +1,4 @@
-import DailyNote from "../../../../core/src/domain/DailyNote";
+import DailyNote from "../../../../core/src/domain/tms/DailyNote";
 import {TFile} from "obsidian";
 import DailyNoteCreator from "../../utils/creators/DailyNoteCreator";
 import AppUtils from "../../utils/AppUtils";

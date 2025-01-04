@@ -1,8 +1,8 @@
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
-import Effort from "../../../../core/src/domain/effort/Effort";
-import {EffortStatus} from "../../../../core/src/domain/effort/EffortStatus";
-import Area from "../../../../core/src/domain/Area";
+import Effort from "../../../../core/src/domain/ems/effort/Effort";
+import {EffortStatus} from "../../../../core/src/domain/ems/effort/EffortStatus";
+import Area from "../../../../core/src/domain/ems/Area";
 import AbstractCreator from "./AbstractCreator";
 import ExoContext from "../../../../common/ExoContext";
 

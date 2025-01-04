@@ -1,7 +1,7 @@
 import EffortRepository from "../../../../core/src/ports/output/EffortRepository";
-import Effort from "../../../../core/src/domain/effort/Effort";
+import Effort from "../../../../core/src/domain/ems/effort/Effort";
 import ExoContext from "../../../../common/ExoContext";
-import Area from "../../../../core/src/domain/Area";
+import Area from "../../../../core/src/domain/ems/Area";
 import {TFile} from "obsidian";
 
 export default class EffortPersistenceAdapter implements EffortRepository {
