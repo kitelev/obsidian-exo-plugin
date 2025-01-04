@@ -6,6 +6,7 @@ import Comparator from "../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
 import DailyNote from "../../../../../core/src/domain/DailyNote";
 import {Predicate} from "../../../../../common/Predicate";
+import DateUtils from "../../../../../common/DateUtils";
 
 export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 
@@ -21,7 +22,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 			if (e.plannedStart === null) {
 				return false;
 			}
-			return e.plannedStart.setHours(0, 0, 0, 0) === day.setHours(0, 0, 0, 0);
+			return DateUtils.sameDay(e.plannedStart, day);
 		});
 
 		filters.set("plannedStartBefore", e => {
@@ -42,14 +43,14 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 			if (e.started === null || e.isResolved()) {
 				return false;
 			}
-			return e.started.setHours(0, 0, 0, 0) === day.setHours(0, 0, 0, 0);
+			return DateUtils.sameDay(e.started, day);
 		});
 
 		filters.set("ended", e => {
 			if (e.ended === null || e.isResolved()) {
 				return false;
 			}
-			return e.ended.setHours(0, 0, 0, 0) === day.setHours(0, 0, 0, 0);
+			return DateUtils.sameDay(e.ended, day);
 		});
 
 		const efforts = await this.ctx.effortRepository.find(e => {

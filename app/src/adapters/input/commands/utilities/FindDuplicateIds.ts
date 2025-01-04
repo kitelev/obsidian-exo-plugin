@@ -1,5 +1,5 @@
-import ExoCommand from "./ExoCommand";
-import ExoContext from "../../../../../common/ExoContext";
+import ExoCommand from "../ExoCommand";
+import ExoContext from "../../../../../../common/ExoContext";
 
 export default class FindDuplicateIds implements ExoCommand {
 	name = "Find Duplicate IDs";

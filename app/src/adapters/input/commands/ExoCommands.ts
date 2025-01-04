@@ -1,13 +1,14 @@
 import OpenRandomNoteExoCommand from "./OpenRandomNoteExoCommand";
 import ExoCommand from "./ExoCommand";
-import CountNotesExoCommand from "./CountNotesExoCommand";
+import CountNotesExoCommand from "./utilities/CountNotesExoCommand";
 import CreateEmptyNoteWithinInboxExoCommand from "./CreateEmptyNoteWithinInboxExoCommand";
-import GetActiveFileTagsExoCommand from "./GetActiveFileTagsExoCommand";
-import GetCurrentKOCExoCommand from "./GetCurrentKOCExoCommand";
+import GetActiveFileTagsExoCommand from "./utilities/GetActiveFileTagsExoCommand";
+import GetCurrentKOCExoCommand from "./utilities/GetCurrentKOCExoCommand";
 import OpenCurrentDailyNoteExoCommand from "./OpenCurrentDailyNoteExoCommand";
 import ExoContext from "../../../../../common/ExoContext";
 import CreateEffortExoCommand from "./CreateEffortExoCommand";
-import FindDuplicateIds from "./FindDuplicateIds";
+import FindDuplicateIds from "./utilities/FindDuplicateIds";
+import CountNotesWithoutId from "./utilities/CountNotesWithoutId";
 
 export default class ExoCommands {
 	static all(ctx: ExoContext): ExoCommand[] {
@@ -19,7 +20,8 @@ export default class ExoCommands {
 			new GetCurrentKOCExoCommand(ctx),
 			new OpenCurrentDailyNoteExoCommand(ctx, ctx.getCurrentDNUseCase),
 			new CreateEffortExoCommand(ctx),
-			new FindDuplicateIds(ctx)
+			new FindDuplicateIds(ctx),
+			new CountNotesWithoutId(ctx)
 		];
 	}
 }
