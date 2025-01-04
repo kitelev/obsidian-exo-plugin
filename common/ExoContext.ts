@@ -18,9 +18,11 @@ import EffortPathRulesHelper from "../app/src/helpers/EffortPathRulesHelper";
 import EffortCreator from "../app/src/utils/creators/EffortCreator";
 import AreaCreator from "../app/src/utils/creators/AreaCreator";
 import LayoutFactory from "../app/src/adapters/input/layouts/LayoutFactory";
+import DvApiHolder from "../app/src/utils/dv/DvApiHolder";
 
 export default class ExoContext {
 	public readonly utils: Utils;
+	public readonly dvApiHolder: DvApiHolder;
 	public readonly kObjectCreator: KObjectCreator
 	public readonly dailyNoteCreator: DailyNoteCreator;
 	public readonly areaCreator: AreaCreator;
@@ -39,6 +41,7 @@ export default class ExoContext {
 
 	constructor(public app: App) {
 		this.utils = new Utils();
+		this.dvApiHolder = new DvApiHolder(this);
 		this.appUtils = new AppUtils(this.app);
 		this.layoutFactory = new LayoutFactory(this);
 

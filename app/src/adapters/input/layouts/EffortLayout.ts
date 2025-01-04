@@ -1,12 +1,13 @@
-import Layout from "./Layout";
 import ExoContext from "../../../../../common/ExoContext";
 import DvRenderer from "../../../utils/dv/DvRenderer";
 import Effort from "../../../../../core/src/domain/effort/Effort";
 import {EffortStatusComparator} from "../../../../../core/src/domain/effort/EffortStatus";
 import Comparator from "../../../../../common/Comparator";
+import AbstractLayout from "./AbstractLayout";
 
-export default class EffortLayout implements Layout<Effort> {
-	constructor(private ctx: ExoContext, private dvRender: DvRenderer) {
+export default class EffortLayout extends AbstractLayout<Effort> {
+	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
+		super(ctx, dvRenderer);
 	}
 
 	async render(ko: Effort, el: HTMLElement): Promise<void> {
@@ -42,20 +43,6 @@ export default class EffortLayout implements Layout<Effort> {
 		}
 	}
 
-	private createH1(textContent: string) {
-		return this.createHeader(textContent, 1);
-	}
-
-	private createH2(textContent: string) {
-		return this.createHeader(textContent, 2);
-	}
-
-	private createHeader(textContent: string, level: number) {
-		const header = document.createElement(`h${level}`);
-		header.textContent = textContent;
-		return header;
-	}
-
 	private async createTable(efforts: Effort[]) {
 		const headers = ["Effort", "Status", "Votes"];
 
@@ -72,11 +59,6 @@ export default class EffortLayout implements Layout<Effort> {
 				return [effortLink, statusStr, votesStr];
 			});
 
-		return await this.dvRender.table(headers, rows);
-	}
-
-	private toLink(e: Effort) {
-		const file = this.ctx.appUtils.getObjectFileOrThrow(e);
-		return this.dvRender.dvApi.fileLink(file.path);
+		return await this.dvRenderer.table(headers, rows);
 	}
 }

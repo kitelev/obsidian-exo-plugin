@@ -1,13 +1,14 @@
-import Layout from "./Layout";
 import ExoContext from "../../../../../common/ExoContext";
 import Area from "../../../../../core/src/domain/Area";
 import DvRenderer from "../../../utils/dv/DvRenderer";
 import Effort from "../../../../../core/src/domain/effort/Effort";
 import {EffortStatusComparator} from "../../../../../core/src/domain/effort/EffortStatus";
 import Comparator from "../../../../../common/Comparator";
+import AbstractLayout from "./AbstractLayout";
 
-export default class AreaLayout implements Layout<Area> {
-    constructor(private ctx: ExoContext, private dvRender: DvRenderer) {
+export default class AreaLayout extends AbstractLayout<Area> {
+    constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
+        super(ctx, dvRenderer);
     }
 
     async render(ko: Area, el: HTMLElement): Promise<void> {
@@ -29,12 +30,6 @@ export default class AreaLayout implements Layout<Area> {
         }
     }
 
-    private createH1(textContent: string) {
-        const h1 = document.createElement("h1");
-        h1.textContent = textContent;
-        return h1;
-    }
-
     private async createTable(efforts: Effort[]) {
         const headers = ["Effort", "Area", "Status", "Votes"];
 
@@ -51,11 +46,6 @@ export default class AreaLayout implements Layout<Area> {
                 const votesStr = e.getVotes();
                 return [effortLink, aresStr, statusStr, votesStr];
             });
-        return await this.dvRender.table(headers, rows);
-    }
-
-    private toLink(e: Effort) {
-        let file = this.ctx.appUtils.getObjectFileOrThrow(e);
-        return this.dvRender.dvApi.fileLink(file.path);
+        return await this.dvRenderer.table(headers, rows);
     }
 }
