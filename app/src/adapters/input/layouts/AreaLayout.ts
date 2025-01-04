@@ -4,6 +4,7 @@ import Area from "../../../../../core/src/domain/Area";
 import DvRenderer from "../../../utils/dv/DvRenderer";
 import Effort from "../../../../../core/src/domain/effort/Effort";
 import {EffortStatusComparator} from "../../../../../core/src/domain/effort/EffortStatus";
+import Comparator from "../../../../../common/Comparator";
 
 export default class AreaLayout implements Layout<Area> {
     constructor(private ctx: ExoContext, private dvRender: DvRenderer) {
@@ -36,8 +37,13 @@ export default class AreaLayout implements Layout<Area> {
 
     private async createTable(efforts: Effort[]) {
         const headers = ["Effort", "Area", "Status", "Votes"];
+
+        const rowsComparator = Comparator.combineCompare(
+            EffortStatusComparator.compare,
+            Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes())));
+
         const rows = efforts
-            .sort(EffortStatusComparator.compare)
+            .sort(rowsComparator)
             .map(e => {
                 const effortLink = this.toLink(e);
                 const aresStr = e.area?.name ?? "--"; // TODO use inherited area
