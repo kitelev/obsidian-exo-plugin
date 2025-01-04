@@ -1,17 +1,16 @@
 import ExoCommand from "../ExoCommand";
 import {Notice} from "obsidian";
-import CountNotesUseCase from "../../../../../../core/src/ports/input/CountNotesUseCase";
+import ExoContext from "../../../../../../common/ExoContext";
 
 export default class CountNotesExoCommand implements ExoCommand {
 	name = "Notes Count";
 	slug = "count-notes";
 
-	constructor(private useCase: CountNotesUseCase) {
+	constructor(private ctx: ExoContext) {
 	}
 
 	async execute(): Promise<void> {
-		const result = this.useCase.count();
-
+		const result = this.ctx.appUtils.getAllMdFiles().length;
 		new Notice(`Vault has ${result} notes`);
 	}
 }

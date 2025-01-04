@@ -4,8 +4,6 @@ import Utils from "../core/src/utils/Utils";
 import DailyNoteCreator from "../app/src/utils/creators/DailyNoteCreator";
 import KObjectCreator from "../app/src/utils/creators/KObjectCreator";
 import AppUtils from "../app/src/utils/AppUtils";
-import CountNotesUseCase from "../core/src/ports/input/CountNotesUseCase";
-import CountNotesService from "../core/src/service/CountNotesService";
 import DailyNotePersistenceAdapter from "../app/src/adapters/output/DailyNotePersistenceAdapter";
 import GetCurrentDailyNoteUseCase from "../core/src/ports/input/GetCurrentDailyNoteUseCase";
 import GetCurrentDailyNoteService from "../core/src/service/GetCurrentDailyNoteService";
@@ -33,7 +31,6 @@ export default class ExoContext {
 	public readonly appUtils: AppUtils;
 	public readonly layoutFactory: LayoutFactory;
 
-	public readonly countNotesUseCase: CountNotesUseCase;
 	public readonly getCurrentDNUseCase: GetCurrentDailyNoteUseCase;
 	public readonly createEffortUseCase: CreateEffortUseCase;
 	public readonly effortRepository: EffortRepository;
@@ -53,7 +50,6 @@ export default class ExoContext {
 		this.dailyNoteRepository = new DailyNotePersistenceAdapter(this.appUtils, this.dailyNoteCreator);
 		this.kObjectUtility = new KObjectUtility(this);
 
-		this.countNotesUseCase = new CountNotesService(this.appUtils);
 		this.getCurrentDNUseCase = new GetCurrentDailyNoteService(this.dailyNoteRepository);
 		this.effortRepository = new EffortPersistenceAdapter(this);
 		this.createEffortUseCase = new CreateEffortService(this);
