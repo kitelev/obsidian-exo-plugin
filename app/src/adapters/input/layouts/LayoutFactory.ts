@@ -4,6 +4,7 @@ import KObject from "../../../../../core/src/domain/KObject";
 import AreaLayoutDv from "./AreaLayout";
 import DvRenderer from "../../../utils/dv/DvRenderer";
 import Layout from "./Layout";
+import EffortLayout from "./EffortLayout";
 
 export default class LayoutFactory {
 	constructor(private ctx: ExoContext) {
@@ -13,6 +14,8 @@ export default class LayoutFactory {
 		switch (ko.koc) {
 			case KOC.EMS_AREA:
 				return new AreaLayoutDv(this.ctx, dvRender);
+			case KOC.EMS_EFFORT:
+				return new EffortLayout(this.ctx, dvRender);
 			default:
 				return null;
 		}
