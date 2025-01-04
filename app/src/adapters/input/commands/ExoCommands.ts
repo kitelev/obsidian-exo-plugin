@@ -7,6 +7,7 @@ import GetCurrentKOCExoCommand from "./GetCurrentKOCExoCommand";
 import OpenCurrentDailyNoteExoCommand from "./OpenCurrentDailyNoteExoCommand";
 import ExoContext from "../../../../../common/ExoContext";
 import CreateEffortExoCommand from "./CreateEffortExoCommand";
+import FindDuplicateIds from "./FindDuplicateIds";
 
 export default class ExoCommands {
 	static all(ctx: ExoContext): ExoCommand[] {
@@ -17,7 +18,8 @@ export default class ExoCommands {
 			new GetActiveFileTagsExoCommand(ctx),
 			new GetCurrentKOCExoCommand(ctx),
 			new OpenCurrentDailyNoteExoCommand(ctx, ctx.getCurrentDNUseCase),
-			new CreateEffortExoCommand(ctx)
+			new CreateEffortExoCommand(ctx),
+			new FindDuplicateIds(ctx)
 		];
 	}
 }
