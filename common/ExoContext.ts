@@ -21,6 +21,7 @@ import LinksRegistry from "../app/src/utils/LinksRegistry";
 import MOCCreator from "../app/src/utils/creators/MOCCreator";
 import MocRepository from "../core/src/ports/output/MocRepository";
 import MocPersistenceAdapter from "../app/src/adapters/output/MocPersistenceAdapter";
+import PropertyCreator from "../app/src/utils/creators/PropertyCreator";
 
 export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
 	// Utils
@@ -36,6 +37,7 @@ export default class ExoContext { // TODO replace initializers with `= new Class
 	public readonly areaCreator: AreaCreator = new AreaCreator(this);
 	public readonly effortCreator: EffortCreator = new EffortCreator(this);
 	public readonly mocCreator: MOCCreator = new MOCCreator(this);
+	public readonly propertyCreator: PropertyCreator = new PropertyCreator(this);
 
 	// KO Repositories
 	public readonly mocRepository: MocRepository = new MocPersistenceAdapter(this);

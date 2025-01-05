@@ -31,6 +31,8 @@ export default class KObjectCreator {
 				return this.ctx.dailyNoteCreator.create(file);
 			case KOC.IMS_MOC:
 				return this.ctx.mocCreator.create(file);
+			case KOC.KMS_PROPERTY:
+				return this.ctx.propertyCreator.create(file);
 			default:
 				throw new Error(`KOC '${koc}' not supported`);
 		}
