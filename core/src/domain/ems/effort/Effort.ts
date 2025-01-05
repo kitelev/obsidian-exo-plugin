@@ -33,6 +33,12 @@ export default class Effort extends KObject {
 		this.status = EffortStatus.ENDED;
 	}
 
+	getRelatedArea(): Area | null {
+		if (this.area !== null) return this.area;
+		if (this.prototype !== null) return this.prototype.area;
+		return null;
+	}
+
 	getVotes(): number {
 		return this.votes ?? 0;
 	}

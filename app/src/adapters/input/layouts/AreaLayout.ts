@@ -13,10 +13,10 @@ export default class AreaLayout extends AbstractLayout<Area> {
 
     async render(ko: Area, el: HTMLElement): Promise<void> {
         const unresolvedEfforts = await this.ctx.effortRepository.find(e => {
-            if (e.area === null) {
+			if (e.getRelatedArea() === null) {
                 return false;
             }
-            const sameArea = e.area.id == ko.id;
+			const sameArea = e.getRelatedArea()!.id == ko.id;
             const unresolved = e.isUnresolved();
             return sameArea && unresolved;
         });
@@ -41,7 +41,7 @@ export default class AreaLayout extends AbstractLayout<Area> {
             .sort(rowsComparator)
             .map(e => {
                 const effortLink = this.toLink(e);
-                const aresStr = e.area?.name ?? "--"; // TODO use inherited area
+				const aresStr = e.getRelatedArea()?.name ?? "--"; // TODO use inherited area
                 const statusStr = e.status;
                 const votesStr = e.getVotes();
                 return [effortLink, aresStr, statusStr, votesStr];

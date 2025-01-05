@@ -3,13 +3,14 @@ import Effort from "../../../../core/src/domain/ems/effort/Effort";
 import ExoContext from "../../../../common/ExoContext";
 import Area from "../../../../core/src/domain/ems/Area";
 import {TFile} from "obsidian";
+import KObject from "../../../../core/src/domain/KObject";
 
 export default class EffortPersistenceAdapter implements EffortRepository {
 	constructor(private ctx: ExoContext) {
 	}
 
 	async save(effort: Effort): Promise<void> {
-		const folderPath: string = this.ctx.effortPathRulesHelper.getEffortPath(effort)
+		const folderPath: string = this.ctx.effortPathRulesHelper.getEffortFolderPath(effort)
 		const filePath = folderPath + "/" + effort.title + ".md";
 		const data = this.serializeData(effort);
 
@@ -49,6 +50,9 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 		if (effort.ended) {
 			result += "ended: " + effort.ended + "\n";
 		}
+		if (effort.prototype) {
+			result += "e-prototype: \'" + this.getLinkToKO(effort.prototype) + "\'\n";
+		}
 		if (effort.area) {
 			result += "area: \'" + this.getLinkToArea(effort.area) + "\'\n";
 		}
@@ -58,6 +62,11 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 		result += "---\n";
 		result += effort.body;
 		return result;
+	}
+
+	private getLinkToKO(ko: KObject): string {
+		let file = this.ctx.appUtils.getObjectFileOrThrow(ko);
+		return `[[${file.basename}]]`;
 	}
 
 	private getLinkToArea(area: Area): string {

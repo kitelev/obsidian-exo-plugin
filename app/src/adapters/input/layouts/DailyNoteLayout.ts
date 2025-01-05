@@ -86,7 +86,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 			.sort(rowsComparator)
 			.map(e => {
 				const effortLink = this.toLink(e);
-				const aresStr = e.area?.name ?? "--"; // TODO use inherited area
+				const aresStr = e.getRelatedArea()?.name ?? "--";
 				return [effortLink, aresStr, e.status];
 			});
 		return await this.dvRenderer.table(headers, rows);

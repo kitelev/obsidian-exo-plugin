@@ -1,31 +1,37 @@
 import ExoContext from "../../../common/ExoContext";
 import Effort from "../../../core/src/domain/ems/effort/Effort";
+import KObject from "../../../core/src/domain/KObject";
 
 export default class EffortPathRulesHelper {
+	private readonly INBOX_FOLDER_PATH: string = "/0 Inbox/";
+
 	constructor(private ctx: ExoContext) {
 	}
 
-	getEffortPath(effort: Effort) {
+	getEffortFolderPath(effort: Effort) {
 		if (effort.area !== null) {
-			const areaFile = this.ctx.appUtils.getObjectFileOrThrow(effort.area);
-			const areaFolder = areaFile.parent;
-			if (!areaFolder) {
-				throw new Error("Area file has no parent folder");
-			}
-
-			return areaFolder.path;
+			return this.getRelatedObjectFolderPath(effort.area, "Area file has no parent folder");
 		}
 
 		if (effort.parent !== null) {
-			const parentFile = this.ctx.appUtils.getObjectFileOrThrow(effort.parent);
-			const parentFolder = parentFile.parent;
-			if (!parentFolder) {
-				throw new Error("Effort parent file has no parent folder");
-			}
-
-			return parentFolder.path;
+			return this.getRelatedObjectFolderPath(effort.parent, "Effort parent file has no parent folder");
 		}
 
-		return "/0 Inbox/";
+		if (effort.prototype !== null) {
+			return this.getRelatedObjectFolderPath(effort.prototype, "Effort prototype file has no parent folder");
+		}
+
+		return this.INBOX_FOLDER_PATH;
+	}
+
+	private getRelatedObjectFolderPath(ko: KObject, noFolderMsg: string) {
+		const areaFile = this.ctx.appUtils.getObjectFileOrThrow(ko);
+		const areaFolder = areaFile.parent;
+		if (!areaFolder) {
+			console.warn(noFolderMsg);
+			return this.INBOX_FOLDER_PATH;
+		}
+
+		return areaFolder.path;
 	}
 }
