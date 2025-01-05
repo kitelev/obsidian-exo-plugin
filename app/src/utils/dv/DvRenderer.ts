@@ -15,7 +15,7 @@ export default class DvRenderer {
 		this.dvApi = this.exoCtx.dvApiHolder.dvApi;
 	}
 
-	async listKOs(objects: KObject[]) {
+	async listKOs(objects: KObject[]) { // TODO replace with table (with #)
 		const links = objects.map((ko) => {
 			let koPath = this.exoCtx.appUtils.getObjectFileOrThrow(ko).path;
 			return this.dvApi.fileLink(koPath);

@@ -3,6 +3,7 @@ import {EffortStatus} from "./EffortStatus";
 import {KOC} from "../../KOC";
 import Area from "../Area";
 import {UUID} from "node:crypto";
+import EffortPrototype from "./EffortPrototype";
 
 export default class Effort extends KObject {
 	constructor(public id: UUID,
@@ -13,6 +14,7 @@ export default class Effort extends KObject {
 				public plannedStart: Date | null,
 				public plannedEnd: Date | null,
 				public due: Date | null,
+				public prototype: EffortPrototype | null,
 				public area: Area | null,
 				public parent: Effort | null,
 				public votes: number | null,

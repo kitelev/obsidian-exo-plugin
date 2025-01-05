@@ -1,6 +1,7 @@
 export enum KOC {
 	EMS_AREA = "EMS/Area",
 	EMS_EFFORT = "EMS/Effort",
+	EMS_EFFORT_PROTOTYPE = "EMS/Effort/Prototype",
 	IMS_MOC = "IMS/MOC",
 	TMS_DN = "TMS/DailyNote",
 	KMS_PROPERTY = "KMS/Property",

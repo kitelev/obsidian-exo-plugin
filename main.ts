@@ -40,6 +40,8 @@ export default class ExoPlugin extends Plugin {
 				}
 
 				await layout.render(ko, el);
+
+				// TODO add divider after or Exo-wrapper around
 			}
 		});
 	}

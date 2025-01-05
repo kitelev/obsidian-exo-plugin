@@ -27,6 +27,8 @@ export default class KObjectCreator {
 				return this.ctx.areaCreator.create(file);
 			case KOC.EMS_EFFORT:
 				return await this.ctx.effortCreator.create(file);
+			case KOC.EMS_EFFORT_PROTOTYPE:
+				return await this.ctx.effortPrototypeCreator.create(file);
 			case KOC.TMS_DN:
 				return this.ctx.dailyNoteCreator.create(file);
 			case KOC.IMS_MOC:

@@ -9,6 +9,7 @@ import DailyNoteLayout from "./DailyNoteLayout";
 import MOCLayout from "./MOCLayout";
 import PropertyLayout from "./PropertyLayout";
 import KOCObjectLayout from "./KOCObjectLayout";
+import EffortPrototypeLayout from "./EffortPrototypeLayout";
 
 export default class LayoutFactory {
 	constructor(private ctx: ExoContext) {
@@ -20,6 +21,8 @@ export default class LayoutFactory {
 				return new AreaLayoutDv(this.ctx, dvRender);
 			case KOC.EMS_EFFORT:
 				return new EffortLayout(this.ctx, dvRender);
+			case KOC.EMS_EFFORT_PROTOTYPE:
+				return new EffortPrototypeLayout(this.ctx, dvRender);
 			case KOC.TMS_DN:
 				return new DailyNoteLayout(this.ctx, dvRender);
 			case KOC.IMS_MOC:

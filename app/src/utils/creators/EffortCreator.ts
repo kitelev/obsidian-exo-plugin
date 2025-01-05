@@ -5,6 +5,7 @@ import {EffortStatus} from "../../../../core/src/domain/ems/effort/EffortStatus"
 import Area from "../../../../core/src/domain/ems/Area";
 import AbstractCreator from "./AbstractCreator";
 import ExoContext from "../../../../common/ExoContext";
+import EffortPrototype from "../../../../core/src/domain/ems/effort/EffortPrototype";
 
 export default class EffortCreator extends AbstractCreator<Effort> {
 	constructor(ctx: ExoContext) {
@@ -13,6 +14,14 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 
 	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Effort> {
 		const status: EffortStatus = fm["e-status"] as EffortStatus;
+
+		let prototype: EffortPrototype | null = null;
+		const prototypeStr: string = fm["e-prototype"];
+		if (prototypeStr) {
+			const file = this.ctx.appUtils.getTFileFromStrLink(prototypeStr);
+			prototype = await this.ctx.effortPrototypeCreator.create(file);
+		}
+
 		const started: Date | null = fm["started"] ? new Date(fm["started"]) : null;
 		const ended: Date | null = fm["ended"] ? new Date(fm["ended"]) : null;
 		const plannedStart: Date | null = fm["planned-start"] ? new Date(fm["planned-start"]) : null;
@@ -45,6 +54,6 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 		}
 
 		const body: string = await this.ctx.appUtils.getFileBody(file);
-		return new Effort(id, file.name.replace(".md", ""), status, started, ended, plannedStart, plannedEnd, due, area, parent, votes, relates, body);
+		return new Effort(id, file.name.replace(".md", ""), status, started, ended, plannedStart, plannedEnd, due, prototype, area, parent, votes, relates, body);
 	}
 }
