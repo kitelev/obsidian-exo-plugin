@@ -105,7 +105,7 @@ export default class AppUtils {
 	}
 
 	getFileByNameOrThrow(parentFileName: string): TFile {
-		let tFile = this.app.vault.getMarkdownFiles().filter(f => f.name == parentFileName)[0];
+		let tFile = this.getAllNotes().filter(f => f.name == parentFileName)[0];
 		if (!tFile) {
 			throw new Error("File not found by name " + parentFileName);
 		}

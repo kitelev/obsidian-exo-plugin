@@ -33,18 +33,4 @@ export default class MOCLayout extends AbstractLayout<MOC> {
 		}
 	}
 
-	private async handleUnresolvedRelatedEfforts(ko: MOC, el: HTMLElement) {
-		const efforts = await this.ctx.effortRepository.find(e => {
-			if (e.isResolved()) {
-				return false;
-			}
-			return e.related.some(r => r.id === ko.id);
-		});
-
-		if (efforts.length > 0) {
-			el.appendChild(this.createH1("Unresolved related efforts"));
-			let div = await this.dvRenderer.listKOs(efforts);
-			el.appendChild(div);
-		}
-	}
 }

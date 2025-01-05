@@ -11,6 +11,11 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 	}
 
 	async render(ko: Effort, el: HTMLElement): Promise<void> {
+		await this.handleChildren(ko, el);
+		await this.handleRelatedEfforts(ko, el);
+	}
+
+	private async handleChildren(ko: Effort, el: HTMLElement) {
 		const childEfforts = await this.ctx.effortRepository.find(e => {
 			if (e.parent === null) {
 				return false;

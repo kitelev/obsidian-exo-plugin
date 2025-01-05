@@ -12,19 +12,4 @@ export default class PropertyLayout extends AbstractLayout<Property> {
 	async render(ko: Property, el: HTMLElement): Promise<void> {
 		await this.handleUnresolvedRelatedEfforts(ko, el);
 	}
-
-	private async handleUnresolvedRelatedEfforts(ko: Property, el: HTMLElement) {
-		const efforts = await this.ctx.effortRepository.find(e => {
-			if (e.isResolved()) {
-				return false;
-			}
-			return e.related.some(r => r.id === ko.id);
-		});
-
-		if (efforts.length > 0) {
-			el.appendChild(this.createH1("Unresolved related efforts"));
-			let div = await this.dvRenderer.listKOs(efforts);
-			el.appendChild(div);
-		}
-	}
 }
