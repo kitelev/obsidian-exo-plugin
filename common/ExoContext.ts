@@ -19,34 +19,45 @@ import LayoutFactory from "../app/src/adapters/input/layouts/LayoutFactory";
 import DvApiHolder from "../app/src/utils/dv/DvApiHolder";
 import LinksRegistry from "../app/src/utils/LinksRegistry";
 import MOCCreator from "../app/src/utils/creators/MOCCreator";
+import MocRepository from "../core/src/ports/output/MocRepository";
+import MocPersistenceAdapter from "../app/src/adapters/output/MocPersistenceAdapter";
 
-export default class ExoContext {
+export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
+	// Utils
 	public readonly utils: Utils;
+	public readonly appUtils: AppUtils;
 	public readonly dvApiHolder: DvApiHolder;
+	public readonly kObjectUtility: KObjectUtility;
+	public readonly linksRegistry: LinksRegistry;
+
+	// KO Creators
 	public readonly kObjectCreator: KObjectCreator
 	public readonly dailyNoteCreator: DailyNoteCreator;
 	public readonly areaCreator: AreaCreator;
 	public readonly effortCreator: EffortCreator;
 	public readonly mocCreator: MOCCreator;
 
+	// KO Repositories
 	public readonly dailyNoteRepository: DailyNoteRepository;
-	public readonly kObjectUtility: KObjectUtility;
-	public readonly linksRegistry: LinksRegistry;
+	public readonly mocRepository: MocRepository;
+	public readonly effortRepository: EffortRepository;
 
-	public readonly appUtils: AppUtils;
-	public readonly layoutFactory: LayoutFactory;
+	// Domain utils
+	public readonly effortPathRulesHelper: EffortPathRulesHelper;
 
+	// Use Cases
 	public readonly getCurrentDNUseCase: GetCurrentDailyNoteUseCase;
 	public readonly createEffortUseCase: CreateEffortUseCase;
-	public readonly effortRepository: EffortRepository;
-	public readonly effortPathRulesHelper: EffortPathRulesHelper;
+
+	public readonly layoutFactory: LayoutFactory;
 
 	constructor(public app: App) {
 		this.utils = new Utils();
-		this.dvApiHolder = new DvApiHolder(this);
 		this.appUtils = new AppUtils(this.app);
+		this.dvApiHolder = new DvApiHolder(this);
 		this.layoutFactory = new LayoutFactory(this);
 		this.linksRegistry = new LinksRegistry(this);
+		this.kObjectUtility = new KObjectUtility(this);
 
 		this.dailyNoteCreator = new DailyNoteCreator(this);
 		this.areaCreator = new AreaCreator(this);
@@ -55,11 +66,12 @@ export default class ExoContext {
 		this.mocCreator = new MOCCreator(this);
 
 		this.dailyNoteRepository = new DailyNotePersistenceAdapter(this.appUtils, this.dailyNoteCreator);
-		this.kObjectUtility = new KObjectUtility(this);
+		this.effortRepository = new EffortPersistenceAdapter(this);
+		this.mocRepository = new MocPersistenceAdapter(this);
 
 		this.getCurrentDNUseCase = new GetCurrentDailyNoteService(this.dailyNoteRepository);
-		this.effortRepository = new EffortPersistenceAdapter(this);
 		this.createEffortUseCase = new CreateEffortService(this);
+
 		this.effortPathRulesHelper = new EffortPathRulesHelper(this);
 	}
 }
