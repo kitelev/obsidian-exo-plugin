@@ -12,6 +12,7 @@ import CountNotesExoCommand from "./utilities/CountNotesExoCommand";
 import FindNotesWithoutFrontmatter from "./utilities/FindNotesWithoutFrontmatter";
 import AddMissingFrontmatterCommand from "./utilities/AddMissingFrontmatterCommand";
 import AddMissingUidCommand from "./utilities/AddMissingUidCommand";
+import DropRedundantDataviewJsLayoutScriptCommand from "./utilities/DropRedundantDataviewJsLayoutScriptCommand";
 
 export default class ExoCommands {
 	static all(ctx: ExoContext): ExoCommand[] {
@@ -27,7 +28,8 @@ export default class ExoCommands {
 			new CountNotesExoCommand(ctx),
 			new FindNotesWithoutFrontmatter(ctx),
 			new AddMissingFrontmatterCommand(ctx),
-			new AddMissingUidCommand(ctx)
+			new AddMissingUidCommand(ctx),
+			new DropRedundantDataviewJsLayoutScriptCommand(ctx)
 		];
 	}
 }
