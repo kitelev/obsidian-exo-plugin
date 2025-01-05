@@ -1,8 +1,8 @@
-import ExoContext from "../../../../../common/ExoContext";
-import DvRenderer from "../../../utils/dv/DvRenderer";
+import ExoContext from "../../../../../../common/ExoContext";
+import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout from "./AbstractLayout";
-import KOCObject from "../../../../../core/src/domain/KOCObject";
-import {KOC} from "../../../../../core/src/domain/KOC";
+import KOCObject from "../../../../../../core/src/domain/KOCObject";
+import {KOC} from "../../../../../../core/src/domain/KOC";
 
 export default class KOCObjectLayout extends AbstractLayout<KOCObject> {
 

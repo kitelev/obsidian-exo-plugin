@@ -1,7 +1,7 @@
-import ExoContext from "../../../../../common/ExoContext";
-import DvRenderer from "../../../utils/dv/DvRenderer";
+import ExoContext from "../../../../../../common/ExoContext";
+import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout from "./AbstractLayout";
-import Property from "../../../../../core/src/domain/Property";
+import Property from "../../../../../../core/src/domain/Property";
 
 export default class PropertyLayout extends AbstractLayout<Property> {
 

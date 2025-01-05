@@ -1,15 +1,15 @@
 import {KOC} from "../../../../../core/src/domain/KOC";
 import ExoContext from "../../../../../common/ExoContext";
 import KObject from "../../../../../core/src/domain/KObject";
-import AreaLayoutDv from "./AreaLayout";
+import AreaLayoutDv from "./impls/AreaLayout";
 import DvRenderer from "../../../utils/dv/DvRenderer";
 import Layout from "./Layout";
-import EffortLayout from "./EffortLayout";
-import DailyNoteLayout from "./DailyNoteLayout";
-import MOCLayout from "./MOCLayout";
-import PropertyLayout from "./PropertyLayout";
-import KOCObjectLayout from "./KOCObjectLayout";
-import EffortPrototypeLayout from "./EffortPrototypeLayout";
+import EffortLayout from "./impls/EffortLayout";
+import DailyNoteLayout from "./impls/DailyNoteLayout";
+import MOCLayout from "./impls/MOCLayout";
+import PropertyLayout from "./impls/PropertyLayout";
+import KOCObjectLayout from "./impls/KOCObjectLayout";
+import EffortPrototypeLayout from "./impls/EffortPrototypeLayout";
 
 export default class LayoutFactory {
 	constructor(private ctx: ExoContext) {

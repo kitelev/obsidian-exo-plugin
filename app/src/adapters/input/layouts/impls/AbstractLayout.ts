@@ -1,7 +1,7 @@
-import Layout from "./Layout";
-import ExoContext from "../../../../../common/ExoContext";
-import DvRenderer from "../../../utils/dv/DvRenderer";
-import KObject from "../../../../../core/src/domain/KObject";
+import Layout from "../Layout";
+import ExoContext from "../../../../../../common/ExoContext";
+import DvRenderer from "../../../../utils/dv/DvRenderer";
+import KObject from "../../../../../../core/src/domain/KObject";
 
 export default abstract class AbstractLayout<KO> implements Layout<KO> {
 	protected constructor(protected ctx: ExoContext,

@@ -1,7 +1,7 @@
-import ExoContext from "../../../../../common/ExoContext";
-import DvRenderer from "../../../utils/dv/DvRenderer";
+import ExoContext from "../../../../../../common/ExoContext";
+import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout from "./AbstractLayout";
-import EffortPrototype from "../../../../../core/src/domain/ems/effort/EffortPrototype";
+import EffortPrototype from "../../../../../../core/src/domain/ems/effort/EffortPrototype";
 
 export default class EffortPrototypeLayout extends AbstractLayout<EffortPrototype> {
 

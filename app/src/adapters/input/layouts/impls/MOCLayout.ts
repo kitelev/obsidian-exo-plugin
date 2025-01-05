@@ -1,7 +1,7 @@
-import ExoContext from "../../../../../common/ExoContext";
-import DvRenderer from "../../../utils/dv/DvRenderer";
+import ExoContext from "../../../../../../common/ExoContext";
+import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout from "./AbstractLayout";
-import MOC from "../../../../../core/src/domain/ims/MOC";
+import MOC from "../../../../../../core/src/domain/ims/MOC";
 
 export default class MOCLayout extends AbstractLayout<MOC> {
 
