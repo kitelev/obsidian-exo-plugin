@@ -1,8 +1,11 @@
 import {App, CachedMetadata, FrontMatterCache, TFile} from "obsidian";
 import KObject from "../../../core/src/domain/KObject";
+import ExoContext from "../../../common/ExoContext";
 
 export default class AppUtils {
-	constructor(private app: App) {
+	private app: App = this.ctx.app;
+
+	constructor(private ctx: ExoContext) {
 	}
 
 	async createFile(path: string, textContent: string) {

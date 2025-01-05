@@ -24,54 +24,33 @@ import MocPersistenceAdapter from "../app/src/adapters/output/MocPersistenceAdap
 
 export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
 	// Utils
-	public readonly utils: Utils;
-	public readonly appUtils: AppUtils;
-	public readonly dvApiHolder: DvApiHolder;
-	public readonly kObjectUtility: KObjectUtility;
-	public readonly linksRegistry: LinksRegistry;
+	public readonly utils: Utils = new Utils();
+	public readonly appUtils: AppUtils = new AppUtils(this);
+	public readonly dvApiHolder: DvApiHolder = new DvApiHolder(this);
+	public readonly kObjectUtility: KObjectUtility = new KObjectUtility(this);
+	public readonly linksRegistry: LinksRegistry = new LinksRegistry(this);
 
 	// KO Creators
-	public readonly kObjectCreator: KObjectCreator
-	public readonly dailyNoteCreator: DailyNoteCreator;
-	public readonly areaCreator: AreaCreator;
-	public readonly effortCreator: EffortCreator;
-	public readonly mocCreator: MOCCreator;
+	public readonly kObjectCreator: KObjectCreator = new KObjectCreator(this);
+	public readonly dailyNoteCreator: DailyNoteCreator = new DailyNoteCreator(this);
+	public readonly areaCreator: AreaCreator = new AreaCreator(this);
+	public readonly effortCreator: EffortCreator = new EffortCreator(this);
+	public readonly mocCreator: MOCCreator = new MOCCreator(this);
 
 	// KO Repositories
-	public readonly dailyNoteRepository: DailyNoteRepository;
-	public readonly mocRepository: MocRepository;
-	public readonly effortRepository: EffortRepository;
+	public readonly mocRepository: MocRepository = new MocPersistenceAdapter(this);
+	public readonly effortRepository: EffortRepository = new EffortPersistenceAdapter(this);
+	public readonly dailyNoteRepository: DailyNoteRepository = new DailyNotePersistenceAdapter(this);
 
 	// Domain utils
-	public readonly effortPathRulesHelper: EffortPathRulesHelper;
+	public readonly effortPathRulesHelper: EffortPathRulesHelper = new EffortPathRulesHelper(this);
 
 	// Use Cases
-	public readonly getCurrentDNUseCase: GetCurrentDailyNoteUseCase;
-	public readonly createEffortUseCase: CreateEffortUseCase;
+	public readonly getCurrentDNUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
+	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 
-	public readonly layoutFactory: LayoutFactory;
+	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
 
 	constructor(public app: App) {
-		this.utils = new Utils();
-		this.appUtils = new AppUtils(this.app);
-		this.dvApiHolder = new DvApiHolder(this);
-		this.layoutFactory = new LayoutFactory(this);
-		this.linksRegistry = new LinksRegistry(this);
-		this.kObjectUtility = new KObjectUtility(this);
-
-		this.dailyNoteCreator = new DailyNoteCreator(this);
-		this.areaCreator = new AreaCreator(this);
-		this.effortCreator = new EffortCreator(this);
-		this.kObjectCreator = new KObjectCreator(this);
-		this.mocCreator = new MOCCreator(this);
-
-		this.dailyNoteRepository = new DailyNotePersistenceAdapter(this.appUtils, this.dailyNoteCreator);
-		this.effortRepository = new EffortPersistenceAdapter(this);
-		this.mocRepository = new MocPersistenceAdapter(this);
-
-		this.getCurrentDNUseCase = new GetCurrentDailyNoteService(this.dailyNoteRepository);
-		this.createEffortUseCase = new CreateEffortService(this);
-
-		this.effortPathRulesHelper = new EffortPathRulesHelper(this);
 	}
 }

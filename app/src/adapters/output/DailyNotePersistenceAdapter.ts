@@ -3,10 +3,13 @@ import {TFile} from "obsidian";
 import DailyNoteCreator from "../../utils/creators/DailyNoteCreator";
 import AppUtils from "../../utils/AppUtils";
 import DailyNoteRepository from "../../../../core/src/ports/output/DailyNoteRepository";
+import ExoContext from "../../../../common/ExoContext";
 
 export default class DailyNotePersistenceAdapter implements DailyNoteRepository {
-	constructor(private appUtils: AppUtils,
-				private dailyNoteCreator: DailyNoteCreator) {
+	private appUtils: AppUtils = this.ctx.appUtils;
+	private dailyNoteCreator: DailyNoteCreator = this.ctx.dailyNoteCreator;
+
+	constructor(private ctx: ExoContext) {
 	}
 
 	async findCurrent(): Promise<DailyNote | null> {
