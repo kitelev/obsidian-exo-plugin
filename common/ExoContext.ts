@@ -26,6 +26,8 @@ import KOCObjectCreator from "../app/src/utils/creators/KOCObjectCreator";
 import KObjectRepository from "../core/src/ports/output/KObjectRepository";
 import KObjectPersistenceAdapter from "../app/src/adapters/output/KObjectPersistenceAdapter";
 import EffortPrototypeCreator from "../app/src/utils/creators/EffortPrototypeCreator";
+import AreaRepository from "../core/src/ports/output/AreaRepository";
+import AreaPersistenceAdapter from "../app/src/adapters/output/AreaPersistenceAdapter";
 
 export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
 	// Utils
@@ -59,6 +61,7 @@ export default class ExoContext { // TODO replace initializers with `= new Class
 	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 
 	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
+	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);
 
 	constructor(public app: App) {
 	}

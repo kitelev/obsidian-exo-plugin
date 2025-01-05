@@ -12,25 +12,42 @@ export default class AreaLayout extends AbstractLayout<Area> {
     }
 
     async render(ko: Area, el: HTMLElement): Promise<void> {
-        const unresolvedEfforts = await this.ctx.effortRepository.find(e => {
+		await this.handleChildren(ko, el);
+		await this.handleUnresolvedEfforts(ko, el);
+	}
+
+	private async handleChildren(ko: Area, el: HTMLElement) {
+		const children = await this.ctx.areaRepository.findChildren(ko);
+		if (children.length === 0) return;
+
+
+		let header = this.createH1("Child Areas");
+		el.appendChild(header);
+
+		let div = await this.dvRenderer.listKOs(children);
+		el.appendChild(div)
+	}
+
+	private async handleUnresolvedEfforts(ko: Area, el: HTMLElement) {
+		const unresolvedEfforts = await this.ctx.effortRepository.find(e => {
 			if (e.getRelatedArea() === null) {
-                return false;
-            }
+				return false;
+			}
 			const sameArea = e.getRelatedArea()!.id == ko.id;
-            const unresolved = e.isUnresolved();
-            return sameArea && unresolved;
-        });
+			const unresolved = e.isUnresolved();
+			return sameArea && unresolved;
+		});
 
-        if (unresolvedEfforts.length > 0) {
-            let header = this.createH1("Unresolved Efforts");
-            el.appendChild(header);
+		if (unresolvedEfforts.length > 0) {
+			let header = this.createH1("Unresolved Efforts");
+			el.appendChild(header);
 
-            const dvTable = await this.createTable(unresolvedEfforts);
-            el.appendChild(dvTable)
-        }
-    }
+			const dvTable = await this.createTable(unresolvedEfforts);
+			el.appendChild(dvTable)
+		}
+	}
 
-    private async createTable(efforts: Effort[]) {
+	private async createTable(efforts: Effort[]) {
         const headers = ["Effort", "Area", "Status", "Votes"];
 
         const rowsComparator = Comparator.combineCompare(
@@ -41,7 +58,7 @@ export default class AreaLayout extends AbstractLayout<Area> {
             .sort(rowsComparator)
             .map(e => {
                 const effortLink = this.toLink(e);
-				const aresStr = e.getRelatedArea()?.name ?? "--"; // TODO use inherited area
+				const aresStr = e.getRelatedArea()?.name ?? "--";
                 const statusStr = e.status;
                 const votesStr = e.getVotes();
                 return [effortLink, aresStr, statusStr, votesStr];
