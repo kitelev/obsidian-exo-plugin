@@ -120,12 +120,13 @@ export default class AppUtils {
 		return file;
 	}
 
-	getAllMdFiles() {
-		return this.app.vault.getMarkdownFiles();
+	getAllNotes(): TFile[] {
+		return this.app.vault.getMarkdownFiles()
+			.filter(f => !f.path.startsWith("9 Meta/9 Templates") && !f.path.startsWith("Scripts"));
 	}
 
 	findMdWith(filter: (f: TFile) => boolean) {
-		return this.getAllMdFiles().filter(filter);
+		return this.getAllNotes().filter(filter);
 	}
 
 	getObjectFileOrThrow(ko: KObject): TFile {

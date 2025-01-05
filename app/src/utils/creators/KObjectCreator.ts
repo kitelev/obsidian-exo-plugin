@@ -33,6 +33,8 @@ export default class KObjectCreator {
 				return this.ctx.mocCreator.create(file);
 			case KOC.KMS_PROPERTY:
 				return this.ctx.propertyCreator.create(file);
+			case KOC.KMS_KOC:
+				return this.ctx.kocObjectCreator.create(file);
 			default:
 				throw new Error(`KOC '${koc}' not supported`);
 		}
@@ -40,6 +42,6 @@ export default class KObjectCreator {
 
 	getFileKoc(file: TFile): KOC {
 		const tags = this.ctx.appUtils.getTagsFromFile(file);
-		return KOCFactory.create(tags);
+		return KOCFactory.getFromTags(tags);
 	}
 }

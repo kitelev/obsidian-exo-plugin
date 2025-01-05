@@ -10,7 +10,8 @@ import FindDuplicateIds from "./utilities/FindDuplicateIds";
 import CountNotesWithoutId from "./utilities/CountNotesWithoutId";
 import CountNotesExoCommand from "./utilities/CountNotesExoCommand";
 import FindNotesWithoutFrontmatter from "./utilities/FindNotesWithoutFrontmatter";
-import AddMissingFrontmatter from "./utilities/AddMissingFrontmatter";
+import AddMissingFrontmatterCommand from "./utilities/AddMissingFrontmatterCommand";
+import AddMissingUidCommand from "./utilities/AddMissingUidCommand";
 
 export default class ExoCommands {
 	static all(ctx: ExoContext): ExoCommand[] {
@@ -25,7 +26,8 @@ export default class ExoCommands {
 			new CountNotesWithoutId(ctx),
 			new CountNotesExoCommand(ctx),
 			new FindNotesWithoutFrontmatter(ctx),
-			new AddMissingFrontmatter(ctx)
+			new AddMissingFrontmatterCommand(ctx),
+			new AddMissingUidCommand(ctx)
 		];
 	}
 }

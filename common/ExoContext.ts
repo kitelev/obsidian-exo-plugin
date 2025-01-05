@@ -22,6 +22,9 @@ import MOCCreator from "../app/src/utils/creators/MOCCreator";
 import MocRepository from "../core/src/ports/output/MocRepository";
 import MocPersistenceAdapter from "../app/src/adapters/output/MocPersistenceAdapter";
 import PropertyCreator from "../app/src/utils/creators/PropertyCreator";
+import KOCObjectCreator from "../app/src/utils/creators/KOCObjectCreator";
+import KObjectRepository from "../core/src/ports/output/KObjectRepository";
+import KObjectPersistenceAdapter from "../app/src/adapters/output/KObjectPersistenceAdapter";
 
 export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
 	// Utils
@@ -38,8 +41,10 @@ export default class ExoContext { // TODO replace initializers with `= new Class
 	public readonly effortCreator: EffortCreator = new EffortCreator(this);
 	public readonly mocCreator: MOCCreator = new MOCCreator(this);
 	public readonly propertyCreator: PropertyCreator = new PropertyCreator(this);
+	public readonly kocObjectCreator: KOCObjectCreator = new KOCObjectCreator(this);
 
 	// KO Repositories
+	public readonly kObjectRepository: KObjectRepository = new KObjectPersistenceAdapter(this);
 	public readonly mocRepository: MocRepository = new MocPersistenceAdapter(this);
 	public readonly effortRepository: EffortRepository = new EffortPersistenceAdapter(this);
 	public readonly dailyNoteRepository: DailyNoteRepository = new DailyNotePersistenceAdapter(this);

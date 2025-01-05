@@ -7,7 +7,7 @@ export default class KObjectUtility {
 
 	// noinspection JSUnusedGlobalSymbols
 	async addMissingId(): Promise<void> {
-		let allMdFiles = this.ctx.appUtils.getAllMdFiles();
+		let allMdFiles = this.ctx.appUtils.getAllNotes();
 
 		const KOs = allMdFiles.filter(f => {
 			const tags = this.ctx.appUtils.getTagsFromFile(f);
@@ -44,7 +44,7 @@ export default class KObjectUtility {
 	}
 
 	findNotesWithoutFrontmatter() {
-		let allMdFiles = this.ctx.appUtils.getAllMdFiles();
+		let allMdFiles = this.ctx.appUtils.getAllNotes();
 
 		return allMdFiles.filter(f => {
 			if (f.path.startsWith("9 Meta/9 Templates") || f.path.startsWith("Scripts")) {
@@ -56,7 +56,7 @@ export default class KObjectUtility {
 	}
 
 	findNotesWithDuplicateIds() {
-		let allMdFiles = this.ctx.appUtils.getAllMdFiles();
+		let allMdFiles = this.ctx.appUtils.getAllNotes();
 
 		const KOs = allMdFiles.filter(f => {
 			const tags = this.ctx.appUtils.getTagsFromFile(f);
@@ -87,7 +87,7 @@ export default class KObjectUtility {
 		return res;
 	}
 
-	private async setRandomId(f: TFile) {
+	async setRandomId(f: TFile) {
 		await this.ctx.app.fileManager.processFrontMatter(f, (frontmatter) => {
 			frontmatter['uid'] = this.ctx.utils.generateUid();
 		});

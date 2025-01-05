@@ -8,6 +8,7 @@ import EffortLayout from "./EffortLayout";
 import DailyNoteLayout from "./DailyNoteLayout";
 import MOCLayout from "./MOCLayout";
 import PropertyLayout from "./PropertyLayout";
+import KOCObjectLayout from "./KOCObjectLayout";
 
 export default class LayoutFactory {
 	constructor(private ctx: ExoContext) {
@@ -25,6 +26,8 @@ export default class LayoutFactory {
 				return new MOCLayout(this.ctx, dvRender);
 			case KOC.KMS_PROPERTY:
 				return new PropertyLayout(this.ctx, dvRender);
+			case KOC.KMS_KOC:
+				return new KOCObjectLayout(this.ctx, dvRender);
 			default:
 				return null;
 		}

@@ -10,7 +10,7 @@ export default class CountNotesExoCommand implements ExoCommand {
 	}
 
 	async execute(): Promise<void> {
-		const result = this.ctx.appUtils.getAllMdFiles().length;
+		const result = this.ctx.appUtils.getAllNotes().length;
 		new Notice(`Vault has ${result} notes`);
 	}
 }

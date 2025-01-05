@@ -11,7 +11,6 @@ export default class FindNotesWithoutFrontmatter implements ExoCommand {
 
 	async execute(): Promise<void> {
 		const result = this.ctx.kObjectUtility.findNotesWithoutFrontmatter();
-		console.log(result.map(f => f.name));
 		new Notice(`Vault has ${result.length} notes without frontmatter.`);
 	}
 }

@@ -4,5 +4,6 @@ export enum KOC {
 	IMS_MOC = "IMS/MOC",
 	TMS_DN = "TMS/DailyNote",
 	KMS_PROPERTY = "KMS/Property",
+	KMS_KOC = "KOC", // TODO rename to "KMS/KOC"
 	UNKNOWN = "UNKNOWN"
 }
