@@ -31,7 +31,7 @@ export default class KObjectUtility {
 
 	// noinspection JSUnusedGlobalSymbols
 	async replaceDuplicatedIds(): Promise<void> {
-		let withDuplicateId = this.findFilesWithDuplicateIds();
+		let withDuplicateId = this.findNotesWithDuplicateIds();
 
 		let idx = 0;
 		for (let f of withDuplicateId) {
@@ -43,7 +43,19 @@ export default class KObjectUtility {
 		}
 	}
 
-	findFilesWithDuplicateIds() {
+	findNotesWithoutFrontmatter() {
+		let allMdFiles = this.ctx.appUtils.getAllMdFiles();
+
+		return allMdFiles.filter(f => {
+			if (f.path.startsWith("9 Meta/9 Templates") || f.path.startsWith("Scripts")) {
+				return false;
+			}
+			const fm = this.ctx.appUtils.getFrontmatterOrNull(f);
+			return fm === null;
+		});
+	}
+
+	findNotesWithDuplicateIds() {
 		let allMdFiles = this.ctx.appUtils.getAllMdFiles();
 
 		const KOs = allMdFiles.filter(f => {
@@ -77,6 +89,12 @@ export default class KObjectUtility {
 
 	private async setRandomId(f: TFile) {
 		await this.ctx.app.fileManager.processFrontMatter(f, (frontmatter) => {
+			frontmatter['uid'] = this.ctx.utils.generateUid();
+		});
+	}
+
+	async addFrontmatterToFile(file: TFile) {
+		await this.ctx.app.fileManager.processFrontMatter(file, (frontmatter) => {
 			frontmatter['uid'] = this.ctx.utils.generateUid();
 		});
 	}

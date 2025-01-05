@@ -9,6 +9,6 @@ export default class FindDuplicateIds implements ExoCommand {
 	}
 
 	async execute(): Promise<void> {
-		this.ctx.kObjectUtility.findFilesWithDuplicateIds();
+		this.ctx.kObjectUtility.findNotesWithDuplicateIds();
 	}
 }
