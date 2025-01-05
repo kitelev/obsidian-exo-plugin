@@ -11,10 +11,13 @@ Designed to enhance cognitive processes and decision-making within Obsidian.
 - Knowledge Object Class (KOC) - Classification of a note
 
 Every KO should have properties:
-
 - uid
 - tags (with class)
 
 ## Abbreviations
-
 - fm - FrontMatter 
+
+## Terminology
+
+- inbound link - a link to a note
+- outbound link - a link from a note

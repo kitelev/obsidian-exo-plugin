@@ -16,6 +16,10 @@ export default class KObjectCreator {
 		return new KObject(id, koc);
 	}
 
+	async createFromTFileTypedOrNull(file: TFile) {
+		return await this.createFromTFileTyped(file).catch(() => null);
+	}
+
 	async createFromTFileTyped(file: TFile) {
 		const koc = this.getFileKoc(file);
 		switch (koc) {

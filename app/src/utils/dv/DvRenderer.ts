@@ -1,39 +1,48 @@
 import ExoContext from "../../../../common/ExoContext";
 import {Component, MarkdownPostProcessorContext} from "obsidian";
 import {Link} from "obsidian-dataview";
+import KObject from "../../../../core/src/domain/KObject";
 
 /**
  * Dataview renderer for MarkdownPostProcessing
  */
 export default class DvRenderer {
-    private dvApi;
+	private dvApi;
 
-    constructor(private exoCtx: ExoContext,
-                private mdCtx: MarkdownPostProcessorContext,
-                private component: Component) {
-        this.dvApi = this.exoCtx.dvApiHolder.dvApi;
-    }
+	constructor(private exoCtx: ExoContext,
+				private mdCtx: MarkdownPostProcessorContext,
+				private component: Component) {
+		this.dvApi = this.exoCtx.dvApiHolder.dvApi;
+	}
 
-    // noinspection JSUnusedGlobalSymbols
-    async list(links: Link[]) {
-        const div = document.createElement("div");
-        div.addClass("dv-renderer");
+	async listKOs(objects: KObject[]) {
+		const links = objects.map((ko) => {
+			let koPath = this.exoCtx.appUtils.getObjectFileOrThrow(ko).path;
+			return this.dvApi.fileLink(koPath);
+		});
 
-        await this.dvApi.list(links, div, this.component,
-            this.mdCtx.sourcePath // TODO maybe this in unnecessary
-        );
+		return await this.list(links);
+	}
 
-        return div;
-    }
+	async list(links: Link[]) {
+		const div = document.createElement("div");
+		div.addClass("dv-renderer");
 
-    async table(headers: string[], rows: any[][]) {
-        const div = document.createElement("div");
-        div.addClass("dv-renderer");
+		await this.dvApi.list(links, div, this.component,
+			this.mdCtx.sourcePath // TODO maybe this in unnecessary
+		);
 
-        await this.dvApi.table(headers, rows, div, this.component,
-            this.mdCtx.sourcePath // TODO maybe this in unnecessary
-        );
+		return div;
+	}
 
-        return div;
-    }
+	async table(headers: string[], rows: any[][]) {
+		const div = document.createElement("div");
+		div.addClass("dv-renderer");
+
+		await this.dvApi.table(headers, rows, div, this.component,
+			this.mdCtx.sourcePath // TODO maybe this in unnecessary
+		);
+
+		return div;
+	}
 }

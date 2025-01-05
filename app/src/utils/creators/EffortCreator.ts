@@ -35,7 +35,16 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 
 		const votes: number = fm["votes"];
 
+		let relates: Effort[] = [];
+		const relatesStrArray: string[] = fm["relates"];
+		if (relatesStrArray) {
+			relates = await Promise.all(relatesStrArray.map(async str => {
+				const file = this.ctx.appUtils.getTFileFromStrLink(str);
+				return await this.create(file);
+			}));
+		}
+
 		const body: string = await this.ctx.appUtils.getFileBody(file);
-		return new Effort(id, file.name.replace(".md", ""), status, started, ended, plannedStart, plannedEnd, due, area, parent, votes, body);
+		return new Effort(id, file.name.replace(".md", ""), status, started, ended, plannedStart, plannedEnd, due, area, parent, votes, relates, body);
 	}
 }

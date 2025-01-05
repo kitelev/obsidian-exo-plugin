@@ -26,10 +26,16 @@ export default class ExoPlugin extends Plugin {
 				const renderer = new DvRenderer(this.ctx, ctx, this);
 
 				const file: TFile = this.ctx.appUtils.getFileByPathOrThrow(ctx.sourcePath);
-				const ko = await this.ctx.kObjectCreator.createFromTFileTyped(file);
+
+				const ko = await this.ctx.kObjectCreator.createFromTFileTypedOrNull(file);
+				if (ko === null) {
+					console.warn(`Could not create KObject from file ${file.path}`);
+					return;
+				}
 
 				const layout = this.ctx.layoutFactory.create(ko, renderer);
 				if (layout === null) {
+					console.warn(`Could not create layout for KObject ${ko.id}`);
 					return;
 				}
 

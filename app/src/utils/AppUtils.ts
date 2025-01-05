@@ -55,12 +55,15 @@ export default class AppUtils {
 	}
 
 	getTFileFromStrLink(strLink: string): TFile {
+		let linkWithoutBrackets = strLink.replace("[[", "").replace("]]", "");
+		if (strLink.contains("|")) {
+			linkWithoutBrackets = linkWithoutBrackets.split("|")[0];
+		}
+
 		if (strLink.contains("/")) {
-			const areaFileName = strLink.replace("[[", "").replace("]]", "");
-			return this.getFileByPathOrThrow(areaFileName + ".md");
+			return this.getFileByPathOrThrow(linkWithoutBrackets + ".md");
 		} else {
-			const areaFileName = strLink.replace("[[", "").replace("]]", "");
-			return this.getFileByNameOrThrow(areaFileName + ".md");
+			return this.getFileByNameOrThrow(linkWithoutBrackets + ".md");
 		}
 	}
 

@@ -16,6 +16,7 @@ export default class Effort extends KObject {
 				public area: Area | null,
 				public parent: Effort | null,
 				public votes: number | null,
+				public related: KObject[],
 				public body: string) {
 		super(id, KOC.EMS_EFFORT);
 	}

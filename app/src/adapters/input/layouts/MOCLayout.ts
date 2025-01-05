@@ -10,16 +10,31 @@ export default class MOCLayout extends AbstractLayout<MOC> {
 	}
 
 	async render(ko: MOC, el: HTMLElement): Promise<void> {
-		const file = this.ctx.appUtils.getObjectFileOrThrow(ko);
-		const linksOutbound = this.ctx.linksRegistry.getFileOutboundLinks(file.path);
-		const linksInbound = this.ctx.linksRegistry.getFileInboundLinks(file.path);
-		console.log("linksOutbound", linksOutbound);
-		console.log("linksInbound", linksInbound);
+		await this.handleInboundUnidirectionalLinks(ko, el);
+		await this.handleUnresolvedRelatedEfforts(ko, el);
+	}
 
-		// notes with inbound link but without outbound link
-		const orphans = linksInbound.filter((inboundLink) => !linksOutbound.includes(inboundLink));
-		console.log("orphans", orphans);
+	private async handleInboundUnidirectionalLinks(ko: MOC, el: HTMLElement) {
+		let links = this.ctx.linksRegistry.getKoInboundUnidirectionalLinks(ko);
+		if (links.length > 0) {
+			el.appendChild(this.createH1("Inbound 1-directional links"));
+			let div = await this.dvRenderer.listKOs(links);
+			el.appendChild(div);
+		}
+	}
 
-		// TODO not working!!
+	private async handleUnresolvedRelatedEfforts(ko: MOC, el: HTMLElement) {
+		const efforts = await this.ctx.effortRepository.find(e => {
+			if (e.isResolved()) {
+				return false;
+			}
+			return e.related.some(r => r.id === ko.id);
+		});
+
+		if (efforts.length > 0) {
+			el.appendChild(this.createH1("Unresolved related efforts"));
+			let div = await this.dvRenderer.listKOs(efforts);
+			el.appendChild(div);
+		}
 	}
 }
