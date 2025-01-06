@@ -18,7 +18,7 @@ export default class CreateEffortBySelectedText extends AbstractExoAction {
 		const activeFile = this.ctx.appUtils.getActiveFileOrThrow();
 		const activeKo = await this.ctx.kObjectCreator.createFromFileTyped(activeFile);
 
-		let title = `(T) ${selection}`;
+		let title = `${selection}`;
 		if (activeKo instanceof Effort) {
 			let effort = await this.ctx.createEffortUseCase.taskUnderEffort(activeKo, title);
 			this.ctx.app.workspace.activeEditor!.editor!.replaceSelection(`[[${title}]]`);
