@@ -47,7 +47,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		});
 
 		filters.set("ended", e => {
-			if (e.ended === null || e.isResolved()) {
+			if (e.ended === null) {
 				return false;
 			}
 			return DateUtils.sameDay(e.ended, day);
