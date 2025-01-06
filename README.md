@@ -23,5 +23,8 @@ Every KO should have properties:
 - bidirectional link - both notes have links to each other
 
 # Important
-
 - Update of domain object will lead to removing all unknown properties from the object
+
+# Known Issues
+
+- Date fields (started, ended) behaves weird when starting and shutting down (with buttons in layout)

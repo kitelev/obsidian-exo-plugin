@@ -33,8 +33,9 @@ import EffortStartUseCase from "../core/src/ports/input/EffortStartUseCase";
 import EffortStartService from "../core/src/service/EffortStartService";
 import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
 import EffortEndService from "../core/src/service/EffortEndService";
+import EffortCommandFactory from "../app/src/adapters/input/commands/ko-based/EffortCommandFactory";
 
-export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
+export default class ExoContext {
 	// Utils
 	public readonly utils: Utils = new Utils();
 	public readonly appUtils: AppUtils = new AppUtils(this);
@@ -71,6 +72,9 @@ export default class ExoContext { // TODO replace initializers with `= new Class
 
 	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
 	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);
+
+	// Commands
+	public readonly effortCommandFactory: EffortCommandFactory = new EffortCommandFactory(this);
 
 	constructor(public app: App) {
 	}

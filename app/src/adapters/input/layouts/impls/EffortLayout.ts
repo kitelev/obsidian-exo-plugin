@@ -5,8 +5,6 @@ import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effo
 import Comparator from "../../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
 import {Notice} from "obsidian";
-import StartEffortCommand from "../../commands/ko-based/StartEffortCommand";
-import EndEffortCommand from "../../commands/ko-based/EndEffortCommand";
 
 export default class EffortLayout extends AbstractLayout<Effort> {
 	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
@@ -41,13 +39,13 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 
 	private async showAvailableActions(effort: Effort, el: HTMLElement) {
 		const startButton = this.createButton("Start", async () => {
-			await new StartEffortCommand(this.ctx).execute(effort);
+			await this.ctx.effortCommandFactory.createStartEffortCommand().execute(effort);
 			new Notice("Effort started");
 		});
 		el.appendChild(startButton);
 
 		const endButton = this.createButton("End", async () => {
-			await new EndEffortCommand(this.ctx).execute(effort);
+			await this.ctx.effortCommandFactory.createEndEffortCommand().execute(effort);
 			new Notice("Effort ended");
 		});
 		el.appendChild(endButton);
