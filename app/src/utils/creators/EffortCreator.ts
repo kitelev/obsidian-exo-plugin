@@ -18,7 +18,7 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 		let prototype: EffortPrototype | null = null;
 		const prototypeStr: string = fm["e-prototype"];
 		if (prototypeStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(prototypeStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(prototypeStr);
 			prototype = await this.ctx.effortPrototypeCreator.create(file);
 		}
 
@@ -31,14 +31,14 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 		let area: Area | null = null;
 		const areaStr: string = fm["area"];
 		if (areaStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(areaStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(areaStr);
 			area = await this.ctx.areaCreator.create(file);
 		}
 
 		let parent: Effort | null = null;
 		const parentStr: string = fm["e-parent"];
 		if (parentStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(parentStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(parentStr);
 			parent = await this.create(file);
 		}
 
@@ -48,12 +48,13 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 		const relatesStrArray: string[] = fm["relates"];
 		if (relatesStrArray) {
 			relates = await Promise.all(relatesStrArray.map(async str => {
-				const file = this.ctx.appUtils.getTFileFromStrLink(str);
+				const file = this.ctx.appUtils.getFileFromStrLink(str);
 				return await this.create(file);
 			}));
 		}
 
 		const body: string = await this.ctx.appUtils.getFileBody(file);
+
 		return new Effort(id, file.name.replace(".md", ""), status, started, ended, plannedStart, plannedEnd, due, prototype, area, parent, votes, relates, body);
 	}
 }

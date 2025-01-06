@@ -19,7 +19,7 @@ export default class DropRedundantDataviewJsLayoutScriptCommand implements ExoCo
 
 		let idx = 0;
 		for (let file of files) {
-			let newData = await this.ctx.appUtils.getFileBody(file);
+			let newData = await this.ctx.appUtils.getFileContent(file);
 
 			console.log(`Processing file ${++idx}/${files.length}: ${file.path}`);
 

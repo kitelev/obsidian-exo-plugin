@@ -18,7 +18,7 @@ export default class AreaPersistenceAdapter implements AreaRepository {
 	}
 
 	async findAll(): Promise<Area[]> {
-		const files: TFile[] = this.ctx.appUtils.findMdWith((f: TFile) => {
+		const files: TFile[] = this.ctx.appUtils.findNotes((f: TFile) => {
 			return this.ctx.appUtils.getTagsFromFile(f).some(t => t.contains(KOC.EMS_AREA));
 		});
 

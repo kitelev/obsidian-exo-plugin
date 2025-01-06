@@ -17,7 +17,7 @@ export default class MocPersistenceAdapter implements MocRepository {
 	}
 
 	async findAll(): Promise<MOC[]> {
-		const rawMOCs: TFile[] = this.ctx.appUtils.findMdWith((f: TFile) => {
+		const rawMOCs: TFile[] = this.ctx.appUtils.findNotes((f: TFile) => {
 			return this.ctx.appUtils.getTagsFromFile(f).contains("IMS/MOC");
 		});
 

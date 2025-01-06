@@ -18,7 +18,10 @@ Every KO should have properties:
 - fm - FrontMatter 
 
 ## Terminology
-
 - inbound link - unidirectional link to a note
 - outbound link - unidirectional link from a note
 - bidirectional link - both notes have links to each other
+
+# Important
+
+- Update of domain object will lead to removing all unknown properties from the object

@@ -19,7 +19,7 @@ export default class DailyNotePersistenceAdapter implements DailyNoteRepository 
 	}
 
 	async findAll(): Promise<DailyNote[]> {
-		const rawDailyNotes: TFile[] = this.appUtils.findMdWith((f: TFile) => {
+		const rawDailyNotes: TFile[] = this.appUtils.findNotes((f: TFile) => {
 			return this.appUtils.getTagsFromFile(f).includes("TMS/DailyNote");
 		});
 

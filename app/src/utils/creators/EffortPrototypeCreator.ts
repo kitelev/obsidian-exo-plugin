@@ -15,14 +15,14 @@ export default class EffortPrototypeCreator extends AbstractCreator<EffortProtot
 		let area: Area | null = null;
 		const areaStr: string = fm["area"];
 		if (areaStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(areaStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(areaStr);
 			area = await this.ctx.areaCreator.create(file);
 		}
 
 		let effortParent: Effort | null = null;
 		const effortParentStr: string = fm["e-parent"];
 		if (effortParentStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(effortParentStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(effortParentStr);
 			effortParent = await this.ctx.effortCreator.create(file);
 		}
 

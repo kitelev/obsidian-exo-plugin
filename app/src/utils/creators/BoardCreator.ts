@@ -17,7 +17,7 @@ export default class BoardCreator extends AbstractCreator<Board> {
 	private async parseArea(fm: FrontMatterCache) {
 		if (!fm["area"]) throw new Error("Board must have an area");
 		const areaStr: string = fm["area"];
-		const areaFile = this.ctx.appUtils.getTFileFromStrLink(areaStr);
+		const areaFile = this.ctx.appUtils.getFileFromStrLink(areaStr);
 		return await this.ctx.areaCreator.create(areaFile);
 	}
 }

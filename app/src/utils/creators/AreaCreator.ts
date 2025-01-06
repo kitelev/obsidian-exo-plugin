@@ -13,7 +13,7 @@ export default class AreaCreator extends AbstractCreator<Area> {
 		let parentArea: Area | null = null;
 		const parentStr: string = fm["a-parent"];
 		if (parentStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(parentStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(parentStr);
 			parentArea = await this.create(file);
 		}
 

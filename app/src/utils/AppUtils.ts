@@ -8,13 +8,13 @@ export default class AppUtils {
 	constructor(private ctx: ExoContext) {
 	}
 
-	async createFile(path: string, textContent: string) {
-		const file = await this.app.vault.create(path, textContent);
+	async createFile(path: string, content: string) {
+		const file = await this.app.vault.create(path, content);
 		await this.waitCacheUpdate(file);
 	}
 
-	async updateFile(file: TFile, data: string) {
-		await this.app.vault.modify(file, data);
+	async updateFile(file: TFile, content: string) {
+		await this.app.vault.modify(file, content);
 		await this.waitCacheUpdate(file);
 	}
 
@@ -57,7 +57,7 @@ export default class AppUtils {
 		return this.app.workspace.getActiveFile();
 	}
 
-	getTFileFromStrLink(strLink: string): TFile {
+	getFileFromStrLink(strLink: string): TFile {
 		let linkWithoutBrackets = strLink.replace("[[", "").replace("]]", "");
 		if (strLink.contains("|")) {
 			linkWithoutBrackets = linkWithoutBrackets.split("|")[0];
@@ -125,7 +125,7 @@ export default class AppUtils {
 			.filter(f => !f.path.startsWith("9 Meta/9 Templates") && !f.path.startsWith("Scripts"));
 	}
 
-	findMdWith(filter: (f: TFile) => boolean) {
+	findNotes(filter: (f: TFile) => boolean) {
 		return this.getAllNotes().filter(filter);
 	}
 
@@ -138,7 +138,7 @@ export default class AppUtils {
 	}
 
 	getObjectFile(ko: KObject): TFile | null {
-		const a = this.findMdWith(f => {
+		const a = this.findNotes(f => {
 			const frontmatter = this.getFrontmatterOrNull(f);
 			if (!frontmatter) {
 				return false;
@@ -150,7 +150,12 @@ export default class AppUtils {
 		return a[0];
 	}
 
-	getFileBody(file: TFile) {
+	getFileContent(file: TFile) {
 		return this.app.vault.read(file);
+	}
+
+	async getFileBody(file: TFile): Promise<string> {
+		const content = await this.getFileContent(file);
+		return content.replace(/---[\s\S]*?---/, "").trim();
 	}
 }

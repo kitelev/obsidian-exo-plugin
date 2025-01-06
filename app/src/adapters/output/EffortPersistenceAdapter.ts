@@ -12,14 +12,14 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 	async save(effort: Effort): Promise<void> {
 		const folderPath: string = this.ctx.effortPathRulesHelper.getEffortFolderPath(effort)
 		const filePath = folderPath + "/" + effort.title + ".md";
-		const data = this.serializeData(effort);
+		const fileContent = this.serialize(effort);
 
-		await this.ctx.appUtils.createFile(filePath, data);
+		await this.ctx.appUtils.createFile(filePath, fileContent);
 	}
 
 	async update(effort: Effort): Promise<void> {
 		const file = this.ctx.appUtils.getObjectFileOrThrow(effort);
-		const data = this.serializeData(effort);
+		const data = this.serialize(effort);
 		await this.ctx.appUtils.updateFile(file, data);
 	}
 
@@ -29,7 +29,7 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 	}
 
 	async findAll(): Promise<Effort[]> {
-		const rawEfforts: TFile[] = this.ctx.appUtils.findMdWith((f: TFile) => {
+		const rawEfforts: TFile[] = this.ctx.appUtils.findNotes((f: TFile) => {
 			return this.ctx.appUtils.getTagsFromFile(f).includes("EMS/Effort");
 		});
 
@@ -37,7 +37,7 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 		return await Promise.all(promises);
 	}
 
-	private serializeData(effort: Effort) {
+	private serialize(effort: Effort) {
 		let result = "";
 		result += "---\n";
 		result += "tags:\n";

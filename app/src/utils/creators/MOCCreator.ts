@@ -13,7 +13,7 @@ export default class MOCCreator extends AbstractCreator<MOC> {
 		let parent: MOC | null = null;
 		const parentStr: string = fm["moc-parent"];
 		if (parentStr) {
-			const file = this.ctx.appUtils.getTFileFromStrLink(parentStr);
+			const file = this.ctx.appUtils.getFileFromStrLink(parentStr);
 			parent = await this.create(file);
 		}
 

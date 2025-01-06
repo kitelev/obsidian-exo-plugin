@@ -1,27 +1,33 @@
 import ExoCommand from "./ExoCommand";
-import {Notice} from "obsidian";
+import {Notice, TFile} from "obsidian";
 import ExoContext from "../../../../../common/ExoContext";
 
 export default class OpenRandomNoteExoCommand implements ExoCommand {
 	name = "Рандомная заметка из прошлого";
 	slug = "open-random-note";
 
-	async execute(ctx: ExoContext): Promise<void> {
-		const files = ctx.appUtils.getAllNotes();
+	constructor(private ctx: ExoContext) {
+	}
+
+	async execute(): Promise<void> {
+		let randomNote = this.getRandomNote();
+		if (randomNote === null) {
+			new Notice("No old notes found");
+			return;
+		}
+
+		await this.ctx.appUtils.openFile(randomNote);
+	}
+
+	private getRandomNote(): TFile | null {
 		const today = new Date();
 		const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()).setHours(0, 0, 0, 0); // Дата месяц назад без времени
 
-		// Фильтрация заметок с датой изменения раньше прошлого месяца
-		const oldNotes = files.filter(file => file.stat.mtime < lastMonth);
-
-		if (oldNotes.length > 0) {
-			// Выбираем случайную заметку
-			const randomNote = oldNotes[Math.floor(Math.random() * oldNotes.length)];
-
-			// Открываем её в активной панели
-			await ctx.appUtils.openFile(randomNote);
-		} else {
-			new Notice("No old notes found.");
+		const oldNotes = this.ctx.appUtils.findNotes(file => file.stat.mtime < lastMonth);
+		if (oldNotes.length === 0) {
+			return null;
 		}
+
+		return oldNotes[Math.floor(Math.random() * oldNotes.length)];
 	}
 }
