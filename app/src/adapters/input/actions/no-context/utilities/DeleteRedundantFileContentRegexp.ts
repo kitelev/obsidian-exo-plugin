@@ -1,11 +1,11 @@
-import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class DeleteRedundantFileContentRegexp implements ExoAction {
+export default class DeleteRedundantFileContentRegexp extends AbstractExoAction {
 	name: string = "Delete Redundant File Content Regexp";
-	slug: string = "delete-redundant-file-content-regexp";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(ctx: ExoContext): Promise<void> {

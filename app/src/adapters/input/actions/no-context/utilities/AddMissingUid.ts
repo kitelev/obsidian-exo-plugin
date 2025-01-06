@@ -1,10 +1,11 @@
-import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class AddMissingUid implements ExoAction {
+export default class AddMissingUid extends AbstractExoAction {
 	name = "Add Missing UID";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

@@ -1,16 +1,17 @@
-import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
 import Constants from "../../../../../utils/Constants";
-import SingleInputModal from "../../../../../SingleInputModal";
+import SingleInputModal from "../../../../../utils/modal/SingleInputModal";
 import {BiConsumerAsync} from "../../../../../../../common/fp/Consumer";
 import {TFile} from "obsidian";
 import {KOC} from "../../../../../../../core/src/domain/KOC";
 import KObject from "../../../../../../../core/src/domain/KObject";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class CreateEmptyNoteWithinInbox implements ExoAction {
+export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 	name = "Create Empty Note Within Inbox";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute() {

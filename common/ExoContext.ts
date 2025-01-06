@@ -33,7 +33,8 @@ import EffortStartUseCase from "../core/src/ports/input/EffortStartUseCase";
 import EffortStartService from "../core/src/service/EffortStartService";
 import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
 import EffortEndService from "../core/src/service/EffortEndService";
-import EffortActionFactory from "../app/src/adapters/input/actions/ko-based/EffortActionFactory";
+import EffortActionFactory from "../app/src/adapters/input/actions/effort-context/EffortActionFactory";
+import {ModalItemsFolderFactory} from "../app/src/utils/modal/ModalItemsFolder";
 
 export default class ExoContext {
 	// Utils
@@ -42,6 +43,8 @@ export default class ExoContext {
 	public readonly dvApiHolder: DvApiHolder = new DvApiHolder(this);
 	public readonly kObjectUtility: KObjectUtility = new KObjectUtility(this);
 	public readonly linksRegistry: LinksRegistry = new LinksRegistry(this);
+
+	public readonly modalItemsFolderFactory: ModalItemsFolderFactory = new ModalItemsFolderFactory(this);
 
 	// KO Creators
 	public readonly kObjectCreator: KObjectCreator = new KObjectCreator(this);

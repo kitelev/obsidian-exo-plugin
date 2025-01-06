@@ -1,13 +1,14 @@
-import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
 import Area from "../../../../../../../core/src/domain/ems/Area";
 import Effort from "../../../../../../../core/src/domain/ems/effort/Effort";
 import EffortPrototype from "../../../../../../../core/src/domain/ems/effort/EffortPrototype";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class CreateEffort implements ExoAction {
+export default class CreateEffort extends AbstractExoAction {
 	name = "Create Effort";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute() {

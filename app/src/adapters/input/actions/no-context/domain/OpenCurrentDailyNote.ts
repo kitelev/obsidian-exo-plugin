@@ -1,10 +1,11 @@
-import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class OpenCurrentDailyNoteExoCommand implements ExoAction {
+export default class OpenCurrentDailyNote extends AbstractExoAction {
 	name = "Open Current Daily Note";
 
 	constructor(private ctx: ExoContext) {
+		super()
 	}
 
 	async execute() {

@@ -1,11 +1,12 @@
-import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class GetActiveFileTags implements ExoAction {
+export default class GetActiveFileTags extends AbstractExoAction {
 	name = "Get Active File Tags";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

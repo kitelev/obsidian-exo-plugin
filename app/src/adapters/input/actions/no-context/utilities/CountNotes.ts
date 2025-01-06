@@ -1,11 +1,12 @@
-import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class CountNotes implements ExoAction {
+export default class CountNotes extends AbstractExoAction {
 	name = "Notes Count";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

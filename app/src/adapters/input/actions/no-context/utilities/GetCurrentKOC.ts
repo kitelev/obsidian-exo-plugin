@@ -1,11 +1,12 @@
-import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class GetCurrentKOC implements ExoAction {
+export default class GetCurrentKOC extends AbstractExoAction {
 	name = "Get Current KOC";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

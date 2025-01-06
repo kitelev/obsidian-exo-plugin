@@ -1,11 +1,12 @@
-import ExoAction from "../ExoAction";
 import {Notice, TFile} from "obsidian";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class OpenRandomNote implements ExoAction {
+export default class OpenRandomNote extends AbstractExoAction {
 	name = "Open Random Note";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

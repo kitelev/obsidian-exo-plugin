@@ -1,9 +1,25 @@
 import {Plugin, TFile} from 'obsidian';
-import {ExoModal} from "./app/src/ExoModal";
+import {ExoModal} from "./app/src/utils/modal/ExoModal";
 import "localforage";
 import ExoApi from "./core/src/ExoApi";
 import ExoContext from "./common/ExoContext";
 import DvRenderer from "./app/src/utils/dv/DvRenderer";
+import OpenCurrentDailyNote from "./app/src/adapters/input/actions/no-context/domain/OpenCurrentDailyNote";
+import {ModalItem} from "./app/src/utils/modal/ModalItem";
+import FindDuplicateIds from "./app/src/adapters/input/actions/no-context/utilities/FindDuplicateIds";
+import CountNotes from "./app/src/adapters/input/actions/no-context/utilities/CountNotes";
+import CreateEffort from "./app/src/adapters/input/actions/no-context/domain/CreateEffort";
+import AddMissingFrontmatter from "./app/src/adapters/input/actions/no-context/utilities/AddMissingFrontmatter";
+import AddMissingUid from "./app/src/adapters/input/actions/no-context/utilities/AddMissingUid";
+import CountNotesWithoutId from "./app/src/adapters/input/actions/no-context/utilities/CountNotesWithoutId";
+import CreateEmptyNoteWithinInbox from "./app/src/adapters/input/actions/no-context/domain/CreateEmptyNoteWithinInbox";
+import DeleteRedundantFileContentRegexp
+	from "./app/src/adapters/input/actions/no-context/utilities/DeleteRedundantFileContentRegexp";
+import FindNotesWithoutFrontmatter
+	from "./app/src/adapters/input/actions/no-context/utilities/FindNotesWithoutFrontmatter";
+import GetActiveFileTags from "./app/src/adapters/input/actions/no-context/utilities/GetActiveFileTags";
+import GetCurrentKOC from "./app/src/adapters/input/actions/no-context/utilities/GetCurrentKOC";
+import OpenRandomNote from "./app/src/adapters/input/actions/no-context/utilities/OpenRandomNote";
 
 export default class ExoPlugin extends Plugin {
 	private api: ExoApi;
@@ -63,6 +79,27 @@ export default class ExoPlugin extends Plugin {
 	}
 
 	private openExoModal() {
-		new ExoModal(this.ctx).open();
+		const folderFactory = this.ctx.modalItemsFolderFactory;
+
+		const items: ModalItem[] = [
+			folderFactory.create("Domain", [
+				new CreateEmptyNoteWithinInbox(this.ctx),
+				new CreateEffort(this.ctx),
+				new OpenCurrentDailyNote(this.ctx)
+			]),
+			folderFactory.create("Utilities", [
+				new AddMissingFrontmatter(this.ctx),
+				new AddMissingUid(this.ctx),
+				new CountNotes(this.ctx),
+				new CountNotesWithoutId(this.ctx),
+				new DeleteRedundantFileContentRegexp(this.ctx),
+				new FindDuplicateIds(this.ctx),
+				new FindNotesWithoutFrontmatter(this.ctx),
+				new GetActiveFileTags(this.ctx),
+				new GetCurrentKOC(this.ctx),
+				new OpenRandomNote(this.ctx)
+			])
+		];
+		new ExoModal(this.ctx, items).open();
 	}
 }

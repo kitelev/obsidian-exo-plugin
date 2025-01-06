@@ -1,10 +1,11 @@
-import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class AddMissingFrontmatter implements ExoAction {
+export default class AddMissingFrontmatter extends AbstractExoAction {
 	name = "Add Missing Frontmatter";
-	
+
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

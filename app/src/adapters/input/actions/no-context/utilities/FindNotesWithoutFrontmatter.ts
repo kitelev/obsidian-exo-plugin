@@ -1,11 +1,12 @@
-import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
 import ExoContext from "../../../../../../../common/ExoContext";
+import AbstractExoAction from "../../AbstractExoAction";
 
-export default class FindNotesWithoutFrontmatter implements ExoAction {
+export default class FindNotesWithoutFrontmatter extends AbstractExoAction {
 	name = "Find Notes Without Frontmatter";
 
 	constructor(private ctx: ExoContext) {
+		super();
 	}
 
 	async execute(): Promise<void> {

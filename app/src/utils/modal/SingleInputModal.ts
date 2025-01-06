@@ -1,8 +1,8 @@
 import {Modal} from "obsidian";
-import ExoContext from "../../common/ExoContext";
-import {BiConsumerAsync} from "../../common/fp/Consumer";
-import UserFriendly from "./utils/UserFriendly";
-import {KOC} from "../../core/src/domain/KOC";
+import ExoContext from "../../../../common/ExoContext";
+import {BiConsumerAsync} from "../../../../common/fp/Consumer";
+import UserFriendly from "../UserFriendly";
+import {KOC} from "../../../../core/src/domain/KOC";
 
 export default class SingleInputModal extends Modal {
 	private input: HTMLInputElement;
