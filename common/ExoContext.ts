@@ -31,6 +31,8 @@ import AreaPersistenceAdapter from "../app/src/adapters/output/AreaPersistenceAd
 import BoardCreator from "../app/src/utils/creators/BoardCreator";
 import EffortStartUseCase from "../core/src/ports/input/EffortStartUseCase";
 import EffortStartService from "../core/src/service/EffortStartService";
+import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
+import EffortEndService from "../core/src/service/EffortEndService";
 
 export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
 	// Utils
@@ -62,9 +64,10 @@ export default class ExoContext { // TODO replace initializers with `= new Class
 
 	// Use Cases
 	public readonly getCurrentDNUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
-	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 
+	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 	public readonly effortStartUseCase: EffortStartUseCase = new EffortStartService(this);
+	public readonly effortEndUseCase: EffortEndUseCase = new EffortEndService(this);
 
 	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
 	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);

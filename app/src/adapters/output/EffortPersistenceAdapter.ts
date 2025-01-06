@@ -4,6 +4,7 @@ import ExoContext from "../../../../common/ExoContext";
 import Area from "../../../../core/src/domain/ems/Area";
 import {TFile} from "obsidian";
 import KObject from "../../../../core/src/domain/KObject";
+import DateUtils from "../../../../common/utils/DateUtils";
 
 export default class EffortPersistenceAdapter implements EffortRepository {
 	constructor(private ctx: ExoContext) {
@@ -45,10 +46,10 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 		result += "uid: " + effort.id + "\n";
 		result += "e-status: " + effort.status + "\n";
 		if (effort.started) {
-			result += "started: " + effort.started + "\n";
+			result += "started: " + DateUtils.formatDate(effort.started) + "\n";
 		}
 		if (effort.ended) {
-			result += "ended: " + effort.ended + "\n";
+			result += "ended: " + DateUtils.formatDate(effort.ended) + "\n";
 		}
 		if (effort.prototype) {
 			result += "e-prototype: \'" + this.getLinkToKO(effort.prototype) + "\'\n";

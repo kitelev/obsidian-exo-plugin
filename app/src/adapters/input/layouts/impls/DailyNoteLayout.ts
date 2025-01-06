@@ -6,7 +6,7 @@ import Comparator from "../../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
 import DailyNote from "../../../../../../core/src/domain/tms/DailyNote";
 import {Predicate} from "../../../../../../common/Predicate";
-import DateUtils from "../../../../../../common/DateUtils";
+import DateUtils from "../../../../../../common/utils/DateUtils";
 
 export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 

@@ -14,6 +14,7 @@ import AddMissingFrontmatterCommand from "./utilities/AddMissingFrontmatterComma
 import AddMissingUidCommand from "./utilities/AddMissingUidCommand";
 import DropRedundantDataviewJsLayoutScriptCommand from "./utilities/DropRedundantDataviewJsLayoutScriptCommand";
 import EffortStartCommand from "./EffortStartCommand";
+import EffortEndCommand from "./EffortEndCommand";
 
 export default class ExoCommands {
 	static all(ctx: ExoContext): ExoCommand[] {
@@ -22,9 +23,13 @@ export default class ExoCommands {
 			new CreateEmptyNoteWithinInboxExoCommand(ctx),
 			new GetActiveFileTagsExoCommand(ctx),
 			new GetCurrentKOCExoCommand(ctx),
+
 			new OpenCurrentDailyNoteExoCommand(ctx, ctx.getCurrentDNUseCase),
+
 			new CreateEffortExoCommand(ctx),
 			new EffortStartCommand(ctx),
+			new EffortEndCommand(ctx),
+
 			new FindDuplicateIds(ctx),
 			new CountNotesWithoutId(ctx),
 			new CountNotesExoCommand(ctx),
