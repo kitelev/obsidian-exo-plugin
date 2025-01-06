@@ -33,18 +33,13 @@ export default class CreateEffortBySelectedText extends AbstractExoAction {
 		];
 		const callback: ConsumerAsync<string[]> = async (fields) => {
 			const title = fields[0] as string;
-			const areaId = fields[1] ? fields[1] as UUID : undefined;
-			let area: Area | null = null;
-			if (areaId) {
-				area = await this.ctx.areaRepository.findById(areaId);
-			}
 
-			let effort: Effort;
-			if (activeKo instanceof Effort) {
-				effort = await this.ctx.createEffortUseCase.taskUnderEffort(activeKo, title, area ?? undefined);
-			} else {
-				effort = await this.ctx.createEffortUseCase.createTask(title, area ?? undefined);
-			}
+			const areaId = fields[1] ? fields[1] as UUID : undefined;
+			const area: Area | null = areaId ? await this.ctx.areaRepository.findById(areaId) : null;
+
+			const parent: Effort | null = activeKo instanceof Effort ? activeKo : null;
+
+			const effort = await this.ctx.createEffortUseCase.create({title, parent, area});
 
 			this.ctx.app.workspace.activeEditor!.editor!.replaceSelection(`[[${effort.title}]]`);
 			await this.ctx.appUtils.openKObject(effort);

@@ -60,3 +60,42 @@ export default class Effort extends KObject { // TODO add builder pattern
 		return !this.isResolved();
 	}
 }
+
+export class EffortBuilder {
+	public id: UUID;
+	public title: string;
+	public body: string = "";
+	public status: EffortStatus = EffortStatus.DRAFT;
+	public started?: Date | null;
+	public ended?: Date | null;
+	public plannedStart?: Date | null;
+	public plannedEnd?: Date | null;
+	public due?: Date | null;
+	public prototype?: EffortPrototype | null;
+	public area?: Area | null;
+	public parent?: Effort | null;
+	public votes?: number;
+	public relates: KObject[] = [];
+
+	constructor() {
+	}
+
+	build(): Effort {
+		if (!this.id) throw new Error("id is required");
+		return new Effort(
+			this.id,
+			this.title,
+			this.status,
+			this.started ?? null,
+			this.ended ?? null,
+			this.plannedStart ?? null,
+			this.plannedEnd ?? null,
+			this.due ?? null,
+			this.prototype ?? null,
+			this.area ?? null,
+			this.parent ?? null,
+			this.votes ?? null,
+			this.relates,
+			this.body);
+	}
+}

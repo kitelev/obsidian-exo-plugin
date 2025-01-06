@@ -1,47 +1,21 @@
-import CreateEffortUseCase from "../ports/input/CreateEffortUseCase";
-import Area from "../domain/ems/Area";
+import CreateEffortUseCase, {CreateEffortCommand} from "../ports/input/CreateEffortUseCase";
 import {EffortStatus} from "../domain/ems/effort/EffortStatus";
-import Effort from "../domain/ems/effort/Effort";
+import Effort, {EffortBuilder} from "../domain/ems/effort/Effort";
 import ExoContext from "../../../common/ExoContext";
-import EffortPrototype from "../domain/ems/effort/EffortPrototype";
 
 export default class CreateEffortService implements CreateEffortUseCase {
 	constructor(private ctx: ExoContext) {
 	}
 
-	async createTask(title: string, area?: Area): Promise<Effort> {
-		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, null, area ?? null, null, 0, [], "");
-
-		await this.ctx.effortRepository.save(effort);
-
-		return effort;
-	}
-
-	async taskUnderArea(area: Area, title?: string): Promise<Effort> {
-		title = title ?? this.ctx.utils.generateUid();
-		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, null, area, null, 0, [], "");
-
-		await this.ctx.effortRepository.save(effort);
-
-		return effort;
-	}
-
-	async taskUnderEffort(parentEffort: Effort, title: string | undefined, area?: Area): Promise<Effort> {
-		title = title ?? this.ctx.utils.generateUid();
-		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, null, area ?? null, parentEffort, 0, [], "");
-
-		await this.ctx.effortRepository.save(effort);
-
-		return effort;
-	}
-
-	async taskUnderPrototype(prototype: EffortPrototype, title?: string): Promise<Effort> {
-		title = title ?? this.ctx.utils.generateUid();
-		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, prototype, null, null, 0, [], "");
+	async create(cmd: CreateEffortCommand): Promise<Effort> {
+		const builder = new EffortBuilder();
+		builder.id = this.ctx.utils.generateUid();
+		builder.title = `(T) ${cmd.title}`;
+		builder.prototype = cmd.prototype;
+		builder.area = cmd.area;
+		builder.parent = cmd.parent;
+		builder.status = EffortStatus.DRAFT;
+		const effort = builder.build();
 
 		await this.ctx.effortRepository.save(effort);
 

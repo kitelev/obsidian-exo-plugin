@@ -44,13 +44,13 @@ export default class CreateEffort extends AbstractExoAction {
 
 	private async createEffort(activeKo: KObject, title: string): Promise<Effort> {
 		if (activeKo instanceof Area) {
-			return await this.ctx.createEffortUseCase.taskUnderArea(activeKo, title);
+			return await this.ctx.createEffortUseCase.create({title, area: activeKo});
 		} else if (activeKo instanceof Effort) {
-			return await this.ctx.createEffortUseCase.taskUnderEffort(activeKo);
+			return await this.ctx.createEffortUseCase.create({title, parent: activeKo});
 		} else if (activeKo instanceof EffortPrototype) {
-			return await this.ctx.createEffortUseCase.taskUnderPrototype(activeKo, title);
+			return await this.ctx.createEffortUseCase.create({title, prototype: activeKo});
 		} else {
-			return await this.ctx.createEffortUseCase.createTask(title);
+			return await this.ctx.createEffortUseCase.create({title});
 		}
 	}
 }
