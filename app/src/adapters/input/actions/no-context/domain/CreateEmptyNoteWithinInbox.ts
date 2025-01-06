@@ -5,7 +5,7 @@ import {TFile} from "obsidian";
 import {KOC} from "../../../../../../../core/src/domain/KOC";
 import KObject from "../../../../../../../core/src/domain/KObject";
 import AbstractExoAction from "../../AbstractExoAction";
-import ModalForm, {SelectField, TextField} from "../../../../../utils/modal/forms/ModalForm";
+import ModalForm, {SelectField, SelectOption, TextField} from "../../../../../utils/modal/forms/ModalForm";
 
 export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 	name = "Create Empty Note Within Inbox";
@@ -17,7 +17,7 @@ export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 	async execute() {
 		const fields = [
 			new TextField("Title"),
-			new SelectField("KOC", Object.values(KOC))
+			new SelectField("KOC", Object.values(KOC).map(koc => new SelectOption(koc, koc)))
 		];
 		const callback: ConsumerAsync<string[]> = async (fields) => {
 			const title = fields[0] as string;

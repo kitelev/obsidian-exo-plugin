@@ -9,9 +9,9 @@ export default class CreateEffortService implements CreateEffortUseCase {
 	constructor(private ctx: ExoContext) {
 	}
 
-	async createTask(title: string): Promise<Effort> {
+	async createTask(title: string, area?: Area): Promise<Effort> {
 		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, null, null, null, 0, [], "");
+		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, null, area ?? null, null, 0, [], "");
 
 		await this.ctx.effortRepository.save(effort);
 
@@ -28,10 +28,10 @@ export default class CreateEffortService implements CreateEffortUseCase {
 		return effort;
 	}
 
-	async taskUnderEffort(parentEffort: Effort, title: string | undefined): Promise<Effort> {
+	async taskUnderEffort(parentEffort: Effort, title: string | undefined, area?: Area): Promise<Effort> {
 		title = title ?? this.ctx.utils.generateUid();
 		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, null, null, parentEffort, 0, [], "");
+		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, null, area ?? null, parentEffort, 0, [], "");
 
 		await this.ctx.effortRepository.save(effort);
 

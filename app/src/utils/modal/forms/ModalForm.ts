@@ -51,13 +51,13 @@ export interface FormField<T> {
 }
 
 export abstract class AbstractFormField<T> implements FormField<T> {
-	protected constructor(protected placeholder: string) {
+	protected constructor(protected fieldName: string) {
 	}
 
 	render(contentEl: HTMLElement): void {
 		const div = contentEl.createEl("div");
 		div.createEl("label", {
-			text: this.placeholder,
+			text: this.fieldName,
 			attr: {
 				style: "margin-top: 10px; display: block;"
 			}
@@ -74,15 +74,15 @@ export abstract class AbstractFormField<T> implements FormField<T> {
 export class TextField extends AbstractFormField<string> {
 	private input: HTMLInputElement;
 
-	constructor(placeholder: string,
+	constructor(fieldName: string,
 				private prefilledValue?: string) {
-		super(placeholder);
+		super(fieldName);
 	}
 
 	renderInternal(fieldRow: HTMLElement): void {
 		this.input = fieldRow.createEl("input", {
 			type: "text",
-			placeholder: this.placeholder,
+			placeholder: this.fieldName,
 			attr: {
 				style: "width: 100%"
 			},
@@ -95,12 +95,12 @@ export class TextField extends AbstractFormField<string> {
 	}
 }
 
-export class SelectField<T> extends AbstractFormField<T> {
+export class SelectField extends AbstractFormField<string> {
 	private select: HTMLSelectElement;
 
-	constructor(protected placeholder: string,
-				private options: T[]) {
-		super(placeholder);
+	constructor(protected fieldName: string,
+				private options: SelectOption[]) {
+		super(fieldName);
 	}
 
 	renderInternal(fieldRow: HTMLElement): void {
@@ -111,14 +111,19 @@ export class SelectField<T> extends AbstractFormField<T> {
 				}
 			});
 
-		this.options.forEach((value) => {
-			let valueStr = `${value}`;
-			const option = this.select.createEl("option", {value: valueStr});
-			option.textContent = valueStr;
+		this.options.forEach((selectOption) => {
+			const option = this.select.createEl("option", {value: selectOption.value});
+			option.textContent = selectOption.display;
 		});
 	}
 
-	getValue(): T {
-		return this.select.value as unknown as T;
+	getValue(): string {
+		return this.select.value as string;
+	}
+}
+
+export class SelectOption {
+	constructor(public value: string | undefined,
+				public display: string) {
 	}
 }

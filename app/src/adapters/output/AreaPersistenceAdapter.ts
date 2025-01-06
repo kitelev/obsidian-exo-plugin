@@ -3,9 +3,15 @@ import ExoContext from "../../../../common/ExoContext";
 import Area from "../../../../core/src/domain/ems/Area";
 import AreaRepository from "../../../../core/src/ports/output/AreaRepository";
 import {KOC} from "../../../../core/src/domain/KOC";
+import {UUID} from "node:crypto";
 
 export default class AreaPersistenceAdapter implements AreaRepository {
 	constructor(private ctx: ExoContext) {
+	}
+
+	async findById(id: UUID): Promise<Area | null> {
+		const all = await this.findAll();
+		return all.find(a => a.id === id) ?? null
 	}
 
 	async findChildren(parent: Area): Promise<Area[]> {
