@@ -1,6 +1,6 @@
 import ExoContext from "../../../../../../../common/ExoContext";
 import Constants from "../../../../../utils/Constants";
-import SingleInputModal from "../../../../../utils/modal/SingleInputModal";
+import InputAndSelectKOCModal from "../../../../../utils/modal/InputAndSelectKOCModal";
 import {BiConsumerAsync} from "../../../../../../../common/fp/Consumer";
 import {TFile} from "obsidian";
 import {KOC} from "../../../../../../../core/src/domain/KOC";
@@ -20,7 +20,7 @@ export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 			await this.ctx.appUtils.openFile(file);
 		};
 
-		new SingleInputModal(this.ctx, callback).open();
+		new InputAndSelectKOCModal(this.ctx, callback).open();
 	}
 
 	private async createNote(title: string, koc: KOC): Promise<TFile> {

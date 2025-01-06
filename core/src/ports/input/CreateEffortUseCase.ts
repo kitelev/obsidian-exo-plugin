@@ -5,7 +5,7 @@ import EffortPrototype from "../../domain/ems/effort/EffortPrototype";
 export default interface CreateEffortUseCase {
 	createTask(title: string): Promise<Effort>;
 
-	taskUnderArea(area: Area): Promise<Effort>;
+	taskUnderArea(area: Area, title?: string): Promise<Effort>;
 
 	taskUnderEffort(parentEffort: Effort, title?: string): Promise<Effort>;
 

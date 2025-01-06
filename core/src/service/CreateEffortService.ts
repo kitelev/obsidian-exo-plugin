@@ -18,10 +18,10 @@ export default class CreateEffortService implements CreateEffortUseCase {
 		return effort;
 	}
 
-	async taskUnderArea(area: Area): Promise<Effort> {
-		const title = this.ctx.utils.generateUid();
+	async taskUnderArea(area: Area, title?: string): Promise<Effort> {
+		title = title ?? this.ctx.utils.generateUid();
 		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, null, area, null, 0, [], "");
+		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, null, area, null, 0, [], "");
 
 		await this.ctx.effortRepository.save(effort);
 
@@ -31,7 +31,7 @@ export default class CreateEffortService implements CreateEffortUseCase {
 	async taskUnderEffort(parentEffort: Effort, title: string | undefined): Promise<Effort> {
 		title = title ?? this.ctx.utils.generateUid();
 		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, null, null, parentEffort, 0, [], "");
+		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, null, null, parentEffort, 0, [], "");
 
 		await this.ctx.effortRepository.save(effort);
 
@@ -41,7 +41,7 @@ export default class CreateEffortService implements CreateEffortUseCase {
 	async taskUnderPrototype(prototype: EffortPrototype): Promise<Effort> {
 		const title = this.ctx.utils.generateUid();
 		const id = this.ctx.utils.generateUid();
-		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, prototype, null, null, 0, [], "");
+		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, prototype, null, null, 0, [], "");
 
 		await this.ctx.effortRepository.save(effort);
 

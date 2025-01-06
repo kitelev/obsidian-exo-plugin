@@ -1,15 +1,13 @@
 import {Modal} from "obsidian";
 import ExoContext from "../../../../common/ExoContext";
-import {BiConsumerAsync} from "../../../../common/fp/Consumer";
+import {ConsumerAsync} from "../../../../common/fp/Consumer";
 import UserFriendly from "../UserFriendly";
-import {KOC} from "../../../../core/src/domain/KOC";
 
-export default class SingleInputModal extends Modal {
+export default class InputModal extends Modal {
 	private input: HTMLInputElement;
-	private select: HTMLSelectElement;
 
 	constructor(ctx: ExoContext,
-				private callback: BiConsumerAsync<string, string>) {
+				private callback: ConsumerAsync<string>) {
 		super(ctx.app);
 	}
 
@@ -22,17 +20,6 @@ export default class SingleInputModal extends Modal {
 			attr: {
 				style: "width: 100%"
 			}
-		});
-
-		this.select = this.contentEl.createEl(
-			"select", {
-				attr: {
-					style: "width: 100%; margin-top: 10px;"
-				}
-			});
-		Object.values(KOC).forEach((value) => {
-			const option = this.select.createEl("option", {value});
-			option.textContent = value;
 		});
 
 		const submitButton = this.contentEl.createEl(
@@ -60,9 +47,7 @@ export default class SingleInputModal extends Modal {
 			throw new Error("Note title cannot be empty");
 		}
 
-		const selectValue = this.select.value;
-
-		await this.callback(inputValue, selectValue);
+		await this.callback(inputValue);
 		this.close();
 	}
 }

@@ -5,6 +5,7 @@ import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
 import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effort/EffortStatus";
 import Comparator from "../../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
+import CreateEffort from "../../actions/no-context/domain/CreateEffort";
 
 export default class AreaLayout extends AbstractLayout<Area> {
     constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
@@ -12,8 +13,19 @@ export default class AreaLayout extends AbstractLayout<Area> {
     }
 
     async render(ko: Area, el: HTMLElement): Promise<void> {
+		await this.createCreateEffortButton(ko, el);
 		await this.handleChildren(ko, el);
 		await this.handleUnresolvedEfforts(ko, el);
+	}
+
+	private async createCreateEffortButton(ko: Area, el: HTMLElement) {
+		const button = document.createElement("button");
+		button.innerText = "Create Effort";
+		button.onclick = async () => {
+			let createEffortAction = new CreateEffort(this.ctx);
+			await createEffortAction.execute();
+		}
+		el.appendChild(button);
 	}
 
 	private async handleChildren(ko: Area, el: HTMLElement) {
