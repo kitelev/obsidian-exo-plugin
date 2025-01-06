@@ -38,8 +38,8 @@ export default class CreateEffortService implements CreateEffortUseCase {
 		return effort;
 	}
 
-	async taskUnderPrototype(prototype: EffortPrototype): Promise<Effort> {
-		const title = this.ctx.utils.generateUid();
+	async taskUnderPrototype(prototype: EffortPrototype, title?: string): Promise<Effort> {
+		title = title ?? this.ctx.utils.generateUid();
 		const id = this.ctx.utils.generateUid();
 		const effort = new Effort(id, `(T) ${title}`, EffortStatus.DRAFT, null, null, null, null, null, prototype, null, null, 0, [], "");
 

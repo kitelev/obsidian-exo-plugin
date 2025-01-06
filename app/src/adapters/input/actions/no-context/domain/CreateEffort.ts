@@ -18,12 +18,21 @@ export default class CreateEffort extends AbstractExoAction {
 		const activeFile = this.ctx.appUtils.getActiveFileOrThrow();
 		const activeKo = await this.ctx.kObjectCreator.createFromFileTyped(activeFile);
 
-		await this.createAndOpen(activeKo);
+		const prefilledTitle = this.getPrefilledTitle(activeKo);
+		await this.createAndOpen(activeKo, prefilledTitle);
 	}
 
-	private async createAndOpen(activeKo: KObject) {
+	private getPrefilledTitle(activeKo: KObject) {
+		if (activeKo instanceof EffortPrototype) {
+			return activeKo.title;
+		} else {
+			return undefined;
+		}
+	}
+
+	private async createAndOpen(activeKo: KObject, prefilledTitle?: string) {
 		const fields = [
-			new TextField("Title")
+			new TextField("Title", prefilledTitle)
 		];
 		const callback: ConsumerAsync<string[]> = async (fields) => {
 			const title = fields[0] as string;
@@ -39,7 +48,7 @@ export default class CreateEffort extends AbstractExoAction {
 		} else if (activeKo instanceof Effort) {
 			return await this.ctx.createEffortUseCase.taskUnderEffort(activeKo);
 		} else if (activeKo instanceof EffortPrototype) {
-			return await this.ctx.createEffortUseCase.taskUnderPrototype(activeKo);
+			return await this.ctx.createEffortUseCase.taskUnderPrototype(activeKo, title);
 		} else {
 			return await this.ctx.createEffortUseCase.createTask(title);
 		}

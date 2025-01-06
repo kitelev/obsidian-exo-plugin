@@ -9,5 +9,5 @@ export default interface CreateEffortUseCase {
 
 	taskUnderEffort(parentEffort: Effort, title?: string): Promise<Effort>;
 
-	taskUnderPrototype(prototype: EffortPrototype): Promise<Effort>;
+	taskUnderPrototype(prototype: EffortPrototype, title?: string): Promise<Effort>;
 }

@@ -74,7 +74,8 @@ export abstract class AbstractFormField<T> implements FormField<T> {
 export class TextField extends AbstractFormField<string> {
 	private input: HTMLInputElement;
 
-	constructor(placeholder: string) {
+	constructor(placeholder: string,
+				private prefilledValue?: string) {
 		super(placeholder);
 	}
 
@@ -84,7 +85,8 @@ export class TextField extends AbstractFormField<string> {
 			placeholder: this.placeholder,
 			attr: {
 				style: "width: 100%"
-			}
+			},
+			value: this.prefilledValue
 		});
 	}
 

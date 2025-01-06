@@ -2,6 +2,7 @@ import ExoContext from "../../../../../../common/ExoContext";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout from "./AbstractLayout";
 import EffortPrototype from "../../../../../../core/src/domain/ems/effort/EffortPrototype";
+import CreateEffort from "../../actions/no-context/domain/CreateEffort";
 
 export default class EffortPrototypeLayout extends AbstractLayout<EffortPrototype> {
 
@@ -10,7 +11,18 @@ export default class EffortPrototypeLayout extends AbstractLayout<EffortPrototyp
 	}
 
 	async render(ko: EffortPrototype, el: HTMLElement): Promise<void> {
+		await this.renderCreateImplementationButton(ko, el);
 		await this.handleUnresolvedImplementations(ko, el);
+	}
+
+	private async renderCreateImplementationButton(prototype: EffortPrototype, el: HTMLElement) {
+		const button = document.createElement("button");
+		button.innerText = "Create implementation";
+		button.onclick = async () => {
+			let createEffortAction = new CreateEffort(this.ctx);
+			await createEffortAction.execute();
+		};
+		el.appendChild(button);
 	}
 
 	private async handleUnresolvedImplementations(ko: EffortPrototype, el: HTMLElement) {
