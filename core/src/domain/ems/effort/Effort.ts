@@ -5,6 +5,7 @@ import Area from "../Area";
 import {UUID} from "node:crypto";
 import EffortPrototype from "./EffortPrototype";
 
+// TODO add validation - effort cannot have both prototype and (parent or area)
 export default class Effort extends KObject { // TODO add builder pattern
 	constructor(public id: UUID,
 				public title: string,
@@ -36,6 +37,7 @@ export default class Effort extends KObject { // TODO add builder pattern
 	getRelatedArea(): Area | null {
 		if (this.area !== null) return this.area;
 		if (this.prototype !== null) return this.prototype.area;
+		if (this.parent !== null) return this.parent.getRelatedArea();
 		return null;
 	}
 

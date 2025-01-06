@@ -62,6 +62,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		await this.printEfforts(efforts, el, filters.get("due")!, "Due today or before");
 		await this.printEfforts(efforts, el, filters.get("started")!, "Started today");
 		await this.printEfforts(efforts, el, filters.get("ended")!, "Ended today");
+		// TODO add filter "Done today"
 	}
 
 	private async printEfforts(allEfforts: Effort[], el: HTMLElement, predicate: Predicate<Effort>, title: string) {
