@@ -3,7 +3,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class OpenCurrentDailyNoteExoCommand implements ExoAction {
 	name = "Open Current Daily Note";
-	slug = "open-current-daily-note";
 
 	constructor(private ctx: ExoContext) {
 	}

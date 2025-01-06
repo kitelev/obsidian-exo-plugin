@@ -4,7 +4,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class FindNotesWithoutFrontmatter implements ExoAction {
 	name = "Find Notes Without Frontmatter";
-	slug = "find-notes-without-frontmatter";
 
 	constructor(private ctx: ExoContext) {
 	}

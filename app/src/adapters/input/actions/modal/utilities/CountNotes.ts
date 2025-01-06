@@ -4,7 +4,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class CountNotes implements ExoAction {
 	name = "Notes Count";
-	slug = "count-notes";
 
 	constructor(private ctx: ExoContext) {
 	}

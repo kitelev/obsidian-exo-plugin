@@ -4,7 +4,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class GetActiveFileTags implements ExoAction {
 	name = "Get Active File Tags";
-	slug = "get-active-file-tags";
 
 	constructor(private ctx: ExoContext) {
 	}

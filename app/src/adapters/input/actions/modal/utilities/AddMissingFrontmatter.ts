@@ -3,8 +3,7 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class AddMissingFrontmatter implements ExoAction {
 	name = "Add Missing Frontmatter";
-	slug = "add-missing-frontmatter";
-
+	
 	constructor(private ctx: ExoContext) {
 	}
 

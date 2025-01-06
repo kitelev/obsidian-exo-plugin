@@ -6,7 +6,6 @@ import EffortPrototype from "../../../../../../../core/src/domain/ems/effort/Eff
 
 export default class CreateEffort implements ExoAction {
 	name = "Create Effort";
-	slug = "create-effort";
 
 	constructor(private ctx: ExoContext) {
 	}

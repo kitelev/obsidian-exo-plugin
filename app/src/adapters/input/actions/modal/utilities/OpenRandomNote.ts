@@ -4,8 +4,7 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class OpenRandomNote implements ExoAction {
 	name = "Рандомная заметка из прошлого";
-	slug = "open-random-note";
-
+	
 	constructor(private ctx: ExoContext) {
 	}
 

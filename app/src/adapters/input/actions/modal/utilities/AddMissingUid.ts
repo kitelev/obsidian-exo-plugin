@@ -3,7 +3,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class AddMissingUid implements ExoAction {
 	name = "Add Missing UID";
-	slug = "add-missing-uid";
 
 	constructor(private ctx: ExoContext) {
 	}

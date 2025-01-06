@@ -4,7 +4,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class GetCurrentKOC implements ExoAction {
 	name = "Get Current KOC";
-	slug = "get-current-koc";
 
 	constructor(private ctx: ExoContext) {
 	}

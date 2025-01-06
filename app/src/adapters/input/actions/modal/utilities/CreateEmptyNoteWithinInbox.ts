@@ -3,7 +3,6 @@ import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class CreateEmptyNoteWithinInbox implements ExoAction {
 	name = "Create Effort Within Inbox";
-	slug = "create-effort-within-inbox";
 
 	constructor(private ctx: ExoContext) {
 	}
