@@ -1,13 +1,15 @@
 import {Modal} from "obsidian";
 import ExoContext from "../../common/ExoContext";
-import {ConsumerAsync} from "../../common/fp/Consumer";
+import {BiConsumerAsync} from "../../common/fp/Consumer";
 import UserFriendly from "./utils/UserFriendly";
+import {KOC} from "../../core/src/domain/KOC";
 
 export default class SingleInputModal extends Modal {
 	private input: HTMLInputElement;
+	private select: HTMLSelectElement;
 
 	constructor(ctx: ExoContext,
-				private callback: ConsumerAsync<string>) {
+				private callback: BiConsumerAsync<string, string>) {
 		super(ctx.app);
 	}
 
@@ -22,12 +24,28 @@ export default class SingleInputModal extends Modal {
 			}
 		});
 
-		this.input.addEventListener("keydown", async (event) => {
-			if (event.key === "Enter") {
-				await UserFriendly.callAsync(async () => {
-					await this.submitInput();
-				});
-			}
+		this.select = this.contentEl.createEl(
+			"select", {
+				attr: {
+					style: "width: 100%; margin-top: 10px;"
+				}
+			});
+		Object.values(KOC).forEach((value) => {
+			const option = this.select.createEl("option", {value});
+			option.textContent = value;
+		});
+
+		const submitButton = this.contentEl.createEl(
+			"button", {
+				text: "Submit",
+				attr: {
+					style: "margin-top: 10px; margin-left: auto; margin-right: auto; display: block;"
+				}
+			});
+		submitButton.addEventListener("click", async () => {
+			await UserFriendly.callAsync(async () => {
+				await this.submit();
+			});
 		});
 	}
 
@@ -36,13 +54,15 @@ export default class SingleInputModal extends Modal {
 		contentEl.empty();
 	}
 
-	private async submitInput() {
+	private async submit() {
 		const inputValue = this.input.value.trim();
 		if (!inputValue) {
 			throw new Error("Note title cannot be empty");
 		}
 
-		await this.callback(inputValue);
+		const selectValue = this.select.value;
+
+		await this.callback(inputValue, selectValue);
 		this.close();
 	}
 }
