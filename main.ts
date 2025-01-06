@@ -1,5 +1,5 @@
 import {Plugin, TFile} from 'obsidian';
-import {ExoMainModal} from "./app/src/ExoMainModal";
+import {ExoModal} from "./app/src/ExoModal";
 import "localforage";
 import ExoApi from "./core/src/ExoApi";
 import ExoContext from "./common/ExoContext";
@@ -63,6 +63,6 @@ export default class ExoPlugin extends Plugin {
 	}
 
 	private openExoModal() {
-		new ExoMainModal(this.ctx).open();
+		new ExoModal(this.ctx).open();
 	}
 }

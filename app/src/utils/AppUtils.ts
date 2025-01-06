@@ -11,6 +11,7 @@ export default class AppUtils {
 	async createFile(path: string, content: string) {
 		const file = await this.app.vault.create(path, content);
 		await this.waitCacheUpdate(file);
+		return file;
 	}
 
 	async updateFile(file: TFile, content: string) {
