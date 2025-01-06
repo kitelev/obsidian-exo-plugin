@@ -1,11 +1,11 @@
 import ExoContext from "../../../../../../../common/ExoContext";
 import Constants from "../../../../../utils/Constants";
-import InputAndSelectKOCModal from "../../../../../utils/modal/forms/InputAndSelectKOCModal";
-import {BiConsumerAsync} from "../../../../../../../common/fp/Consumer";
+import {ConsumerAsync} from "../../../../../../../common/fp/Consumer";
 import {TFile} from "obsidian";
 import {KOC} from "../../../../../../../core/src/domain/KOC";
 import KObject from "../../../../../../../core/src/domain/KObject";
 import AbstractExoAction from "../../AbstractExoAction";
+import ModalForm, {SelectField, TextField} from "../../../../../utils/modal/forms/ModalForm";
 
 export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 	name = "Create Empty Note Within Inbox";
@@ -15,12 +15,17 @@ export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 	}
 
 	async execute() {
-		const callback: BiConsumerAsync<string, KOC> = async (title, koc) => {
+		const fields = [
+			new TextField("Title"),
+			new SelectField("KOC", Object.values(KOC))
+		];
+		const callback: ConsumerAsync<string[]> = async (fields) => {
+			const title = fields[0] as string;
+			const koc = fields[1] as KOC;
 			const file = await this.createNote(title, koc);
 			await this.ctx.appUtils.openFile(file);
 		};
-
-		new InputAndSelectKOCModal(this.ctx, callback).open();
+		new ModalForm(this.ctx, "Enter note title and KOC", fields, callback).open();
 	}
 
 	private async createNote(title: string, koc: KOC): Promise<TFile> {

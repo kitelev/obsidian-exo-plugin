@@ -5,7 +5,7 @@ import EffortPrototype from "../../../../../../../core/src/domain/ems/effort/Eff
 import AbstractExoAction from "../../AbstractExoAction";
 import KObject from "../../../../../../../core/src/domain/KObject";
 import {ConsumerAsync} from "../../../../../../../common/fp/Consumer";
-import InputModal from "../../../../../utils/modal/forms/InputModal";
+import ModalForm, {TextField} from "../../../../../utils/modal/forms/ModalForm";
 
 export default class CreateEffort extends AbstractExoAction {
 	name = "Create Effort";
@@ -22,12 +22,15 @@ export default class CreateEffort extends AbstractExoAction {
 	}
 
 	private async createAndOpen(activeKo: KObject) {
-		const callback: ConsumerAsync<string> = async (title: string) => {
+		const fields = [
+			new TextField("Title")
+		];
+		const callback: ConsumerAsync<string[]> = async (fields) => {
+			const title = fields[0] as string;
 			const effort = await this.createEffort(activeKo, title);
 			await this.ctx.appUtils.openKObject(effort);
 		};
-
-		new InputModal(this.ctx, callback).open();
+		new ModalForm(this.ctx, "Enter effort title", fields, callback).open();
 	}
 
 	private async createEffort(activeKo: KObject, title: string): Promise<Effort> {
