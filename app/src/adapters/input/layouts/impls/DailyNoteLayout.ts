@@ -5,7 +5,7 @@ import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effo
 import Comparator from "../../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
 import DailyNote from "../../../../../../core/src/domain/tms/DailyNote";
-import {Predicate} from "../../../../../../common/Predicate";
+import {Predicate} from "../../../../../../common/fp/Predicate";
 import DateUtils from "../../../../../../common/utils/DateUtils";
 
 export default class DailyNoteLayout extends AbstractLayout<DailyNote> {

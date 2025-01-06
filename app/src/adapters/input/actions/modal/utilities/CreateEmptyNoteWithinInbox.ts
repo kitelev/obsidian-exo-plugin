@@ -2,6 +2,7 @@ import ExoAction from "../ExoAction";
 import ExoContext from "../../../../../../../common/ExoContext";
 import Constants from "../../../../../utils/Constants";
 import SingleInputModal from "../../../../../SingleInputModal";
+import {ConsumerAsync} from "../../../../../../../common/fp/Consumer";
 
 export default class CreateEmptyNoteWithinInbox implements ExoAction {
 	name = "Create Empty Note Within Inbox";
@@ -10,7 +11,7 @@ export default class CreateEmptyNoteWithinInbox implements ExoAction {
 	}
 
 	async execute() {
-		const callback: (title: string) => Promise<void> = async (title) => {
+		const callback: ConsumerAsync<string> = async (title) => {
 			const file = await this.createNote(title);
 			await this.ctx.appUtils.openFile(file);
 		};

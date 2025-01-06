@@ -1,11 +1,13 @@
-import {Modal, Notice} from "obsidian";
+import {Modal} from "obsidian";
 import ExoContext from "../../common/ExoContext";
+import {ConsumerAsync} from "../../common/fp/Consumer";
+import UserFriendly from "./utils/UserFriendly";
 
 export default class SingleInputModal extends Modal {
 	private input: HTMLInputElement;
 
 	constructor(ctx: ExoContext,
-				private callback: (input: string) => Promise<void>) {
+				private callback: ConsumerAsync<string>) {
 		super(ctx.app);
 	}
 
@@ -22,7 +24,9 @@ export default class SingleInputModal extends Modal {
 
 		this.input.addEventListener("keydown", async (event) => {
 			if (event.key === "Enter") {
-				await this.submitInput();
+				await UserFriendly.callAsync(async () => {
+					await this.submitInput();
+				});
 			}
 		});
 	}
@@ -34,14 +38,11 @@ export default class SingleInputModal extends Modal {
 
 	private async submitInput() {
 		const inputValue = this.input.value.trim();
-		if (inputValue) {
-			try {
-				await this.callback(inputValue);
-				this.close();
-			} catch (e) {
-				console.error(e);
-				new Notice(`Error: ${e.message}`);
-			}
+		if (!inputValue) {
+			throw new Error("Note title cannot be empty");
 		}
+
+		await this.callback(inputValue);
+		this.close();
 	}
 }
