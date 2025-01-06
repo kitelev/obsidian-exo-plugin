@@ -1,11 +1,11 @@
 import {Plugin, TFile} from 'obsidian';
-import {ExoModal} from "./app/src/utils/modal/ExoModal";
+import {ExoModal} from "./app/src/utils/modal/actions/ExoModal";
 import "localforage";
 import ExoApi from "./core/src/ExoApi";
 import ExoContext from "./common/ExoContext";
 import DvRenderer from "./app/src/utils/dv/DvRenderer";
 import OpenCurrentDailyNote from "./app/src/adapters/input/actions/no-context/domain/OpenCurrentDailyNote";
-import {ModalItem} from "./app/src/utils/modal/ModalItem";
+import {ModalItem} from "./app/src/utils/modal/actions/ModalItem";
 import FindDuplicateIds from "./app/src/adapters/input/actions/no-context/utilities/FindDuplicateIds";
 import CountNotes from "./app/src/adapters/input/actions/no-context/utilities/CountNotes";
 import CreateEffort from "./app/src/adapters/input/actions/no-context/domain/CreateEffort";

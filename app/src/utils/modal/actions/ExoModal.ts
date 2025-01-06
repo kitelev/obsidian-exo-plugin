@@ -1,5 +1,5 @@
 import {FuzzySuggestModal, Notice} from "obsidian";
-import ExoContext from "../../../../common/ExoContext";
+import ExoContext from "../../../../../common/ExoContext";
 import {ModalItem} from "./ModalItem";
 import ModalItemClickedHandler from "./ModalItemClickedHandler";
 

@@ -1,6 +1,6 @@
 import ExoContext from "../../../../../../../common/ExoContext";
 import Constants from "../../../../../utils/Constants";
-import InputAndSelectKOCModal from "../../../../../utils/modal/InputAndSelectKOCModal";
+import InputAndSelectKOCModal from "../../../../../utils/modal/forms/InputAndSelectKOCModal";
 import {BiConsumerAsync} from "../../../../../../../common/fp/Consumer";
 import {TFile} from "obsidian";
 import {KOC} from "../../../../../../../core/src/domain/KOC";

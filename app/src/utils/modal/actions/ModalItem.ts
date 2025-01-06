@@ -1,5 +1,5 @@
 import ModalItemsFolder from "./ModalItemsFolder";
-import ExoAction from "../../adapters/input/actions/ExoAction";
+import ExoAction from "../../../adapters/input/actions/ExoAction";
 
 export interface ModalItem {
 	name: string;

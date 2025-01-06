@@ -5,7 +5,7 @@ import EffortPrototype from "../../../../../../../core/src/domain/ems/effort/Eff
 import AbstractExoAction from "../../AbstractExoAction";
 import KObject from "../../../../../../../core/src/domain/KObject";
 import {ConsumerAsync} from "../../../../../../../common/fp/Consumer";
-import InputModal from "../../../../../utils/modal/InputModal";
+import InputModal from "../../../../../utils/modal/forms/InputModal";
 
 export default class CreateEffort extends AbstractExoAction {
 	name = "Create Effort";

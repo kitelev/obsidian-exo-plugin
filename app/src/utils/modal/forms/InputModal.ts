@@ -1,7 +1,7 @@
 import {Modal} from "obsidian";
-import ExoContext from "../../../../common/ExoContext";
-import {ConsumerAsync} from "../../../../common/fp/Consumer";
-import UserFriendly from "../UserFriendly";
+import ExoContext from "../../../../../common/ExoContext";
+import {ConsumerAsync} from "../../../../../common/fp/Consumer";
+import UserFriendly from "../../UserFriendly";
 
 export default class InputModal extends Modal {
 	private input: HTMLInputElement;

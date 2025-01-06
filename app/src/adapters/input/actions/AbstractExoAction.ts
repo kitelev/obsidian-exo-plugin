@@ -1,5 +1,5 @@
 import ExoAction from "./ExoAction";
-import {ModalItemVisitor} from "../../../utils/modal/ModalItem";
+import {ModalItemVisitor} from "../../../utils/modal/actions/ModalItem";
 import ExoContext from "../../../../../common/ExoContext";
 
 export default abstract class AbstractExoAction implements ExoAction {

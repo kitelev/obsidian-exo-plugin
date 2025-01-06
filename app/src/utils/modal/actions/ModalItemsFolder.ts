@@ -1,7 +1,7 @@
 import {ModalItem, ModalItemVisitor} from "./ModalItem";
-import ExoContext from "../../../../common/ExoContext";
-import OpenCurrentDailyNote from "../../adapters/input/actions/no-context/domain/OpenCurrentDailyNote";
-import CreateEmptyNoteWithinInbox from "../../adapters/input/actions/no-context/domain/CreateEmptyNoteWithinInbox";
+import ExoContext from "../../../../../common/ExoContext";
+import OpenCurrentDailyNote from "../../../adapters/input/actions/no-context/domain/OpenCurrentDailyNote";
+import CreateEmptyNoteWithinInbox from "../../../adapters/input/actions/no-context/domain/CreateEmptyNoteWithinInbox";
 
 export default class ModalItemsFolder implements ModalItem {
 

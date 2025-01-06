@@ -1,7 +1,7 @@
 import ModalItemsFolder from "./ModalItemsFolder";
-import ExoAction from "../../adapters/input/actions/ExoAction";
+import ExoAction from "../../../adapters/input/actions/ExoAction";
 import {ModalItemVisitor} from "./ModalItem";
-import ExoContext from "../../../../common/ExoContext";
+import ExoContext from "../../../../../common/ExoContext";
 import {ExoModal} from "./ExoModal";
 
 export default class ModalItemClickedHandler implements ModalItemVisitor {

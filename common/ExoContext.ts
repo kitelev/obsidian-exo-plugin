@@ -34,7 +34,7 @@ import EffortStartService from "../core/src/service/EffortStartService";
 import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
 import EffortEndService from "../core/src/service/EffortEndService";
 import EffortActionFactory from "../app/src/adapters/input/actions/effort-context/EffortActionFactory";
-import {ModalItemsFolderFactory} from "../app/src/utils/modal/ModalItemsFolder";
+import {ModalItemsFolderFactory} from "../app/src/utils/modal/actions/ModalItemsFolder";
 import SimulacrumRepository from "../core/src/ports/output/SimulacrumRepository";
 import SimulacrumPersistenceAdapter from "../app/src/adapters/output/SimulacrumPersistenceAdapter";
 import SimulacrumCreator from "../app/src/utils/creators/SimulacrumCreator";
