@@ -39,6 +39,8 @@ export default class KObjectCreator {
 				return this.ctx.propertyCreator.create(file);
 			case KOC.KMS_KOC:
 				return this.ctx.kocObjectCreator.create(file);
+			case KOC.UNKNOWN:
+				throw new Error(`KOC of file ${file.path} is unknown`);
 			default:
 				throw new Error(`KOC '${koc}' not supported`);
 		}

@@ -4,6 +4,9 @@ import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
 import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effort/EffortStatus";
 import Comparator from "../../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
+import {Notice} from "obsidian";
+import StartEffortCommand from "../../commands/ko-based/StartEffortCommand";
+import EndEffortCommand from "../../commands/ko-based/EndEffortCommand";
 
 export default class EffortLayout extends AbstractLayout<Effort> {
 	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
@@ -11,8 +14,43 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 	}
 
 	async render(ko: Effort, el: HTMLElement): Promise<void> {
+		await this.showAvailableActions(ko, el);
 		await this.handleChildren(ko, el);
 		await this.handleRelatedEfforts(ko, el);
+	}
+
+	protected createButton(text: string, onClick: () => Promise<void>): HTMLButtonElement {
+		const button = document.createElement("button");
+		button.textContent = text;
+		button.style.marginRight = "5px";
+		button.style.cursor = "pointer";
+		button.style.transition = "transform 0.1s";
+
+		button.addEventListener("mousedown", () => {
+			button.style.transform = "scale(0.95)";
+		});
+
+		button.addEventListener("mouseup", () => {
+			button.style.transform = "scale(1)";
+		});
+
+		button.addEventListener("click", onClick);
+
+		return button;
+	}
+
+	private async showAvailableActions(effort: Effort, el: HTMLElement) {
+		const startButton = this.createButton("Start", async () => {
+			await new StartEffortCommand(this.ctx).execute(effort);
+			new Notice("Effort started");
+		});
+		el.appendChild(startButton);
+
+		const endButton = this.createButton("End", async () => {
+			await new EndEffortCommand(this.ctx).execute(effort);
+			new Notice("Effort ended");
+		});
+		el.appendChild(endButton);
 	}
 
 	private async handleChildren(ko: Effort, el: HTMLElement) {

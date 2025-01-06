@@ -46,10 +46,10 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 		result += "uid: " + effort.id + "\n";
 		result += "e-status: " + effort.status + "\n";
 		if (effort.started) {
-			result += "started: " + DateUtils.formatDate(effort.started) + "\n";
+			result += "started: " + DateUtils.formatTimestamp(effort.started) + "\n";
 		}
 		if (effort.ended) {
-			result += "ended: " + DateUtils.formatDate(effort.ended) + "\n";
+			result += "ended: " + DateUtils.formatTimestamp(effort.ended) + "\n";
 		}
 		if (effort.prototype) {
 			result += "e-prototype: \'" + this.getLinkToKO(effort.prototype) + "\'\n";
