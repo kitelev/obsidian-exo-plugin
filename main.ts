@@ -14,7 +14,21 @@ export default class ExoPlugin extends Plugin {
 		this.api = new ExoApi(this.ctx);
 
 		this.addRibbonIcon('star', 'Exocortex actions List', () => {
-			new ExoMainModal(this.ctx).open();
+			this.openExoModal();
+		});
+
+		this.addCommand({
+			id: "hotkey-example",
+			name: "Show Hotkey Notice",
+			callback: () => {
+				this.openExoModal();
+			},
+			hotkeys: [
+				{
+					modifiers: ["Mod"],
+					key: "E",
+				},
+			],
 		});
 
 		this.registerMarkdownPostProcessor(async (el, ctx) => {
@@ -46,5 +60,9 @@ export default class ExoPlugin extends Plugin {
 				// TODO add divider after or Exo-wrapper around
 			}
 		});
+	}
+
+	private openExoModal() {
+		new ExoMainModal(this.ctx).open();
 	}
 }
