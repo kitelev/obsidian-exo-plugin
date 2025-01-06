@@ -5,7 +5,7 @@ import Area from "../Area";
 import {UUID} from "node:crypto";
 import EffortPrototype from "./EffortPrototype";
 
-export default class Effort extends KObject {
+export default class Effort extends KObject { // TODO add builder pattern
 	constructor(public id: UUID,
 				public title: string,
 				public status: EffortStatus,

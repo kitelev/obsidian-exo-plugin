@@ -9,6 +9,15 @@ export default class CreateEffortService implements CreateEffortUseCase {
 	constructor(private ctx: ExoContext) {
 	}
 
+	async createTask(title: string): Promise<Effort> {
+		const id = this.ctx.utils.generateUid();
+		const effort = new Effort(id, title, EffortStatus.DRAFT, null, null, null, null, null, null, null, null, 0, [], "");
+
+		await this.ctx.effortRepository.save(effort);
+
+		return effort;
+	}
+
 	async taskUnderArea(area: Area): Promise<Effort> {
 		const title = this.ctx.utils.generateUid();
 		const id = this.ctx.utils.generateUid();

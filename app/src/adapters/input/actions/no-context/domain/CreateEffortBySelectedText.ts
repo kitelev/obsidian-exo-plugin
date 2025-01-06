@@ -1,7 +1,5 @@
 import ExoContext from "../../../../../../../common/ExoContext";
-import Area from "../../../../../../../core/src/domain/ems/Area";
 import Effort from "../../../../../../../core/src/domain/ems/effort/Effort";
-import EffortPrototype from "../../../../../../../core/src/domain/ems/effort/EffortPrototype";
 import AbstractExoAction from "../../AbstractExoAction";
 
 export default class CreateEffortBySelectedText extends AbstractExoAction {
@@ -19,20 +17,15 @@ export default class CreateEffortBySelectedText extends AbstractExoAction {
 
 		const activeFile = this.ctx.appUtils.getActiveFileOrThrow();
 		const activeKo = await this.ctx.kObjectCreator.createFromFileTyped(activeFile);
-		if (activeKo instanceof Area) {
-			let effort = await this.ctx.createEffortUseCase.taskUnderArea(activeKo);
-			await this.ctx.appUtils.openKObject(effort);
-		}
 
+		let title = `(T) ${selection}`;
 		if (activeKo instanceof Effort) {
-			let title = `(T) ${selection}`;
 			let effort = await this.ctx.createEffortUseCase.taskUnderEffort(activeKo, title);
 			this.ctx.app.workspace.activeEditor!.editor!.replaceSelection(`[[${title}]]`);
 			await this.ctx.appUtils.openKObject(effort);
-		}
-
-		if (activeKo instanceof EffortPrototype) {
-			let effort = await this.ctx.createEffortUseCase.taskUnderPrototype(activeKo);
+		} else {
+			let effort = await this.ctx.createEffortUseCase.createTask(title);
+			this.ctx.app.workspace.activeEditor!.editor!.replaceSelection(`[[${title}]]`);
 			await this.ctx.appUtils.openKObject(effort);
 		}
 	}
