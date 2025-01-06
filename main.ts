@@ -20,6 +20,7 @@ import FindNotesWithoutFrontmatter
 import GetActiveFileTags from "./app/src/adapters/input/actions/no-context/utilities/GetActiveFileTags";
 import GetCurrentKOC from "./app/src/adapters/input/actions/no-context/utilities/GetCurrentKOC";
 import OpenRandomNote from "./app/src/adapters/input/actions/no-context/utilities/OpenRandomNote";
+import CreateEffortBySelectedText from "./app/src/adapters/input/actions/no-context/domain/CreateEffortBySelectedText";
 
 export default class ExoPlugin extends Plugin {
 	private api: ExoApi;
@@ -85,6 +86,7 @@ export default class ExoPlugin extends Plugin {
 			folderFactory.create("Domain", [
 				new CreateEmptyNoteWithinInbox(this.ctx),
 				new CreateEffort(this.ctx),
+				new CreateEffortBySelectedText(this.ctx),
 				new OpenCurrentDailyNote(this.ctx)
 			]),
 			folderFactory.create("Utilities", [
