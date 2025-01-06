@@ -35,6 +35,9 @@ import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
 import EffortEndService from "../core/src/service/EffortEndService";
 import EffortActionFactory from "../app/src/adapters/input/actions/effort-context/EffortActionFactory";
 import {ModalItemsFolderFactory} from "../app/src/utils/modal/ModalItemsFolder";
+import SimulacrumRepository from "../core/src/ports/output/SimulacrumRepository";
+import SimulacrumPersistenceAdapter from "../app/src/adapters/output/SimulacrumPersistenceAdapter";
+import SimulacrumCreator from "../app/src/utils/creators/SimulacrumCreator";
 
 export default class ExoContext {
 	// Utils
@@ -54,12 +57,14 @@ export default class ExoContext {
 	public readonly boardCreator: BoardCreator = new BoardCreator(this);
 	public readonly effortPrototypeCreator: EffortPrototypeCreator = new EffortPrototypeCreator(this);
 	public readonly mocCreator: MOCCreator = new MOCCreator(this);
+	public readonly simulacrumCreator: SimulacrumCreator = new SimulacrumCreator(this);
 	public readonly propertyCreator: PropertyCreator = new PropertyCreator(this);
 	public readonly kocObjectCreator: KOCObjectCreator = new KOCObjectCreator(this);
 
 	// KO Repositories
 	public readonly kObjectRepository: KObjectRepository = new KObjectPersistenceAdapter(this);
 	public readonly mocRepository: MocRepository = new MocPersistenceAdapter(this);
+	public readonly simulacrumRepository: SimulacrumRepository = new SimulacrumPersistenceAdapter(this);
 	public readonly effortRepository: EffortRepository = new EffortPersistenceAdapter(this);
 	public readonly dailyNoteRepository: DailyNoteRepository = new DailyNotePersistenceAdapter(this);
 
