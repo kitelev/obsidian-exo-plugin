@@ -19,5 +19,6 @@ Every KO should have properties:
 
 ## Terminology
 
-- inbound link - a link to a note
-- outbound link - a link from a note
+- inbound link - unidirectional link to a note
+- outbound link - unidirectional link from a note
+- bidirectional link - both notes have links to each other

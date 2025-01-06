@@ -28,6 +28,7 @@ import KObjectPersistenceAdapter from "../app/src/adapters/output/KObjectPersist
 import EffortPrototypeCreator from "../app/src/utils/creators/EffortPrototypeCreator";
 import AreaRepository from "../core/src/ports/output/AreaRepository";
 import AreaPersistenceAdapter from "../app/src/adapters/output/AreaPersistenceAdapter";
+import BoardCreator from "../app/src/utils/creators/BoardCreator";
 
 export default class ExoContext { // TODO replace initializers with `= new ClassName(this)`
 	// Utils
@@ -42,6 +43,7 @@ export default class ExoContext { // TODO replace initializers with `= new Class
 	public readonly dailyNoteCreator: DailyNoteCreator = new DailyNoteCreator(this);
 	public readonly areaCreator: AreaCreator = new AreaCreator(this);
 	public readonly effortCreator: EffortCreator = new EffortCreator(this);
+	public readonly boardCreator: BoardCreator = new BoardCreator(this);
 	public readonly effortPrototypeCreator: EffortPrototypeCreator = new EffortPrototypeCreator(this);
 	public readonly mocCreator: MOCCreator = new MOCCreator(this);
 	public readonly propertyCreator: PropertyCreator = new PropertyCreator(this);

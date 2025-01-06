@@ -18,9 +18,9 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 		return this.createHeader(textContent, 2);
 	}
 
-	protected toLink(ko: KObject) {
+	protected toLink(ko: KObject, prefix: string = "") {
 		const file = this.ctx.appUtils.getObjectFileOrThrow(ko);
-		return this.ctx.dvApiHolder.dvApi.fileLink(file.path);
+		return this.ctx.dvApiHolder.dvApi.fileLink(file.path, false, `${prefix}${file.basename}`);
 	}
 
 	private createHeader(textContent: string, level: number) {

@@ -39,6 +39,15 @@ export default class Effort extends KObject {
 		return null;
 	}
 
+	/**
+	 * Returns true if this effort is in the given area or one of its parents
+	 */
+	isInAreaOrOneOfItsParents(area: Area): boolean {
+		if (this.getRelatedArea() === null) return false;
+		if (this.getRelatedArea()!.id === area.id) return true;
+		return this.getRelatedArea()!.isChildOf(area);
+	}
+
 	getVotes(): number {
 		return this.votes ?? 0;
 	}

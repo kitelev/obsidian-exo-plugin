@@ -6,6 +6,7 @@ export default class KOCFactory { // TODO needs refactoring
 		if (tags.includes("EMS/Area")) return KOC.EMS_AREA;
 		if (tags.includes("EMS/Effort")) return KOC.EMS_EFFORT;
 		if (tags.includes("EMS/Effort/Prototype")) return KOC.EMS_EFFORT_PROTOTYPE;
+		if (tags.includes("EMS/Board")) return KOC.EMS_BOARD;
 		if (tags.includes("TMS/DailyNote")) return KOC.TMS_DN;
 		if (tags.includes("KMS/Property")) return KOC.KMS_PROPERTY;
 		if (tags.includes("KOC")) return KOC.KMS_KOC;
