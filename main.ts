@@ -27,9 +27,11 @@ export default class ExoPlugin extends Plugin {
 
 				const file: TFile = this.ctx.appUtils.getFileByPathOrThrow(ctx.sourcePath);
 
-				const ko = await this.ctx.kObjectCreator.createFromTFileTypedOrNull(file);
+				const ko = await this.ctx.kObjectCreator.createFromTFileTyped(file).catch((e) => {
+					console.error(`Could not create KObject from file ${file.path}`, e);
+					return null;
+				});
 				if (ko === null) {
-					console.warn(`Could not create KObject from file ${file.path}`);
 					return;
 				}
 
