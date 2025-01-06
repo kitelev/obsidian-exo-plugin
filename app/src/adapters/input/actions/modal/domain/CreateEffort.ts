@@ -1,10 +1,10 @@
-import ExoCommand from "./ExoCommand";
-import ExoContext from "../../../../../common/ExoContext";
-import Area from "../../../../../core/src/domain/ems/Area";
-import Effort from "../../../../../core/src/domain/ems/effort/Effort";
-import EffortPrototype from "../../../../../core/src/domain/ems/effort/EffortPrototype";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
+import Area from "../../../../../../../core/src/domain/ems/Area";
+import Effort from "../../../../../../../core/src/domain/ems/effort/Effort";
+import EffortPrototype from "../../../../../../../core/src/domain/ems/effort/EffortPrototype";
 
-export default class CreateEffortExoCommand implements ExoCommand {
+export default class CreateEffort implements ExoAction {
 	name = "Create Effort";
 	slug = "create-effort";
 
@@ -13,7 +13,7 @@ export default class CreateEffortExoCommand implements ExoCommand {
 
 	async execute() {
 		const activeFile = this.ctx.appUtils.getActiveFileOrThrow();
-		const activeKo = await this.ctx.kObjectCreator.createFromTFileTyped(activeFile);
+		const activeKo = await this.ctx.kObjectCreator.createFromFileTyped(activeFile);
 		if (activeKo instanceof Area) {
 			let effort = await this.ctx.createEffortUseCase.taskUnderArea(activeKo);
 			await this.ctx.appUtils.openKObject(effort);

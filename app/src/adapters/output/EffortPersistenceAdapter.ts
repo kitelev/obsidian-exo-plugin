@@ -34,7 +34,7 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 			return this.ctx.appUtils.getTagsFromFile(f).includes("EMS/Effort");
 		});
 
-		let promises = rawEfforts.map(async f => await this.ctx.kObjectCreator.createFromTFileTyped(f) as Effort);
+		let promises = rawEfforts.map(async f => await this.ctx.kObjectCreator.createFromFileTyped(f) as Effort);
 		return await Promise.all(promises);
 	}
 

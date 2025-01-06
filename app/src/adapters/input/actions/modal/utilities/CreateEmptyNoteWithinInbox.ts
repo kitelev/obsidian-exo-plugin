@@ -1,7 +1,7 @@
-import ExoCommand from "./ExoCommand";
-import ExoContext from "../../../../../common/ExoContext";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class CreateEmptyNoteWithinInboxExoCommand implements ExoCommand {
+export default class CreateEmptyNoteWithinInbox implements ExoAction {
 	name = "Create Effort Within Inbox";
 	slug = "create-effort-within-inbox";
 

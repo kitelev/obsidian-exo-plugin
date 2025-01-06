@@ -1,8 +1,8 @@
-import ExoCommand from "../ExoCommand";
+import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class CountNotesExoCommand implements ExoCommand {
+export default class CountNotes implements ExoAction {
 	name = "Notes Count";
 	slug = "count-notes";
 

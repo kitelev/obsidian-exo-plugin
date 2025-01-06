@@ -1,7 +1,7 @@
-import ExoCommand from "../ExoCommand";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class AddMissingUidCommand implements ExoCommand {
+export default class AddMissingUid implements ExoAction {
 	name = "Add Missing UID";
 	slug = "add-missing-uid";
 

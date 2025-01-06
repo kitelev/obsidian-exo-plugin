@@ -1,23 +1,23 @@
 import {FuzzySuggestModal, Notice} from "obsidian";
-import ExoCommand from "./adapters/input/commands/ExoCommand";
-import ExoCommands from "./adapters/input/commands/ExoCommands";
+import ExoAction from "./adapters/input/actions/modal/ExoAction";
+import ExoActions from "./adapters/input/actions/modal/ExoActions";
 import ExoContext from "../../common/ExoContext";
 
-export class ExoMainModal extends FuzzySuggestModal<ExoCommand> {
+export class ExoMainModal extends FuzzySuggestModal<ExoAction> {
 
 	constructor(private ctx: ExoContext) {
 		super(ctx.app);
 	}
 
-	getItems(): ExoCommand[] {
-		return ExoCommands.all(this.ctx);
+	getItems(): ExoAction[] {
+		return ExoActions.all(this.ctx);
 	}
 
-	getItemText(cmd: ExoCommand): string {
+	getItemText(cmd: ExoAction): string {
 		return cmd.name;
 	}
 
-	async onChooseItem(cmd: ExoCommand) {
+	async onChooseItem(cmd: ExoAction) {
 		try {
 			await cmd.execute(this.ctx);
 		} catch (e) {

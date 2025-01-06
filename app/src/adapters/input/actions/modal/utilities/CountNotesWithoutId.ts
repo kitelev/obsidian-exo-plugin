@@ -1,7 +1,7 @@
-import ExoCommand from "../ExoCommand";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class CountNotesWithoutId implements ExoCommand {
+export default class CountNotesWithoutId implements ExoAction {
 	name = "Count Notes Without Id";
 	slug = "count-notes-without-id";
 

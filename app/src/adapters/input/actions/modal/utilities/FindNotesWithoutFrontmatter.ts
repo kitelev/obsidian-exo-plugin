@@ -1,8 +1,8 @@
-import ExoCommand from "../ExoCommand";
+import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class FindNotesWithoutFrontmatter implements ExoCommand {
+export default class FindNotesWithoutFrontmatter implements ExoAction {
 	name = "Find Notes Without Frontmatter";
 	slug = "find-notes-without-frontmatter";
 

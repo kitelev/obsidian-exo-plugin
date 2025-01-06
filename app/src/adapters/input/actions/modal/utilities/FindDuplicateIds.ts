@@ -1,7 +1,7 @@
-import ExoCommand from "../ExoCommand";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class FindDuplicateIds implements ExoCommand {
+export default class FindDuplicateIds implements ExoAction {
 	name = "Find Duplicate IDs";
 	slug = "find-duplicate-ids";
 

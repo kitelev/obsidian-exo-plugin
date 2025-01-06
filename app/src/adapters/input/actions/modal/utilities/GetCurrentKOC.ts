@@ -1,8 +1,8 @@
-import ExoCommand from "../ExoCommand";
+import ExoAction from "../ExoAction";
 import {Notice} from "obsidian";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class GetCurrentKOCExoCommand implements ExoCommand {
+export default class GetCurrentKOC implements ExoAction {
 	name = "Get Current KOC";
 	slug = "get-current-koc";
 

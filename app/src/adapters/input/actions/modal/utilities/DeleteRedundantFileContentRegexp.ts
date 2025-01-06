@@ -1,9 +1,9 @@
-import ExoCommand from "../ExoCommand";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class DropRedundantDataviewJsLayoutScriptCommand implements ExoCommand {
-	name: string = "DropRedundantDataviewJsLayoutScriptCommand";
-	slug: string = "drop-redundant-dataview-js-layout-script";
+export default class DeleteRedundantFileContentRegexp implements ExoAction {
+	name: string = "Delete Redundant File Content Regexp";
+	slug: string = "delete-redundant-file-content-regexp";
 
 	constructor(private ctx: ExoContext) {
 	}
@@ -13,7 +13,7 @@ export default class DropRedundantDataviewJsLayoutScriptCommand implements ExoCo
 		let files = this.ctx.appUtils.getAllNotes();
 
 		// Определяем регулярное выражение для удаления нужного фрагмента
-		const regex = /```dataviewjs\s*const { ModulesFactory } = await self\.require\.import\("\[\[ModulesFactory\.ts\]\]"\);\s*const factory = new ModulesFactory\(dv, this\.app, this\);\s*const layoutManager = await factory\.layoutManager\(\);\s*layoutManager\.universalLayout\(\);\s*```/g;
+		const regex = /this is text to delete/g;
 
 		console.log(`Found ${files.length} files`);
 
@@ -24,7 +24,7 @@ export default class DropRedundantDataviewJsLayoutScriptCommand implements ExoCo
 			console.log(`Processing file ${++idx}/${files.length}: ${file.path}`);
 
 			if (regex.test(newData)) {
-				console.log(`Found redundant dataviewjs layout script in ${file.path}`);
+				console.log(`Found text to delete in ${file.path}`);
 				newData = newData.replace(regex, "");
 				await this.ctx.appUtils.updateFile(file, newData);
 			}

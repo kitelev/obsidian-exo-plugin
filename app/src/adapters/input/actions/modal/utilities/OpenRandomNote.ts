@@ -1,8 +1,8 @@
-import ExoCommand from "./ExoCommand";
+import ExoAction from "../ExoAction";
 import {Notice, TFile} from "obsidian";
-import ExoContext from "../../../../../common/ExoContext";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class OpenRandomNoteExoCommand implements ExoCommand {
+export default class OpenRandomNote implements ExoAction {
 	name = "Рандомная заметка из прошлого";
 	slug = "open-random-note";
 

@@ -1,7 +1,7 @@
-import ExoCommand from "../ExoCommand";
-import ExoContext from "../../../../../../common/ExoContext";
+import ExoAction from "../ExoAction";
+import ExoContext from "../../../../../../../common/ExoContext";
 
-export default class AddMissingFrontmatterCommand implements ExoCommand {
+export default class AddMissingFrontmatter implements ExoAction {
 	name = "Add Missing Frontmatter";
 	slug = "add-missing-frontmatter";
 

@@ -33,7 +33,7 @@ import EffortStartUseCase from "../core/src/ports/input/EffortStartUseCase";
 import EffortStartService from "../core/src/service/EffortStartService";
 import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
 import EffortEndService from "../core/src/service/EffortEndService";
-import EffortCommandFactory from "../app/src/adapters/input/commands/ko-based/EffortCommandFactory";
+import EffortActionFactory from "../app/src/adapters/input/actions/ko-based/EffortActionFactory";
 
 export default class ExoContext {
 	// Utils
@@ -64,7 +64,7 @@ export default class ExoContext {
 	public readonly effortPathRulesHelper: EffortPathRulesHelper = new EffortPathRulesHelper(this);
 
 	// Use Cases
-	public readonly getCurrentDNUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
+	public readonly getCurrentDailyNoteUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
 
 	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 	public readonly effortStartUseCase: EffortStartUseCase = new EffortStartService(this);
@@ -74,7 +74,7 @@ export default class ExoContext {
 	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);
 
 	// Commands
-	public readonly effortCommandFactory: EffortCommandFactory = new EffortCommandFactory(this);
+	public readonly effortCommandFactory: EffortActionFactory = new EffortActionFactory(this);
 
 	constructor(public app: App) {
 	}
