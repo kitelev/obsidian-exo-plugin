@@ -17,22 +17,19 @@ import DeleteRedundantFileContentRegexp from "./utilities/DeleteRedundantFileCon
 export default class ExoActions {
 	static all(ctx: ExoContext): ExoAction[] {
 		return [
-			new OpenRandomNote(ctx),
-			new CreateEmptyNoteWithinInbox(ctx),
-			new GetActiveFileTags(ctx),
-			new GetCurrentKOC(ctx),
-
 			new OpenCurrentDailyNoteExoCommand(ctx),
-
+			new CreateEmptyNoteWithinInbox(ctx),
 			new CreateEffort(ctx),
-
-			new FindDuplicateIds(ctx),
-			new CountNotesWithoutId(ctx),
+			new OpenRandomNote(ctx),
 			new CountNotes(ctx),
+			new CountNotesWithoutId(ctx),
+			new FindDuplicateIds(ctx),
 			new FindNotesWithoutFrontmatter(ctx),
 			new AddMissingFrontmatter(ctx),
 			new AddMissingUid(ctx),
-			new DeleteRedundantFileContentRegexp(ctx)
+			new DeleteRedundantFileContentRegexp(ctx),
+			new GetCurrentKOC(ctx),
+			new GetActiveFileTags(ctx)
 		];
 	}
 }

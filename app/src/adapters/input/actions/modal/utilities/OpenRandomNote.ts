@@ -3,8 +3,8 @@ import {Notice, TFile} from "obsidian";
 import ExoContext from "../../../../../../../common/ExoContext";
 
 export default class OpenRandomNote implements ExoAction {
-	name = "Рандомная заметка из прошлого";
-	
+	name = "Open Random Note";
+
 	constructor(private ctx: ExoContext) {
 	}
 
