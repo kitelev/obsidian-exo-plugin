@@ -1,8 +1,8 @@
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
-import MOC from "../../../../core/src/domain/ims/MOC";
+import ExoContext from "../../../../../common/ExoContext";
+import MOC from "../../../../../core/src/domain/ims/MOC";
 
 export default class MOCCreator extends AbstractCreator<MOC> {
 	constructor(ctx: ExoContext) {

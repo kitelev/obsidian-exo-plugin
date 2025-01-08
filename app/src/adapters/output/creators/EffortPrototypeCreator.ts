@@ -1,10 +1,10 @@
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
-import Effort from "../../../../core/src/domain/ems/effort/Effort";
-import Area from "../../../../core/src/domain/ems/Area";
+import Effort from "../../../../../core/src/domain/ems/effort/Effort";
+import Area from "../../../../../core/src/domain/ems/Area";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
-import EffortPrototype from "../../../../core/src/domain/ems/effort/EffortPrototype";
+import ExoContext from "../../../../../common/ExoContext";
+import EffortPrototype from "../../../../../core/src/domain/ems/effort/EffortPrototype";
 
 export default class EffortPrototypeCreator extends AbstractCreator<EffortPrototype> {
 	constructor(ctx: ExoContext) {

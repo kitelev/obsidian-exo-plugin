@@ -1,8 +1,8 @@
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
-import Board from "../../../../core/src/domain/ems/Board";
+import ExoContext from "../../../../../common/ExoContext";
+import Board from "../../../../../core/src/domain/ems/Board";
 
 export default class BoardCreator extends AbstractCreator<Board> {
 	constructor(ctx: ExoContext) {

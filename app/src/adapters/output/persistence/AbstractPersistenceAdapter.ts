@@ -1,9 +1,9 @@
-import ExoContext from "../../../../common/ExoContext";
-import {KOC} from "../../../../core/src/domain/KOC";
-import KObject from "../../../../core/src/domain/KObject";
+import ExoContext from "../../../../../common/ExoContext";
+import {KOC} from "../../../../../core/src/domain/KOC";
+import KObject from "../../../../../core/src/domain/KObject";
 import {TFile} from "obsidian";
 import {UUID} from "node:crypto";
-import GenericRepository from "../../../../core/src/ports/output/GenericRepository";
+import GenericRepository from "../../../../../core/src/ports/output/GenericRepository";
 
 export default abstract class AbstractPersistenceAdapter<KO extends KObject> implements GenericRepository<KO> {
     protected constructor(protected ctx: ExoContext,

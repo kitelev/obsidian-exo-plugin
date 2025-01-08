@@ -1,8 +1,8 @@
 import {FrontMatterCache, TFile} from "obsidian";
-import DailyNote from "../../../../core/src/domain/tms/DailyNote";
+import DailyNote from "../../../../../core/src/domain/tms/DailyNote";
 import {UUID} from "node:crypto";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
+import ExoContext from "../../../../../common/ExoContext";
 
 export default class DailyNoteCreator extends AbstractCreator<DailyNote> {
 	constructor(ctx: ExoContext) {

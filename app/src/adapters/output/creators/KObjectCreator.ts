@@ -1,9 +1,9 @@
 import {TFile} from "obsidian";
-import KObject from "../../../../core/src/domain/KObject";
-import {KOC} from "../../../../core/src/domain/KOC";
+import KObject from "../../../../../core/src/domain/KObject";
+import {KOC} from "../../../../../core/src/domain/KOC";
 import {UUID} from "node:crypto";
-import KOCFactory from "../KOCFactory";
-import ExoContext from "../../../../common/ExoContext";
+import KOCFactory from "../../../utils/KOCFactory";
+import ExoContext from "../../../../../common/ExoContext";
 
 export default class KObjectCreator {
 	constructor(private ctx: ExoContext) {

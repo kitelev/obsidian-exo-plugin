@@ -1,8 +1,8 @@
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
-import Simulacrum from "../../../../core/src/domain/ims/Simulacrum";
+import ExoContext from "../../../../../common/ExoContext";
+import Simulacrum from "../../../../../core/src/domain/ims/Simulacrum";
 
 export default class SimulacrumCreator extends AbstractCreator<Simulacrum> {
 	constructor(ctx: ExoContext) {

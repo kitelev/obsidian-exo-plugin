@@ -1,9 +1,9 @@
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
-import KOCObject from "../../../../core/src/domain/KOCObject";
-import KOCFactory from "../KOCFactory";
+import ExoContext from "../../../../../common/ExoContext";
+import KOCObject from "../../../../../core/src/domain/KOCObject";
+import KOCFactory from "../../../utils/KOCFactory";
 
 export default class KOCObjectCreator extends AbstractCreator<KOCObject> {
 	constructor(ctx: ExoContext) {

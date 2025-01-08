@@ -1,8 +1,8 @@
 import {FrontMatterCache, TFile} from "obsidian";
-import Area from "../../../../core/src/domain/ems/Area";
+import Area from "../../../../../core/src/domain/ems/Area";
 import {UUID} from "node:crypto";
 import AbstractCreator from "./AbstractCreator";
-import ExoContext from "../../../../common/ExoContext";
+import ExoContext from "../../../../../common/ExoContext";
 
 export default class AreaCreator extends AbstractCreator<Area> {
 	constructor(ctx: ExoContext) {
