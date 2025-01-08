@@ -38,13 +38,6 @@ import {ModalItemsFolderFactory} from "../app/src/utils/modal/actions/ModalItems
 import SimulacrumRepository from "../core/src/ports/output/SimulacrumRepository";
 import SimulacrumPersistenceAdapter from "../app/src/adapters/output/SimulacrumPersistenceAdapter";
 import SimulacrumCreator from "../app/src/utils/creators/SimulacrumCreator";
-import CreateMeetingUseCase from "../core/src/ports/input/CreateMeetingUseCase";
-import CreateMeetingService from "../core/src/service/CreateMeetingService";
-import MeetingRepository from "../core/src/ports/output/MeetingRepository";
-import MeetingPersistenceAdapter from "../app/src/adapters/output/MeetingPersistenceAdapter";
-import MeetingPathRulesHelper from "../app/src/helpers/MeetingPathRulesHelper";
-import MeetingCreator from "../app/src/utils/creators/MeetingCreator";
-import MeetingPrototypeCreator from "../app/src/utils/creators/MeetingPrototypeCreator";
 
 export default class ExoContext {
 	// Utils
@@ -62,8 +55,6 @@ export default class ExoContext {
 	public readonly areaCreator: AreaCreator = new AreaCreator(this);
 	public readonly effortCreator: EffortCreator = new EffortCreator(this);
 	public readonly effortPrototypeCreator: EffortPrototypeCreator = new EffortPrototypeCreator(this);
-	public readonly meetingCreator: MeetingCreator = new MeetingCreator(this);
-	public readonly meetingPrototypeCreator: MeetingPrototypeCreator = new MeetingPrototypeCreator(this);
 	public readonly boardCreator: BoardCreator = new BoardCreator(this);
 	public readonly mocCreator: MOCCreator = new MOCCreator(this);
 	public readonly simulacrumCreator: SimulacrumCreator = new SimulacrumCreator(this);
@@ -75,12 +66,10 @@ export default class ExoContext {
 	public readonly mocRepository: MocRepository = new MocPersistenceAdapter(this);
 	public readonly simulacrumRepository: SimulacrumRepository = new SimulacrumPersistenceAdapter(this);
 	public readonly effortRepository: EffortRepository = new EffortPersistenceAdapter(this);
-	public readonly meetingRepository: MeetingRepository = new MeetingPersistenceAdapter(this);
 	public readonly dailyNoteRepository: DailyNoteRepository = new DailyNotePersistenceAdapter(this);
 
 	// Domain utils
 	public readonly effortPathRulesHelper: EffortPathRulesHelper = new EffortPathRulesHelper(this);
-	public readonly meetingPathRulesHelper: MeetingPathRulesHelper = new MeetingPathRulesHelper(this);
 
 	// Use Cases
 	public readonly getCurrentDailyNoteUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
@@ -88,8 +77,6 @@ export default class ExoContext {
 	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 	public readonly effortStartUseCase: EffortStartUseCase = new EffortStartService(this);
 	public readonly effortEndUseCase: EffortEndUseCase = new EffortEndService(this);
-
-	public readonly createMeetingUseCase: CreateMeetingUseCase = new CreateMeetingService(this);
 
 	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
 	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);

@@ -67,7 +67,7 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 
 	protected async handleRelatedEfforts(ko: KObject, el: HTMLElement) {
 		const efforts = await this.ctx.effortRepository.find(e => {
-			return e.relates.some(r => r.id === ko.id);
+			return e.relates?.some(r => r.id === ko.id) || false;
 		});
 
 		if (efforts.length > 0) {

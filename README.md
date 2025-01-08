@@ -32,3 +32,16 @@ Every KO should have properties:
 # Known Issues
 - Date fields (started, ended) behaves weird when starting and shutting down (with buttons in layout)
 - When `StartEffort` is clicked, the `started` date is +1 hour than the current time
+
+# TODO
+
+- Create PersonArea domain class that extends Area
+
+# Code rules
+
+## null & undefined
+
+- undefined
+	- as input parameter
+	- as class field
+- null - as return type

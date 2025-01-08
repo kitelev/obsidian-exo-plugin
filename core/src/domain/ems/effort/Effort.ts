@@ -6,7 +6,9 @@ import {UUID} from "node:crypto";
 import EffortPrototype from "./EffortPrototype";
 
 // TODO add validation - effort cannot have both prototype and (parent or area)
-export default class Effort extends KObject { // TODO add builder pattern
+export default class Effort extends KObject {
+	static readonly CLASS = KOC.EMS_EFFORT;
+
 	constructor(public id: UUID,
 				public title: string,
 				public status: EffortStatus,
@@ -19,9 +21,9 @@ export default class Effort extends KObject { // TODO add builder pattern
 				public area: Area | null,
 				public parent: Effort | null,
 				public votes: number | null,
-				public relates: KObject[],
+				public relates: KObject[] = [],
 				public body: string) {
-		super(id, KOC.EMS_EFFORT);
+		super(id, Effort.CLASS);
 	}
 
 	start() {

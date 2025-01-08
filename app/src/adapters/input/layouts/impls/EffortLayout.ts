@@ -33,7 +33,7 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 
 	private async handleChildren(ko: Effort, el: HTMLElement) {
 		const childEfforts = await this.ctx.effortRepository.find(e => {
-			if (e.parent === null) {
+			if (!e.parent) {
 				return false;
 			}
 			return e.parent.id == ko.id;

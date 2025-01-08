@@ -1,26 +1,17 @@
-import {TFile} from "obsidian";
 import MocRepository from "../../../../core/src/ports/output/MocRepository";
 import MOC from "../../../../core/src/domain/ims/MOC";
 import ExoContext from "../../../../common/ExoContext";
+import AbstractPersistenceAdapter from "./AbstractPersistenceAdapter";
 
-export default class MocPersistenceAdapter implements MocRepository {
-	constructor(private ctx: ExoContext) {
+export default class MocPersistenceAdapter extends AbstractPersistenceAdapter<MOC> implements MocRepository {
+	constructor(ctx: ExoContext) {
+		super(ctx, MOC.CLASS);
 	}
 
 	async findChildren(moc: MOC): Promise<MOC[]> {
-		const allMOCs = await this.findAll();
-
-		return allMOCs.filter(m => {
+		return await this.find(m => {
 			if (m.parent === null) return false
 			return m.parent.id === moc.id;
 		});
-	}
-
-	async findAll(): Promise<MOC[]> {
-		const rawMOCs: TFile[] = this.ctx.appUtils.findNotes((f: TFile) => {
-			return this.ctx.appUtils.getTagsFromFile(f).contains("IMS/MOC");
-		});
-
-		return Promise.all(rawMOCs.map(async f => await this.ctx.mocCreator.create(f)));
 	}
 }

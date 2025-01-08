@@ -1,14 +1,13 @@
 import EffortRepository from "../../../../core/src/ports/output/EffortRepository";
 import Effort from "../../../../core/src/domain/ems/effort/Effort";
 import ExoContext from "../../../../common/ExoContext";
-import Area from "../../../../core/src/domain/ems/Area";
-import {TFile} from "obsidian";
 import KObject from "../../../../core/src/domain/KObject";
 import DateUtils from "../../../../common/utils/DateUtils";
-import {KOC} from "../../../../core/src/domain/KOC";
+import AbstractPersistenceAdapter from "./AbstractPersistenceAdapter";
 
-export default class EffortPersistenceAdapter implements EffortRepository {
-	constructor(private ctx: ExoContext) {
+export default class EffortPersistenceAdapter extends AbstractPersistenceAdapter<Effort> implements EffortRepository {
+	constructor(ctx: ExoContext) {
+		super(ctx, Effort.CLASS);
 	}
 
 	async save(effort: Effort): Promise<void> {
@@ -23,20 +22,6 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 		const file = this.ctx.appUtils.getObjectFileOrThrow(effort);
 		const data = this.serialize(effort);
 		await this.ctx.appUtils.updateFile(file, data);
-	}
-
-	async find(filter: (e: Effort) => boolean): Promise<Effort[]> {
-		let all = await this.findAll();
-		return all.filter(filter);
-	}
-
-	async findAll(): Promise<Effort[]> {
-		const rawEfforts: TFile[] = this.ctx.appUtils.findNotes((f: TFile) => {
-			return this.ctx.appUtils.getTagsFromFile(f).includes(KOC.EMS_EFFORT);
-		});
-
-		let promises = rawEfforts.map(async f => await this.ctx.kObjectCreator.createFromFileTyped(f) as Effort);
-		return await Promise.all(promises);
 	}
 
 	private serialize(effort: Effort) {
@@ -68,14 +53,6 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 
 	private getLinkToKO(ko: KObject): string {
 		let file = this.ctx.appUtils.getObjectFileOrThrow(ko);
-		return `[[${file.basename}]]`;
-	}
-
-	private getLinkToArea(area: Area): string {
-		return `[[${area.name}]]`;
-	}
-
-	private getLinkToEffort(parent: Effort): string {
-		return `[[${parent.title}]]`;
+		return `[[${file.basename}]]`; // TODO replace with ko.title
 	}
 }

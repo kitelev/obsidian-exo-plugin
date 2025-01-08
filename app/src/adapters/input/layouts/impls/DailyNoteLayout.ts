@@ -2,7 +2,6 @@ import ExoContext from "../../../../../../common/ExoContext";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
 import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
 import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effort/EffortStatus";
-import Comparator from "../../../../../../common/Comparator";
 import AbstractLayout from "./AbstractLayout";
 import DailyNote from "../../../../../../core/src/domain/tms/DailyNote";
 import {Predicate} from "../../../../../../common/fp/Predicate";
@@ -19,35 +18,35 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		const day = ko.date;
 
 		filters.set("plannedStartToday", e => {
-			if (e.plannedStart === null) {
+			if (!e.plannedStart) {
 				return false;
 			}
 			return DateUtils.sameDay(e.plannedStart, day);
 		});
 
 		filters.set("plannedStartBefore", e => {
-			if (e.plannedStart === null || e.isResolved()) {
+			if (!e.plannedStart || e.isResolved()) {
 				return false;
 			}
 			return e.plannedStart.setHours(0, 0, 0, 0) < day.setHours(0, 0, 0, 0);
 		});
 
 		filters.set("due", e => {
-			if (e.due === null || e.isResolved()) {
+			if (!e.due || e.isResolved()) {
 				return false;
 			}
 			return e.due.setHours(0, 0, 0, 0) <= day.setHours(0, 0, 0, 0);
 		});
 
 		filters.set("started", e => {
-			if (e.started === null || e.isResolved()) {
+			if (!e.started || e.isResolved()) {
 				return false;
 			}
 			return DateUtils.sameDay(e.started, day);
 		});
 
 		filters.set("ended", e => {
-			if (e.ended === null) {
+			if (!e.ended) {
 				return false;
 			}
 			return DateUtils.sameDay(e.ended, day);
@@ -63,6 +62,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		await this.printEfforts(efforts, el, filters.get("started")!, "Started today");
 		await this.printEfforts(efforts, el, filters.get("ended")!, "Ended today");
 		// TODO add filter "Done today"
+		// TODO do not show waiting efforts that waiting-till > dn-date
 	}
 
 	private async printEfforts(allEfforts: Effort[], el: HTMLElement, predicate: Predicate<Effort>, title: string) {
@@ -76,12 +76,11 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		}
 	}
 
+	// TODO move to AbstractLayout
 	private async createTable(efforts: Effort[]) {
 		const headers = ["Effort", "Area", "Status"];
 
-		const rowsComparator = Comparator.combineCompare(
-			EffortStatusComparator.compare,
-			Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes())));
+		const rowsComparator = EffortStatusComparator.compare;
 
 		const rows = efforts
 			.sort(rowsComparator)

@@ -1,6 +1,5 @@
-import {KOC} from "../../domain/KOC";
 import KObject from "../../domain/KObject";
+import GenericRepository from "./GenericRepository";
 
-export default interface KObjectRepository {
-	findByKOC(koc: KOC): Promise<KObject[]>
+export default interface KObjectRepository extends GenericRepository<KObject> {
 }

@@ -16,7 +16,7 @@ export default class KObjectCreator {
 		return new KObject(id, koc);
 	}
 
-	async createFromFileTyped(file: TFile) {
+	async createFromFileTyped(file: TFile): Promise<KObject> {
 		const koc = this.getFileKoc(file);
 		switch (koc) {
 			case KOC.EMS_AREA:
@@ -25,10 +25,6 @@ export default class KObjectCreator {
 				return await this.ctx.effortCreator.create(file);
 			case KOC.EMS_EFFORT_PROTOTYPE:
 				return await this.ctx.effortPrototypeCreator.create(file);
-			case KOC.EMS_MEETING:
-				return await this.ctx.meetingCreator.create(file);
-			case KOC.EMS_MEETING_PROTOTYPE:
-				return await this.ctx.meetingPrototypeCreator.create(file);
 			case KOC.EMS_BOARD:
 				return await this.ctx.boardCreator.create(file);
 			case KOC.TMS_DN:
@@ -40,7 +36,7 @@ export default class KObjectCreator {
 			case KOC.KMS_KOC:
 				return this.ctx.kocObjectCreator.create(file);
 			case KOC.UNKNOWN:
-				throw new Error(`KOC of file ${file.path} is unknown`);
+				return this.createFromTFile(file);
 			default:
 				throw new Error(`KOC '${koc}' not supported`);
 		}

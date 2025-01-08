@@ -1,9 +1,8 @@
 import Effort from "../../domain/ems/effort/Effort";
+import GenericRepository from "./GenericRepository";
 
-export default interface EffortRepository {
+export default interface EffortRepository extends GenericRepository<Effort> {
 	save(effort: Effort): Promise<void>;
-
-	find(filter: (e: Effort) => boolean): Promise<Effort[]>;
 
 	update(effort: Effort): Promise<void>;
 }

@@ -46,7 +46,10 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 				const file = this.ctx.appUtils.getFileFromStrLink(str);
 				return await this.create(file);
 			}));
+		} else {
+			builder.relates = [];
 		}
+
 
 		return builder.build();
 	}

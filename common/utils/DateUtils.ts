@@ -1,5 +1,11 @@
 export default class DateUtils {
 	static sameDay(d1: Date, d2: Date): boolean {
+		if (!d1) {
+			throw new Error('d1 is required');
+		}
+		if (!d2) {
+			throw new Error('d2 is required');
+		}
 		return d1.setHours(0, 0, 0, 0) === d2.setHours(0, 0, 0, 0);
 	}
 
