@@ -25,6 +25,10 @@ export default class KObjectCreator {
 				return await this.ctx.effortCreator.create(file);
 			case KOC.EMS_EFFORT_PROTOTYPE:
 				return await this.ctx.effortPrototypeCreator.create(file);
+			case KOC.EMS_MEETING:
+				return await this.ctx.meetingCreator.create(file);
+			case KOC.EMS_MEETING_PROTOTYPE:
+				return await this.ctx.meetingPrototypeCreator.create(file);
 			case KOC.EMS_BOARD:
 				return await this.ctx.boardCreator.create(file);
 			case KOC.TMS_DN:

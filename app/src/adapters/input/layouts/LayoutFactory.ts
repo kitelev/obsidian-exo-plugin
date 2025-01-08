@@ -11,6 +11,7 @@ import PropertyLayout from "./impls/PropertyLayout";
 import KOCObjectLayout from "./impls/KOCObjectLayout";
 import EffortPrototypeLayout from "./impls/EffortPrototypeLayout";
 import BoardLayout from "./impls/BoardLayout";
+import MeetingPrototypeLayout from "./impls/MeetingPrototypeLayout";
 
 export default class LayoutFactory {
 	constructor(private ctx: ExoContext) {
@@ -24,6 +25,8 @@ export default class LayoutFactory {
 				return new EffortLayout(this.ctx, dvRender);
 			case KOC.EMS_EFFORT_PROTOTYPE:
 				return new EffortPrototypeLayout(this.ctx, dvRender);
+			case KOC.EMS_MEETING_PROTOTYPE:
+				return new MeetingPrototypeLayout(this.ctx, dvRender);
 			case KOC.EMS_BOARD:
 				return new BoardLayout(this.ctx, dvRender);
 			case KOC.TMS_DN:

@@ -15,21 +15,20 @@ export default class DeleteRedundantFileContentRegexp extends AbstractExoAction 
 		// Определяем регулярное выражение для удаления нужного фрагмента
 		const regex = /this is text to delete/g;
 
-		console.log(`Found ${files.length} files`);
+		console.debug(`Found ${files.length} files`);
 
 		let idx = 0;
 		for (let file of files) {
+			console.debug(`Processing file ${++idx}/${files.length}: ${file.path}`);
 			let newData = await this.ctx.appUtils.getFileContent(file);
 
-			console.log(`Processing file ${++idx}/${files.length}: ${file.path}`);
-
 			if (regex.test(newData)) {
-				console.log(`Found text to delete in ${file.path}`);
+				console.debug(`Found text to delete in ${file.path}`);
 				newData = newData.replace(regex, "");
 				await this.ctx.appUtils.updateFile(file, newData);
 			}
 			if (idx % 50 === 0) {
-				console.log(`Processed ${idx}/${files.length} files`);
+				console.debug(`Processed ${idx}/${files.length} files`);
 			}
 		}
 	}

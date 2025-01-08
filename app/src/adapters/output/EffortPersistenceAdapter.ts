@@ -5,6 +5,7 @@ import Area from "../../../../core/src/domain/ems/Area";
 import {TFile} from "obsidian";
 import KObject from "../../../../core/src/domain/KObject";
 import DateUtils from "../../../../common/utils/DateUtils";
+import {KOC} from "../../../../core/src/domain/KOC";
 
 export default class EffortPersistenceAdapter implements EffortRepository {
 	constructor(private ctx: ExoContext) {
@@ -31,7 +32,7 @@ export default class EffortPersistenceAdapter implements EffortRepository {
 
 	async findAll(): Promise<Effort[]> {
 		const rawEfforts: TFile[] = this.ctx.appUtils.findNotes((f: TFile) => {
-			return this.ctx.appUtils.getTagsFromFile(f).includes("EMS/Effort");
+			return this.ctx.appUtils.getTagsFromFile(f).includes(KOC.EMS_EFFORT);
 		});
 
 		let promises = rawEfforts.map(async f => await this.ctx.kObjectCreator.createFromFileTyped(f) as Effort);

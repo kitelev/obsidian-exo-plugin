@@ -33,3 +33,4 @@ Every KO should have properties:
 
 - Date fields (started, ended) behaves weird when starting and shutting down (with buttons in layout)
 - When `StartEffort` is clicked, the `started` date is +1 hour than the current time
+- `main.registerMarkdownPostProcessor` triggering multiple times when backlinks contains header part of other notes

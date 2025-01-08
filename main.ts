@@ -66,15 +66,18 @@ export default class ExoPlugin extends Plugin {
 					return;
 				}
 
+				console.debug(`Creating layout for KObject...`, ko);
 				const layout = this.ctx.layoutFactory.create(ko, renderer);
 				if (layout === null) {
-					console.warn(`Could not create layout for KObject ${ko.id}`);
+					console.warn('Could not create layout for KObject', ko);
 					return;
 				}
 
 				await layout.render(ko, el);
 
 				el.appendChild(document.createElement("hr"));
+
+				console.debug(`Layout created`);
 			}
 		});
 	}
