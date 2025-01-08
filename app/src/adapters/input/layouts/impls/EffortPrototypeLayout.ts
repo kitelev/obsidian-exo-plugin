@@ -11,17 +11,16 @@ export default class EffortPrototypeLayout extends AbstractLayout<EffortPrototyp
 	}
 
 	async render(ko: EffortPrototype, el: HTMLElement): Promise<void> {
-		await this.renderCreateImplementationButton(ko, el);
+		await this.renderCreateImplementationButton(el);
 		await this.handleUnresolvedImplementations(ko, el);
 	}
 
-	private async renderCreateImplementationButton(prototype: EffortPrototype, el: HTMLElement) {
-		const button = document.createElement("button");
-		button.innerText = "Create implementation";
-		button.onclick = async () => {
+	private async renderCreateImplementationButton(el: HTMLElement) {
+		const button = this.createButton("Create implementation", async () => {
 			let createEffortAction = new CreateEffort(this.ctx);
 			await createEffortAction.execute();
-		};
+		});
+
 		el.appendChild(button);
 	}
 

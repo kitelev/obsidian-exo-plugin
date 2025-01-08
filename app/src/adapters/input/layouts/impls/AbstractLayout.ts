@@ -18,6 +18,27 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 		return this.createHeader(textContent, 2);
 	}
 
+	protected createButton(text: string, onClick: () => Promise<void>): HTMLButtonElement {
+		const button = document.createElement("button");
+		button.textContent = text;
+		button.style.marginRight = "5px";
+		button.style.marginBottom = "5px";
+		button.style.cursor = "pointer";
+		button.style.transition = "transform 0.1s";
+
+		button.addEventListener("mousedown", () => {
+			button.style.transform = "scale(0.95)";
+		});
+
+		button.addEventListener("mouseup", () => {
+			button.style.transform = "scale(1)";
+		});
+
+		button.addEventListener("click", onClick);
+
+		return button;
+	}
+
 	protected toLink(ko: KObject, prefix: string = "") {
 		const file = this.ctx.appUtils.getObjectFileOrThrow(ko);
 		return this.ctx.dvApiHolder.dvApi.fileLink(file.path, false, `${prefix}${file.basename}`);

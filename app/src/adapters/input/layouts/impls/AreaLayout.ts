@@ -8,23 +8,22 @@ import AbstractLayout from "./AbstractLayout";
 import CreateEffort from "../../actions/no-context/domain/CreateEffort";
 
 export default class AreaLayout extends AbstractLayout<Area> {
-    constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
-        super(ctx, dvRenderer);
-    }
+	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
+		super(ctx, dvRenderer);
+	}
 
-    async render(ko: Area, el: HTMLElement): Promise<void> {
-		await this.createCreateEffortButton(ko, el);
+	async render(ko: Area, el: HTMLElement): Promise<void> {
+		await this.createCreateEffortButton(el);
 		await this.handleChildren(ko, el);
 		await this.handleUnresolvedEfforts(ko, el);
 	}
 
-	private async createCreateEffortButton(ko: Area, el: HTMLElement) {
-		const button = document.createElement("button");
-		button.innerText = "Create Effort";
-		button.onclick = async () => {
+	private async createCreateEffortButton(el: HTMLElement) {
+		const button = this.createButton("Create Effort", async () => {
 			let createEffortAction = new CreateEffort(this.ctx);
 			await createEffortAction.execute();
-		}
+		});
+
 		el.appendChild(button);
 	}
 
@@ -60,21 +59,21 @@ export default class AreaLayout extends AbstractLayout<Area> {
 	}
 
 	private async createTable(efforts: Effort[]) {
-        const headers = ["Effort", "Area", "Status", "Votes"];
+		const headers = ["Effort", "Area", "Status", "Votes"];
 
-        const rowsComparator = Comparator.combineCompare(
-            EffortStatusComparator.compare,
-            Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes())));
+		const rowsComparator = Comparator.combineCompare(
+			EffortStatusComparator.compare,
+			Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes())));
 
-        const rows = efforts
-            .sort(rowsComparator)
-            .map(e => {
-                const effortLink = this.toLink(e);
+		const rows = efforts
+			.sort(rowsComparator)
+			.map(e => {
+				const effortLink = this.toLink(e);
 				const aresStr = e.getRelatedArea()?.name ?? "--";
-                const statusStr = e.status;
-                const votesStr = e.getVotes();
-                return [effortLink, aresStr, statusStr, votesStr];
-            });
-        return await this.dvRenderer.table(headers, rows);
-    }
+				const statusStr = e.status;
+				const votesStr = e.getVotes();
+				return [effortLink, aresStr, statusStr, votesStr];
+			});
+		return await this.dvRenderer.table(headers, rows);
+	}
 }

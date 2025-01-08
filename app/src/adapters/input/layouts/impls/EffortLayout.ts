@@ -17,26 +17,6 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 		await this.handleRelatedEfforts(ko, el);
 	}
 
-	protected createButton(text: string, onClick: () => Promise<void>): HTMLButtonElement {
-		const button = document.createElement("button");
-		button.textContent = text;
-		button.style.marginRight = "5px";
-		button.style.cursor = "pointer";
-		button.style.transition = "transform 0.1s";
-
-		button.addEventListener("mousedown", () => {
-			button.style.transform = "scale(0.95)";
-		});
-
-		button.addEventListener("mouseup", () => {
-			button.style.transform = "scale(1)";
-		});
-
-		button.addEventListener("click", onClick);
-
-		return button;
-	}
-
 	private async showAvailableActions(effort: Effort, el: HTMLElement) {
 		const startButton = this.createButton("Start", async () => {
 			await this.ctx.effortCommandFactory.createStartEffortCommand().execute(effort);
