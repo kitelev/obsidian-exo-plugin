@@ -7,6 +7,7 @@ export enum EffortStatus {
 	PLANNED = "PLANNED",
 	TUPLYU = "TUPLYU",
 	STARTED = "STARTED",
+	WAITING = "WAITING",
 	ENDED = "ENDED",
 	TRASHED = "TRASHED"
 }
