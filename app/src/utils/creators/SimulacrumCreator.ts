@@ -9,7 +9,7 @@ export default class SimulacrumCreator extends AbstractCreator<Simulacrum> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Simulacrum> {
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<Simulacrum> {
 		const mocStr: string = fm["moc"];
 		if (!mocStr) {
 			throw new Error(`Simulacrum ${file.name} does not have a MOC`);
@@ -18,6 +18,6 @@ export default class SimulacrumCreator extends AbstractCreator<Simulacrum> {
 		const mocFile = this.ctx.appUtils.getFileFromStrLink(mocStr);
 		const moc = await this.ctx.mocCreator.create(mocFile);
 
-		return new Simulacrum(id, moc)
+		return new Simulacrum(id, title, body, moc);
 	}
 }

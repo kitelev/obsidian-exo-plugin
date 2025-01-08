@@ -9,7 +9,7 @@ export default class AreaCreator extends AbstractCreator<Area> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Area> {
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<Area> {
 		let parentArea: Area | null = null;
 		const parentStr: string = fm["a-parent"];
 		if (parentStr) {
@@ -17,6 +17,6 @@ export default class AreaCreator extends AbstractCreator<Area> {
 			parentArea = await this.create(file);
 		}
 
-		return new Area(id, file.name.replace(".md", ""), parentArea)
+		return new Area(id, title, body, parentArea)
 	}
 }

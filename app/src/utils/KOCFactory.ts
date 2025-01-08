@@ -6,6 +6,7 @@ export default class KOCFactory { // TODO needs refactoring
 	 */
 	static getFromTags(tags: string[]) { // TODO delete
 		if (tags.includes("IMS/MOC")) return KOC.IMS_MOC
+		if (tags.includes(KOC.IMS_SIMULACRUM)) return KOC.IMS_SIMULACRUM
 		if (tags.includes("EMS/Area")) return KOC.EMS_AREA;
 		if (tags.includes("EMS/Effort")) return KOC.EMS_EFFORT;
 		if (tags.includes("EMS/PrototypeEffort")) return KOC.EMS_EFFORT_PROTOTYPE;

@@ -9,9 +9,9 @@ export default class BoardCreator extends AbstractCreator<Board> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Board> {
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<Board> {
 		const area = await this.parseArea(fm);
-		return new Board(id, area);
+		return new Board(id, title, body, area);
 	}
 
 	private async parseArea(fm: FrontMatterCache) {

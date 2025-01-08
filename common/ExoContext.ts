@@ -12,7 +12,6 @@ import CreateEffortService from "../core/src/service/CreateEffortService";
 import EffortRepository from "../core/src/ports/output/EffortRepository";
 import EffortPersistenceAdapter from "../app/src/adapters/output/EffortPersistenceAdapter";
 import KObjectUtility from "../app/src/utils/KObjectUtility";
-import EffortPathRulesHelper from "../app/src/helpers/EffortPathRulesHelper";
 import EffortCreator from "../app/src/utils/creators/EffortCreator";
 import AreaCreator from "../app/src/utils/creators/AreaCreator";
 import LayoutFactory from "../app/src/adapters/input/layouts/LayoutFactory";
@@ -38,6 +37,7 @@ import {ModalItemsFolderFactory} from "../app/src/utils/modal/actions/ModalItems
 import SimulacrumRepository from "../core/src/ports/output/SimulacrumRepository";
 import SimulacrumPersistenceAdapter from "../app/src/adapters/output/SimulacrumPersistenceAdapter";
 import SimulacrumCreator from "../app/src/utils/creators/SimulacrumCreator";
+import KObjectPathRulesHelper from "../app/src/helpers/KObjectPathRulesHelper";
 
 export default class ExoContext {
 	// Utils
@@ -69,7 +69,7 @@ export default class ExoContext {
 	public readonly dailyNoteRepository: DailyNoteRepository = new DailyNotePersistenceAdapter(this);
 
 	// Domain utils
-	public readonly effortPathRulesHelper: EffortPathRulesHelper = new EffortPathRulesHelper(this);
+	public readonly koPathRulesHelper: KObjectPathRulesHelper = new KObjectPathRulesHelper(this);
 
 	// Use Cases
 	public readonly getCurrentDailyNoteUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);

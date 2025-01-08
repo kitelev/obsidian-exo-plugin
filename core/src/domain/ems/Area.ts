@@ -5,10 +5,11 @@ import {UUID} from "node:crypto";
 export default class Area extends KObject {
 	static readonly CLASS = KOC.EMS_AREA;
 
-	constructor(public id: UUID,
-				public readonly name: string,
+	constructor(id: UUID,
+				title: string,
+				body: string,
 				public readonly parent: Area | null) {
-		super(id, Area.CLASS);
+		super(id, Area.CLASS, title, body);
 	}
 
 	isChildOf(area: Area): boolean {

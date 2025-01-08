@@ -9,8 +9,8 @@ import EffortPrototype from "./EffortPrototype";
 export default class Effort extends KObject {
 	static readonly CLASS = KOC.EMS_EFFORT;
 
-	constructor(public id: UUID,
-				public title: string,
+	constructor(id: UUID,
+				title: string,
 				public status: EffortStatus,
 				public started: Date | null,
 				public ended: Date | null,
@@ -22,8 +22,8 @@ export default class Effort extends KObject {
 				public parent: Effort | null,
 				public votes: number | null,
 				public relates: KObject[] = [],
-				public body: string) {
-		super(id, Effort.CLASS);
+				body: string) {
+		super(id, Effort.CLASS, title, body);
 	}
 
 	start() {

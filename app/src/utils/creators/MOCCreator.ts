@@ -9,7 +9,7 @@ export default class MOCCreator extends AbstractCreator<MOC> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<MOC> {
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<MOC> {
 		let parent: MOC | null = null;
 		const parentStr: string = fm["moc-parent"];
 		if (parentStr) {
@@ -17,6 +17,6 @@ export default class MOCCreator extends AbstractCreator<MOC> {
 			parent = await this.create(file);
 		}
 
-		return new MOC(id, file.name.replace(".md", ""), parent)
+		return new MOC(id, title, body, parent)
 	}
 }

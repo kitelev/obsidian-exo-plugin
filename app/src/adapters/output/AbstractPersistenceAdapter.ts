@@ -3,13 +3,11 @@ import {KOC} from "../../../../core/src/domain/KOC";
 import KObject from "../../../../core/src/domain/KObject";
 import {TFile} from "obsidian";
 import {UUID} from "node:crypto";
-import Area from "../../../../core/src/domain/ems/Area";
-import Effort from "../../../../core/src/domain/ems/effort/Effort";
 import GenericRepository from "../../../../core/src/ports/output/GenericRepository";
 
-export default class AbstractPersistenceAdapter<KO extends KObject> implements GenericRepository<KO> {
-    constructor(protected ctx: ExoContext,
-                private koc?: KOC) {
+export default abstract class AbstractPersistenceAdapter<KO extends KObject> implements GenericRepository<KO> {
+    protected constructor(protected ctx: ExoContext,
+                          private koc?: KOC) {
     }
 
     async find(filter: (ko: KO) => boolean): Promise<KO[]> {
@@ -41,11 +39,37 @@ export default class AbstractPersistenceAdapter<KO extends KObject> implements G
         }));
     }
 
-    protected getLinkToArea(area: Area): string {
-        return `[[${area.name}]]`;
+    async save(ko: KO): Promise<void> {
+        const folderPath: string = this.ctx.koPathRulesHelper.getFolderPath(ko)
+        const filePath = folderPath + "/" + ko.title + ".md";
+        const fileContent = this.serialize(ko);
+
+        await this.ctx.appUtils.createFile(filePath, fileContent);
     }
 
-    protected getLinkToEffort(parent: Effort): string {
-        return `[[${parent.title}]]`;
+    async update(ko: KO): Promise<void> {
+        const file = this.ctx.appUtils.getObjectFileOrThrow(ko);
+        const data = this.serialize(ko);
+        await this.ctx.appUtils.updateFile(file, data);
+    }
+
+    protected getLinkToKO(ko: KObject): string {
+        return `[[${ko.title}]]`;
+    }
+
+    protected serializeKoSpecificProps(ko: KO): string {
+        return "";
+    }
+
+    private serialize(ko: KO) {
+        let result = "";
+        result += "---\n";
+        result += "tags:\n";
+        result += ` - ${ko.koc}\n`;
+        result += "uid: " + ko.id + "\n";
+        result += this.serializeKoSpecificProps(ko);
+        result += "---\n";
+        result += ko.body;
+        return result;
     }
 }

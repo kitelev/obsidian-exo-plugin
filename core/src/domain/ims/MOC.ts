@@ -5,9 +5,10 @@ import {KOC} from "../KOC";
 export default class MOC extends KObject {
 	static readonly CLASS = KOC.IMS_MOC;
 
-	constructor(public id: UUID,
-				public name: string,
+	constructor(id: UUID,
+				title: string,
+				body: string,
 				public parent: MOC | null) { // TODO add simulacrum field
-		super(id, MOC.CLASS);
+		super(id, MOC.CLASS, title, body);
 	}
 }

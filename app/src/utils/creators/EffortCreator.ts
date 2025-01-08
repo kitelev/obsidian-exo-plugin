@@ -10,11 +10,15 @@ export default class EffortCreator extends AbstractCreator<Effort> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Effort> {
+	async createInternal(file: TFile,
+						 id: UUID,
+						 title: string,
+						 body: string,
+						 fm: FrontMatterCache): Promise<Effort> {
 		const builder = new EffortBuilder();
-		builder.id = id; // TODO move to AbstractCreator
-		builder.title = file.name.replace(".md", ""); // TODO move to AbstractCreator
-		builder.body = await this.ctx.appUtils.getFileBody(file);
+		builder.id = id;
+		builder.title = title;
+		builder.body = body;
 		builder.status = fm["e-status"] as EffortStatus;
 
 		if (fm["e-prototype"]) {

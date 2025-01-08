@@ -5,16 +5,16 @@ export default class LinksRegistry {
 	constructor(private ctx: ExoContext) {
 	}
 
-	getKoInboundUnidirectionalLinks(ko: KObject): KObject[] {
+	async getKoInboundUnidirectionalLinks(ko: KObject): Promise<KObject[]> {
 		const file = this.ctx.appUtils.getObjectFileOrThrow(ko);
 		const linksInbound = this.ctx.linksRegistry.getFileInboundLinks(file.path);
 		const linksOutbound = this.ctx.linksRegistry.getFileOutboundLinks(file.path);
 		const orphans = linksInbound.filter((inboundLink) => !linksOutbound.includes(inboundLink));
 
-		return orphans.map((orphan) => {
+		return Promise.all(orphans.map(async (orphan) => {
 			const file = this.ctx.appUtils.getFileByPathOrThrow(orphan);
-			return this.ctx.kObjectCreator.createFromTFile(file);
-		});
+			return await this.ctx.kObjectCreator.createFromTFile(file);
+		}));
 	}
 
 	/**

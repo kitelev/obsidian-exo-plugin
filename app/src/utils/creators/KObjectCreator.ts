@@ -9,11 +9,12 @@ export default class KObjectCreator {
 	constructor(private ctx: ExoContext) {
 	}
 
-	createFromTFile(file: TFile) {
+	async createFromTFile(file: TFile) {
 		const frontmatter = this.ctx.appUtils.getFrontmatterOrThrow(file);
 		const id = frontmatter["uid"] as UUID;
 		const koc = this.getFileKoc(file);
-		return new KObject(id, koc);
+		const body = await this.ctx.appUtils.getFileBody(file);
+		return new KObject(id, koc, file.basename, body);
 	}
 
 	async createFromFileTyped(file: TFile): Promise<KObject> {
@@ -31,6 +32,8 @@ export default class KObjectCreator {
 				return this.ctx.dailyNoteCreator.create(file);
 			case KOC.IMS_MOC:
 				return this.ctx.mocCreator.create(file);
+			case KOC.IMS_SIMULACRUM:
+				return this.ctx.simulacrumCreator.create(file);
 			case KOC.KMS_PROPERTY:
 				return this.ctx.propertyCreator.create(file);
 			case KOC.KMS_KOC:

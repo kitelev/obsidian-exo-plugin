@@ -24,7 +24,7 @@ export default class CreateEffort extends AbstractExoAction {
 
 	private getPrefilledTitle(activeKo: KObject) {
 		if (activeKo instanceof EffortPrototype) {
-			return activeKo.title;
+			return activeKo.getTitleWithoutPrefix();
 		} else {
 			return undefined;
 		}

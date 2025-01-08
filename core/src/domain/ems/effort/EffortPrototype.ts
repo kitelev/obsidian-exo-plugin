@@ -6,9 +6,10 @@ import Effort from "./Effort";
 
 export default class EffortPrototype extends KObject {
 	constructor(id: UUID,
-				public title: string,
+				title: string,
+				body: string,
 				public area: Area | null,
 				public effortParent: Effort | null) {
-		super(id, KOC.EMS_EFFORT_PROTOTYPE);
+		super(id, KOC.EMS_EFFORT_PROTOTYPE, title, body);
 	}
 }

@@ -44,7 +44,7 @@ export default class MOCLayout extends AbstractLayout<MOC> {
 	}
 
 	private async handleInboundUnidirectionalLinks(ko: MOC, toExclude: KObject[], el: HTMLElement) {
-		const inbounds = this.ctx.linksRegistry.getKoInboundUnidirectionalLinks(ko);
+		const inbounds = await this.ctx.linksRegistry.getKoInboundUnidirectionalLinks(ko);
 		const excludeIds = toExclude.map(ko => ko.id);
 		const filtered = inbounds.filter(inbound => {
 			return !excludeIds.some(idToExclude => inbound.id === idToExclude);

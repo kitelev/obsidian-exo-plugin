@@ -8,7 +8,9 @@ export default class Simulacrum extends KObject {
 	static readonly CLASS = KOC.IMS_SIMULACRUM;
 
 	constructor(id: UUID,
+				title: string,
+				body: string,
 				public moc: MOC) {
-		super(id, Simulacrum.CLASS);
+		super(id, Simulacrum.CLASS, title, body);
 	}
 }

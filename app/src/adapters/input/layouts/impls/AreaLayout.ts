@@ -69,7 +69,7 @@ export default class AreaLayout extends AbstractLayout<Area> {
 			.sort(rowsComparator)
 			.map(e => {
 				const effortLink = this.toLink(e);
-				const aresStr = e.getRelatedArea()?.name ?? "--";
+				const aresStr = e.getRelatedArea()?.title ?? "--";
 				const statusStr = e.status;
 				const votesStr = e.getVotes();
 				return [effortLink, aresStr, statusStr, votesStr];

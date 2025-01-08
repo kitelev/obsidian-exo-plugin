@@ -30,7 +30,7 @@ export default class CreateEmptyNoteWithinInbox extends AbstractExoAction {
 
 	private async createNote(title: string, koc: KOC): Promise<TFile> {
 		const path = `${Constants.INBOX_FOLDER_PATH}/${title}.md`;
-		const ko = new KObject(this.ctx.utils.generateUid(), koc);
+		const ko = new KObject(this.ctx.utils.generateUid(), koc, title, "");
 		const content = this.serialize(ko);
 		return await this.ctx.appUtils.createFile(path, content);
 	}

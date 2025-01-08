@@ -9,9 +9,9 @@ export default class DailyNoteCreator extends AbstractCreator<DailyNote> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<DailyNote> {
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<DailyNote> {
 		const dateStr = fm["dn-date"];
 		const date = new Date(dateStr);
-		return new DailyNote(id, date);
+		return new DailyNote(id, title, body, date);
 	}
 }

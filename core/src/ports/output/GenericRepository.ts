@@ -10,4 +10,8 @@ export default interface GenericRepository<KO extends KObject> {
 	findByKOC(koc: KOC): Promise<KO[]>
 
 	findAll(): Promise<KO[]>;
+
+	save(ko: KO): Promise<void>;
+
+	update(ko: KO): Promise<void>;
 }

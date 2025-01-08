@@ -10,9 +10,9 @@ export default class KOCObjectCreator extends AbstractCreator<KOCObject> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<KOCObject> {
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<KOCObject> {
 		const implKocStr = fm["tagNames"] as string;
 		const implKoc = KOCFactory.getByValue(implKocStr[0]);
-		return new KOCObject(id, implKoc);
+		return new KOCObject(id, title, body, implKoc);
 	}
 }

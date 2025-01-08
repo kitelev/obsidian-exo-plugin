@@ -28,7 +28,7 @@ export default class CreateEffortBySelectedText extends AbstractExoAction {
 			new TextField("Title", selection),
 			new SelectField("Area", [
 				new SelectOption(undefined, ""),
-				...areas.map(area => new SelectOption(area.id, area.name))
+				...areas.map(area => new SelectOption(area.id, area.title))
 			])
 		];
 		const callback: ConsumerAsync<string[]> = async (fields) => {

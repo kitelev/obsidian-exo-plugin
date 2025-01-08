@@ -11,9 +11,7 @@ export default class EffortPrototypeCreator extends AbstractCreator<EffortProtot
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<EffortPrototype> {
-		const title: string = file.basename.replace(/\(.*\) /g, ""); // TODO move to AbstractCreator
-
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<EffortPrototype> {
 		let area: Area | null = null;
 		const areaStr: string = fm["area"];
 		if (areaStr) {
@@ -28,6 +26,6 @@ export default class EffortPrototypeCreator extends AbstractCreator<EffortProtot
 			effortParent = await this.ctx.effortCreator.create(file);
 		}
 
-		return new EffortPrototype(id, title, area, effortParent);
+		return new EffortPrototype(id, title, body, area, effortParent);
 	}
 }

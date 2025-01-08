@@ -9,7 +9,7 @@ export default class PropertyCreator extends AbstractCreator<Property> {
 		super(ctx);
 	}
 
-	async createInternal(file: TFile, id: UUID, fm: FrontMatterCache): Promise<Property> {
-		return new Property(id);
+	async createInternal(file: TFile, id: UUID, title: string, body: string, fm: FrontMatterCache): Promise<Property> {
+		return new Property(id, title, body);
 	}
 }
