@@ -17,4 +17,8 @@ export default class Area extends KObject {
 		if (this.parent.id === area.id) return true;
 		return this.parent.isChildOf(area);
 	}
+
+	getParentsCount(): number {
+		return this.parent === null ? 0 : 1 + this.parent.getParentsCount();
+	}
 }

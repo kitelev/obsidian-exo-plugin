@@ -1,9 +1,7 @@
 import ExoContext from "../../../../../../common/ExoContext";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
 import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
-import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effort/EffortStatus";
-import Comparator from "../../../../../../common/Comparator";
-import AbstractLayout from "./AbstractLayout";
+import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
 import {Notice} from "obsidian";
 
 export default class EffortLayout extends AbstractLayout<Effort> {
@@ -49,7 +47,8 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 				const unresolvedEffortsH2 = this.createH2("Unresolved");
 				el.appendChild(unresolvedEffortsH2);
 
-				const dvTable = await this.createTable(unresolved);
+				const fieldsToRender = [EffortFieldEnum.STATUS];
+				const dvTable = await this.createTableSuper(unresolved, fieldsToRender);
 				el.appendChild(dvTable);
 			}
 
@@ -58,28 +57,10 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 				const resolvedEffortsH2 = this.createH2("Resolved");
 				el.appendChild(resolvedEffortsH2);
 
-				const resolvedDvTable = await this.createTable(resolved);
+				const fieldsToRender = [EffortFieldEnum.STATUS];
+				const resolvedDvTable = await this.createTableSuper(resolved, fieldsToRender);
 				el.appendChild(resolvedDvTable);
 			}
 		}
-	}
-
-	private async createTable(efforts: Effort[]) {
-		const headers = ["Effort", "Status", "Votes"];
-
-		const rowsComparator = Comparator.combineCompare(
-			EffortStatusComparator.compare,
-			Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes())));
-
-		const rows = efforts
-			.sort(rowsComparator)
-			.map(e => {
-				const effortLink = this.toLink(e);
-				const statusStr = e.status;
-				const votesStr = e.getVotes();
-				return [effortLink, statusStr, votesStr];
-			});
-
-		return await this.dvRenderer.table(headers, rows);
 	}
 }

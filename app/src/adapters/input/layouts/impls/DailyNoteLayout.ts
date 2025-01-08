@@ -1,8 +1,7 @@
 import ExoContext from "../../../../../../common/ExoContext";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
 import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
-import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effort/EffortStatus";
-import AbstractLayout from "./AbstractLayout";
+import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
 import DailyNote from "../../../../../../core/src/domain/tms/DailyNote";
 import {Predicate} from "../../../../../../common/fp/Predicate";
 import DateUtils from "../../../../../../common/utils/DateUtils";
@@ -71,24 +70,8 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 			let header = this.createH1(title);
 			el.appendChild(header);
 
-			const dvTable = await this.createTable(efforts);
+			const dvTable = await this.createTableSuper(efforts, [EffortFieldEnum.AREA, EffortFieldEnum.STATUS]);
 			el.appendChild(dvTable)
 		}
-	}
-
-	// TODO move to AbstractLayout
-	private async createTable(efforts: Effort[]) {
-		const headers = ["Effort", "Area", "Status"];
-
-		const rowsComparator = EffortStatusComparator.compare;
-
-		const rows = efforts
-			.sort(rowsComparator)
-			.map(e => {
-				const effortLink = this.toLink(e);
-				const aresStr = e.getRelatedArea()?.title ?? "--";
-				return [effortLink, aresStr, e.status];
-			});
-		return await this.dvRenderer.table(headers, rows);
 	}
 }

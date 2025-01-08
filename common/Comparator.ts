@@ -1,12 +1,15 @@
 export default class Comparator {
-	static combineCompare<T>(fn1: ComparingFn<T>, fn2: ComparingFn<T>): ComparingFn<T> {
-		return (o1, o2) => {
-			let res1 = fn1(o1, o2);
-			if (res1 !== 0) {
-				return res1;
-			}
-			return fn2(o1, o2);
-		};
+
+	static combine<T>(fns: ComparingFn<T>[]): ComparingFn<T> {
+		return fns.reduce((fn1, fn2) => {
+			return (o1, o2) => {
+				let res1 = fn1(o1, o2);
+				if (res1 !== 0) {
+					return res1;
+				}
+				return fn2(o1, o2);
+			};
+		})
 	}
 
 	static reverse<T>(fn: ComparingFn<T>): ComparingFn<T> {
