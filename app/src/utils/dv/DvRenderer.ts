@@ -15,7 +15,7 @@ export default class DvRenderer {
 		this.dvApi = this.exoCtx.dvApiHolder.dvApi;
 	}
 
-	async listKOs(objects: KObject[]) { // TODO replace with table (with #)
+	async listKOs(objects: KObject[]) { // TODO replace with table
 		const links = objects.map((ko) => {
 			let koPath = this.exoCtx.appUtils.getObjectFileOrThrow(ko).path;
 			return this.dvApi.fileLink(koPath);
@@ -29,7 +29,7 @@ export default class DvRenderer {
 		div.addClass("dv-renderer");
 
 		await this.dvApi.list(links, div, this.component,
-			this.mdCtx.sourcePath // TODO maybe this in unnecessary
+			this.mdCtx.sourcePath
 		);
 
 		return div;
@@ -40,7 +40,7 @@ export default class DvRenderer {
 		div.addClass("dv-renderer");
 
 		await this.dvApi.table(headers, rows, div, this.component,
-			this.mdCtx.sourcePath // TODO maybe this in unnecessary
+			this.mdCtx.sourcePath
 		);
 
 		return div;
