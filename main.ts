@@ -53,7 +53,7 @@ export default class ExoPlugin extends Plugin {
 				return;
 			}
 
-			if (el.classList.contains("mod-ui")) {
+			if (el.classList.contains("mod-ui") && !el.classList.contains("markdown-preview-view")) {
 				const renderer = new DvRenderer(this.ctx, ctx, this);
 
 				const file: TFile = this.ctx.appUtils.getFileByPathOrThrow(ctx.sourcePath);
@@ -69,7 +69,7 @@ export default class ExoPlugin extends Plugin {
 				console.debug(`Creating layout for KObject...`, ko);
 				const layout = this.ctx.layoutFactory.create(ko, renderer);
 				if (layout === null) {
-					console.warn('Could not create layout for KObject', ko);
+					console.debug('No layout defined for KObject', ko);
 					return;
 				}
 
