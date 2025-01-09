@@ -21,6 +21,8 @@ import GetActiveFileTags from "./app/src/adapters/input/actions/no-context/utili
 import GetCurrentKOC from "./app/src/adapters/input/actions/no-context/utilities/GetCurrentKOC";
 import OpenRandomNote from "./app/src/adapters/input/actions/no-context/utilities/OpenRandomNote";
 import CreateEffortBySelectedText from "./app/src/adapters/input/actions/no-context/domain/CreateEffortBySelectedText";
+import TimeoutUtils from "./common/utils/TimeoutUtils";
+import CacheDrop from "./app/src/adapters/input/actions/no-context/utilities/CacheDrop";
 
 export default class ExoPlugin extends Plugin {
 	private api: ExoApi;
@@ -73,7 +75,7 @@ export default class ExoPlugin extends Plugin {
 					return;
 				}
 
-				await layout.render(ko, el);
+				await TimeoutUtils.withTimeout(() => layout.render(ko, el), 10000);
 
 				el.appendChild(document.createElement("hr"));
 
@@ -93,6 +95,7 @@ export default class ExoPlugin extends Plugin {
 				new OpenCurrentDailyNote(this.ctx)
 			]),
 			folderFactory.create("Utilities", [
+				new CacheDrop(this.ctx),
 				new AddMissingFrontmatter(this.ctx),
 				new AddMissingUid(this.ctx),
 				new CountNotes(this.ctx),

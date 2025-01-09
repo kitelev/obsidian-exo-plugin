@@ -1,11 +1,11 @@
-import AbstractSerde from "./AbstractSerde";
 import {EnumFieldType, Field, KObjectFieldType, NumberFieldType, TimestampFieldType} from "./SerdeFields";
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import Effort, {EffortBuilder} from "../../../../../core/src/domain/ems/effort/Effort";
 import {EffortStatus} from "../../../../../core/src/domain/ems/effort/EffortStatus";
+import ExoContext from "../../../../../common/ExoContext";
 
-export default class EffortSerde extends AbstractSerde<Effort> {
+export default class EffortSerde {
 
 	static readonly FIELDS: Field[] = [
 		{
@@ -25,11 +25,14 @@ export default class EffortSerde extends AbstractSerde<Effort> {
 		// {fmPropName: "relates", koPropName: "relates", type: new ArrayFieldType<KObject>(new KObjectFieldType())},
 	];
 
-	async createInternal(file: TFile,
-						 id: UUID,
-						 title: string,
-						 body: string,
-						 fm: FrontMatterCache): Promise<Effort> {
+	constructor(private ctx: ExoContext) {
+	}
+
+	async create(file: TFile,
+				 id: UUID,
+				 title: string,
+				 body: string,
+				 fm: FrontMatterCache): Promise<Effort> {
 		const builder = new EffortBuilder();
 		builder.id = id;
 		builder.title = title;

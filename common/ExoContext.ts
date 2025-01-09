@@ -38,6 +38,8 @@ import SimulacrumRepository from "../core/src/ports/output/SimulacrumRepository"
 import SimulacrumPersistenceAdapter from "../app/src/adapters/output/persistence/SimulacrumPersistenceAdapter";
 import SimulacrumCreator from "../app/src/adapters/output/creators/SimulacrumCreator";
 import KObjectPathRulesHelper from "../app/src/helpers/KObjectPathRulesHelper";
+import {UUID} from "node:crypto";
+import Effort from "../core/src/domain/ems/effort/Effort";
 
 export default class ExoContext {
 	// Utils
@@ -60,6 +62,8 @@ export default class ExoContext {
 	public readonly simulacrumCreator: SimulacrumCreator = new SimulacrumCreator(this);
 	public readonly propertyCreator: PropertyCreator = new PropertyCreator(this);
 	public readonly kocObjectCreator: KOCObjectCreator = new KOCObjectCreator(this);
+
+	public readonly effortCache: EffortCache = new EffortCache();
 
 	// KO Repositories
 	public readonly kObjectRepository: KObjectRepository = new KObjectPersistenceAdapter(this);
@@ -85,5 +89,21 @@ export default class ExoContext {
 	public readonly effortCommandFactory: EffortActionFactory = new EffortActionFactory(this);
 
 	constructor(public app: App) {
+	}
+}
+
+export class EffortCache {
+	private cache: Map<UUID, Effort> = new Map();
+
+	public get(id: UUID): Effort | undefined {
+		return this.cache.get(id);
+	}
+
+	public set(id: UUID, effort: Effort): void {
+		this.cache.set(id, effort);
+	}
+
+	public clear() {
+		this.cache.clear();
 	}
 }
