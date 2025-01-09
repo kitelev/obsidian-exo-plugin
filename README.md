@@ -34,6 +34,7 @@ Every KO should have properties:
 - Date fields (started, ended) behaves weird when starting and shutting down (with buttons in layout)
 - When `StartEffort` is clicked, the `started` date is +1 hour than the current time
 - Self link in Effort properties leads to endless freeze
+- When selected text has `/` then [CreateEffortBySelectedText.ts](app/src/adapters/input/actions/no-context/domain/CreateEffortBySelectedText.ts) will throw an error
 
 # TODO
 
