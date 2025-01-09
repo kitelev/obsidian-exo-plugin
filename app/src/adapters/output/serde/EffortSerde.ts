@@ -1,5 +1,5 @@
 import AbstractSerde from "./AbstractSerde";
-import {EnumFieldType, Field, KObjectFieldType, TimestampFieldType} from "./SerdeFields";
+import {EnumFieldType, Field, KObjectFieldType, NumberFieldType, TimestampFieldType} from "./SerdeFields";
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import Effort, {EffortBuilder} from "../../../../../core/src/domain/ems/effort/Effort";
@@ -21,8 +21,8 @@ export default class EffortSerde extends AbstractSerde<Effort> {
 		{fmPropName: "planned-start", koPropName: "plannedStart", type: new TimestampFieldType()},
 		{fmPropName: "planned-end", koPropName: "plannedEnd", type: new TimestampFieldType()},
 		{fmPropName: "due", koPropName: "due", type: new TimestampFieldType()},
-		// {fmPropName: "votes", koPropName: "votes", type: new TimestampFieldType()},
-		// {fmPropName: "relates", koPropName: "relates", type: new TimestampFieldType()},
+		{fmPropName: "votes", koPropName: "votes", type: new NumberFieldType()},
+		// {fmPropName: "relates", koPropName: "relates", type: new ArrayFieldType<KObject>(new KObjectFieldType())},
 	];
 
 	async createInternal(file: TFile,

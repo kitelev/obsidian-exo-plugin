@@ -30,12 +30,21 @@ Every KO should have properties:
 - Update of domain object will lead to removing all unknown properties from the object
 
 # Known Issues
+
 - Date fields (started, ended) behaves weird when starting and shutting down (with buttons in layout)
 - When `StartEffort` is clicked, the `started` date is +1 hour than the current time
 
 # TODO
 
+- Implement `Effort.relates` field serde
+- Add `Effort.trashed` field
 - Create PersonArea domain class that extends Area
+- Layout should show main properties (without historical)
+- Every change of effort leads to freeze
+	- short-term - editing in edit mode
+	- long-term - optimize layout loading
+		- parallel loading of sections
+		- cancel loading after note change
 
 # Code rules
 

@@ -25,6 +25,18 @@ export class TimestampFieldType implements FieldType<Date> {
 	}
 }
 
+export class LocalDateFieldType implements FieldType<Date> {
+	async de(ctx: ExoContext, str: string): Promise<Date> {
+		let res = new Date(str);
+		res.setHours(0, 0, 0, 0);
+		return res;
+	}
+
+	ser(ctx: ExoContext, value: Date): string {
+		return DateUtils.formatLocalDate(value);
+	}
+}
+
 export class NumberFieldType implements FieldType<number> {
 	async de(ctx: ExoContext, str: string): Promise<number> {
 		return parseInt(str);
@@ -63,17 +75,15 @@ export class KObjectFieldType implements FieldType<KObject> {
 	}
 }
 
-export class ArrayFieldType<T> implements FieldType<T[]> {
-	constructor(private readonly innerType: FieldType<T>) {
-	}
-
-	async de(ctx: ExoContext, str: string): Promise<T[]> {
-		let arr = str.split("\n");
-		let strLinks = arr.map(line => line.replace(" - ", ""));
-		return await Promise.all(strLinks.map(async str => await this.innerType.de(ctx, str)));
-	}
-
-	ser(ctx: ExoContext, koArr: T[]): string {
-		return koArr.map(value => this.innerType.ser(ctx, value)).join(",");
-	}
-}
+// export class ArrayFieldType<T> implements FieldType<T[]> {
+// 	constructor(private readonly innerType: FieldType<T>) {
+// 	}
+//
+// 	async de(ctx: ExoContext, arr: string[]): Promise<T[]> {
+// 		return await Promise.all(arr.map(async str => await this.innerType.de(ctx, str)));
+// 	}
+//
+// 	ser(ctx: ExoContext, koArr: T[]): string {
+// 		return koArr.map(value => this.innerType.ser(ctx, value)).join(",");
+// 	}
+// }

@@ -51,7 +51,7 @@ export default class AreaLayout extends AbstractLayout<Area> {
 			el.appendChild(header);
 
 			const fieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS, EffortFieldEnum.VOTES];
-			const fieldsToSort = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES];
+			const fieldsToSort = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES, EffortFieldEnum.AREA];
 			const dvTable = await this.createTableSuper(unresolvedEfforts, fieldsToRender, fieldsToSort);
 			el.appendChild(dvTable)
 		}
