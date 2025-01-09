@@ -12,7 +12,7 @@ export default class KOCObjectLayout extends AbstractLayout<KOCObject> {
 
 	async render(ko: KOCObject, el: HTMLElement): Promise<void> {
 		if (ko.implKoc === KOC.UNKNOWN) {
-			el.appendChild(this.createH1("Unknown KOC"))
+			el.appendChild(this.createH1("Unknown impl KOC"))
 			return;
 		}
 		await this.handleUnresolvedRelatedEfforts(ko, el);
