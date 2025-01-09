@@ -107,6 +107,7 @@ export enum EffortFieldEnum {
 	AREA = "AREA",
 	STATUS = "STATUS",
 	VOTES = "VOTES",
+	DUE = "DUE",
 	PLAN = "PLAN"
 }
 
@@ -140,6 +141,14 @@ export class EffortField {
 						return `${e.getVotes()}`;
 					},
 					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes()))
+				}
+			case EffortFieldEnum.DUE:
+				return {
+					columnName: "Due",
+					renderFn: (e) => {
+						return `${e.due ? DateUtils.formatLocalDate(e.due) : "--"}`;
+					},
+					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.due?.getTime() ?? 0))
 				}
 			case EffortFieldEnum.PLAN:
 				return {
