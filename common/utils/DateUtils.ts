@@ -6,7 +6,11 @@ export default class DateUtils {
 		if (!d2) {
 			throw new Error('d2 is required');
 		}
-		return d1.setHours(0, 0, 0, 0) === d2.setHours(0, 0, 0, 0);
+		const d1Copy = new Date(d1);
+		const d2Copy = new Date(d2);
+		d1Copy.setHours(0, 0, 0, 0);
+		d2Copy.setHours(0, 0, 0, 0);
+		return d1Copy.getTime() === d2Copy.getTime();
 	}
 
 	static formatTimestamp(date: Date): string {
@@ -20,6 +24,6 @@ export default class DateUtils {
 
 	static formatLocalTime(date: Date): string {
 		const pad = (n: number) => n.toString().padStart(2, '0');
-		return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+		return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 	}
 }

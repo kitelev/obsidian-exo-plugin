@@ -78,6 +78,7 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 	protected async createTableSuper(efforts: Effort[],
 									 fieldsToRender: EffortFieldEnum[],
 									 fieldsToSort: EffortFieldEnum[] = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES]): Promise<HTMLElement> {
+		console.log("fieldsToSort", fieldsToSort);
 		const headers = ["Effort", ...fieldsToRender.map(f => EffortField.enum2Field(f).columnName)];
 
 		const comparatorSuper = Comparator.combine(fieldsToSort.map(f => EffortField.enum2Field(f).comparingFn));
@@ -108,7 +109,7 @@ export enum EffortFieldEnum {
 	STATUS = "STATUS",
 	VOTES = "VOTES",
 	DUE = "DUE",
-	PLAN = "PLAN"
+	PLAN_TIME = "PLAN_TIME"
 }
 
 export class EffortField {
@@ -150,13 +151,19 @@ export class EffortField {
 					},
 					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.due?.getTime() ?? 0))
 				}
-			case EffortFieldEnum.PLAN:
+			case EffortFieldEnum.PLAN_TIME:
 				return {
-					columnName: "Plan",
+					columnName: "Plan Time",
 					renderFn: (e) => {
-						return e.plannedStart ? DateUtils.formatTimestamp(e.plannedStart) : "--";
+						if (e.plannedStart && e.plannedEnd) {
+							return `${DateUtils.formatLocalTime(e.plannedStart)} - ${DateUtils.formatLocalTime(e.plannedEnd)}`;
+						} else if (e.plannedStart) {
+							return DateUtils.formatLocalTime(e.plannedStart);
+						} else {
+							return "--";
+						}
 					},
-					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes()))
+					comparingFn: Comparator.comparing((e: Effort) => e.plannedStart?.getTime() ?? 0)
 				}
 		}
 	}

@@ -15,6 +15,8 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 	async render(ko: DailyNote, el: HTMLElement): Promise<void> {
 		const filters: Map<string, (e: Effort) => boolean> = new Map();
 		const day = ko.date;
+		const dayStart = new Date(day);
+		dayStart.setHours(0, 0, 0, 0);
 
 		filters.set("plannedStartToday", e => {
 			if (!e.plannedStart) {
@@ -65,21 +67,22 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 	}
 
 	private async handlePlannedStartToday(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
-		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.PLAN, EffortFieldEnum.STATUS];
-		await this.printEfforts(efforts, el, filters.get("plannedStartToday")!, "Planned start today", fieldsToRender);
+		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.PLAN_TIME];
+		await this.printEfforts(efforts, el, filters.get("plannedStartToday")!, "Planned start today", fieldsToRender, [EffortFieldEnum.PLAN_TIME]);
 	}
 
 	private async printEfforts(allEfforts: Effort[],
 							   el: HTMLElement,
 							   predicate: Predicate<Effort>,
 							   title: string,
-							   fieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS]) {
+							   fieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS],
+							   fieldsToSort?: EffortFieldEnum[]) {
 		const efforts = allEfforts.filter(predicate);
 		if (efforts.length > 0) {
 			let header = this.createH1(title);
 			el.appendChild(header);
 
-			const dvTable = await this.createTableSuper(efforts, fieldsToRender);
+			const dvTable = await this.createTableSuper(efforts, fieldsToRender, fieldsToSort);
 			el.appendChild(dvTable)
 		}
 	}
