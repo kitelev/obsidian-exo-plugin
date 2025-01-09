@@ -43,6 +43,12 @@ export default class Effort extends KObject {
 		return null;
 	}
 
+	getClosestParent(): Effort | null {
+		if (this.parent !== null) return this.parent;
+		if (this.prototype !== null) return this.prototype.effortParent;
+		return null;
+	}
+
 	/**
 	 * Returns true if this effort is in the given area or one of its parents
 	 */
