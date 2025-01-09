@@ -41,6 +41,9 @@ export default class AreaLayout extends AbstractLayout<Area> {
 			if (e.getRelatedArea() === null) {
 				return false;
 			}
+			if (e.parent !== null) {
+				return false;
+			}
 			const sameArea = e.isInAreaOrOneOfItsParents(ko);
 			const unresolved = e.isUnresolved();
 			return sameArea && unresolved;
