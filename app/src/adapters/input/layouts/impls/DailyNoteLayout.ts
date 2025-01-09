@@ -18,7 +18,17 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		const dayStart = new Date(day);
 		dayStart.setHours(0, 0, 0, 0);
 
+		filters.set("e2e done", e => {
+			if (!e.ended || !e.started) {
+				return false;
+			}
+			return DateUtils.sameDay(e.started, day) && DateUtils.sameDay(e.ended, day);
+		});
+
 		filters.set("plannedStartToday", e => {
+			if (filters.get("e2e done")!(e)) {
+				return false;
+			}
 			if (!e.plannedStart) {
 				return false;
 			}
@@ -40,6 +50,9 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		});
 
 		filters.set("started", e => {
+			if (filters.get("e2e done")!(e)) {
+				return false;
+			}
 			if (!e.started || e.isResolved()) {
 				return false;
 			}
@@ -47,6 +60,9 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		});
 
 		filters.set("ended", e => {
+			if (filters.get("e2e done")!(e)) {
+				return false;
+			}
 			if (!e.ended) {
 				return false;
 			}
@@ -62,7 +78,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		await this.printEfforts(efforts, el, filters.get("due")!, "Due today or before");
 		await this.printEfforts(efforts, el, filters.get("started")!, "Started today");
 		await this.printEfforts(efforts, el, filters.get("ended")!, "Ended today");
-		// TODO add filter "Done today"
+		await this.printEfforts(efforts, el, filters.get("e2e done")!, "Done today");
 		// TODO do not show waiting efforts that waiting-till > dn-date
 	}
 
