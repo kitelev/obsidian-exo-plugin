@@ -55,7 +55,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 			return Array.from(filters.values()).some(f => f(e));
 		});
 
-		await this.printEfforts(efforts, el, filters.get("plannedStartToday")!, "Planned start today");
+		await this.handlePlannedStartToday(efforts, el, filters);
 		await this.printEfforts(efforts, el, filters.get("plannedStartBefore")!, "Planned start before");
 		await this.printEfforts(efforts, el, filters.get("due")!, "Due today or before");
 		await this.printEfforts(efforts, el, filters.get("started")!, "Started today");
@@ -64,13 +64,22 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		// TODO do not show waiting efforts that waiting-till > dn-date
 	}
 
-	private async printEfforts(allEfforts: Effort[], el: HTMLElement, predicate: Predicate<Effort>, title: string) {
+	private async handlePlannedStartToday(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
+		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.PLAN, EffortFieldEnum.STATUS];
+		await this.printEfforts(efforts, el, filters.get("plannedStartToday")!, "Planned start today", fieldsToRender);
+	}
+
+	private async printEfforts(allEfforts: Effort[],
+							   el: HTMLElement,
+							   predicate: Predicate<Effort>,
+							   title: string,
+							   fieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS]) {
 		const efforts = allEfforts.filter(predicate);
 		if (efforts.length > 0) {
 			let header = this.createH1(title);
 			el.appendChild(header);
 
-			const dvTable = await this.createTableSuper(efforts, [EffortFieldEnum.AREA, EffortFieldEnum.STATUS]);
+			const dvTable = await this.createTableSuper(efforts, fieldsToRender);
 			el.appendChild(dvTable)
 		}
 	}

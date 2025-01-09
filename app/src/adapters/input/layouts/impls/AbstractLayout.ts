@@ -5,6 +5,7 @@ import KObject from "../../../../../../core/src/domain/KObject";
 import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
 import {EffortStatusComparator} from "../../../../../../core/src/domain/ems/effort/EffortStatus";
 import Comparator, {ComparingFn} from "../../../../../../common/Comparator";
+import DateUtils from "../../../../../../common/utils/DateUtils";
 
 export default abstract class AbstractLayout<KO> implements Layout<KO> {
 	protected constructor(protected ctx: ExoContext,
@@ -77,7 +78,7 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 	protected async createTableSuper(efforts: Effort[],
 									 fieldsToRender: EffortFieldEnum[],
 									 fieldsToSort: EffortFieldEnum[] = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES]): Promise<HTMLElement> {
-		const headers = ["Effort", ...fieldsToRender.map(f => EffortField.enum2Field(f).field)];
+		const headers = ["Effort", ...fieldsToRender.map(f => EffortField.enum2Field(f).columnName)];
 
 		const comparatorSuper = Comparator.combine(fieldsToSort.map(f => EffortField.enum2Field(f).comparingFn));
 
@@ -105,11 +106,12 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 export enum EffortFieldEnum {
 	AREA = "AREA",
 	STATUS = "STATUS",
-	VOTES = "VOTES"
+	VOTES = "VOTES",
+	PLAN = "PLAN"
 }
 
 export class EffortField {
-	public field: keyof Effort;
+	public columnName: string;
 	public renderFn: (effort: Effort) => string;
 	public comparingFn: ComparingFn<Effort>;
 
@@ -117,7 +119,7 @@ export class EffortField {
 		switch (field) {
 			case EffortFieldEnum.AREA:
 				return {
-					field: "area",
+					columnName: "Area",
 					renderFn: (e) => {
 						return e.getRelatedArea()?.title ?? "--";
 					},
@@ -125,7 +127,7 @@ export class EffortField {
 				};
 			case EffortFieldEnum.STATUS:
 				return {
-					field: "status",
+					columnName: "Status",
 					renderFn: (e) => {
 						return e.status;
 					},
@@ -133,9 +135,17 @@ export class EffortField {
 				}
 			case EffortFieldEnum.VOTES:
 				return {
-					field: "votes",
+					columnName: "Votes",
 					renderFn: (e) => {
 						return `${e.getVotes()}`;
+					},
+					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes()))
+				}
+			case EffortFieldEnum.PLAN:
+				return {
+					columnName: "Plan",
+					renderFn: (e) => {
+						return e.plannedStart ? DateUtils.formatTimestamp(e.plannedStart) : "--";
 					},
 					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.getVotes()))
 				}
