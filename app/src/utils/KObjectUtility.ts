@@ -83,7 +83,8 @@ export default class KObjectUtility {
 			return ids.indexOf(id) !== index;
 		});
 
-		new Notice(`Found ${res.length} files with duplicate ids`);
+		new Notice(`Found ${res.length} files with duplicate ids. See console`);
+		console.log(res.map(f => f.path));
 		return res;
 	}
 
