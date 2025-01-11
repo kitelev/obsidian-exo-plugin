@@ -69,6 +69,13 @@ export default class Effort extends KObject {
 	isUnresolved(): boolean {
 		return !this.isResolved();
 	}
+
+	getLeadTimeMinutes(): number | null {
+		if (!this.started || !this.ended) {
+			return null;
+		}
+		return (this.ended.getTime() - this.started.getTime()) / 1000 / 60;
+	}
 }
 
 export class EffortBuilder {

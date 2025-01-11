@@ -36,4 +36,25 @@ export default class DateUtils {
 		const pad = (n: number) => n.toString().padStart(2, '0');
 		return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
 	}
+
+	/**
+	 * Format a time period in the format "??d ??h ??m"
+	 * if 0 days, it will be omitted
+	 */
+	static formatTimePeriodFromMinutes(periodInMins: number): string {
+		const days = Math.floor(periodInMins / (60 * 24));
+		const hours = Math.floor(periodInMins / (60)) % 24;
+		const minutes = Math.floor(periodInMins) % 60;
+		const parts = [];
+		if (days > 0) {
+			parts.push(`${days}d`);
+		}
+		if (hours > 0) {
+			parts.push(`${hours}h`);
+		}
+		if (minutes > 0) {
+			parts.push(`${minutes}m`);
+		}
+		return parts.join(' ');
+	}
 }

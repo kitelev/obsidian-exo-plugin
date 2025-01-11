@@ -109,7 +109,9 @@ export enum EffortFieldEnum {
 	STATUS = "STATUS",
 	VOTES = "VOTES",
 	DUE = "DUE",
-	PLAN_TIME = "PLAN_TIME"
+	PLAN_TIME = "PLAN_TIME",
+	STARTED = "STARTED",
+	TIME_SPENT = "TIME_SPENT"
 }
 
 export class EffortField {
@@ -164,6 +166,20 @@ export class EffortField {
 						}
 					},
 					comparingFn: Comparator.comparing((e: Effort) => e.plannedStart?.getTime() ?? 0)
+				}
+			case EffortFieldEnum.STARTED:
+				return {
+					columnName: "Started",
+					renderFn: (e) => {
+						return e.started ? DateUtils.formatLocalTime(e.started) : "--";
+					},
+					comparingFn: Comparator.comparing((e: Effort) => e.started?.getTime() ?? 0)
+				}
+			case EffortFieldEnum.TIME_SPENT:
+				return {
+					columnName: "Time Spent",
+					renderFn: (e) => `${e.getLeadTimeMinutes() ? DateUtils.formatTimePeriodFromMinutes(e.getLeadTimeMinutes()!) : "--"}`,
+					comparingFn: Comparator.comparing((e: Effort) => e.getLeadTimeMinutes() ?? 0)
 				}
 		}
 	}

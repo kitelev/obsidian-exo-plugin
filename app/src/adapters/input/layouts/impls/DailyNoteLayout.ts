@@ -78,13 +78,18 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		await this.printEfforts(efforts, el, filters.get("due")!, "Due today or before");
 		await this.printEfforts(efforts, el, filters.get("started")!, "Started today");
 		await this.printEfforts(efforts, el, filters.get("ended")!, "Ended today");
-		await this.printEfforts(efforts, el, filters.get("e2e done")!, "Done today");
+		await this.handleDoneEfforts(efforts, el, filters);
 		// TODO do not show waiting efforts that waiting-till > dn-date
 	}
 
 	private async handlePlannedStartToday(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
 		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.PLAN_TIME];
 		await this.printEfforts(efforts, el, filters.get("plannedStartToday")!, "Planned start today", fieldsToRender, [EffortFieldEnum.PLAN_TIME]);
+	}
+
+	private async handleDoneEfforts(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
+		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.STARTED, EffortFieldEnum.TIME_SPENT];
+		await this.printEfforts(efforts, el, filters.get("e2e done")!, "Done today", fieldsToRender, [EffortFieldEnum.STARTED]);
 	}
 
 	private async printEfforts(allEfforts: Effort[],
