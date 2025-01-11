@@ -13,6 +13,16 @@ export default class DateUtils {
 		return d1Copy.getTime() === d2Copy.getTime();
 	}
 
+	/**
+	 * Returns true if d1 is the same day or before d2
+	 */
+	static sameDayOrBefore(d1: Date, d2: Date): boolean {
+		if (this.sameDay(d1, d2)) {
+			return true;
+		}
+		return d1.getTime() < d2.getTime();
+	}
+
 	static formatTimestamp(date: Date): string {
 		return `${this.formatLocalDate(date)} ${this.formatLocalTime(date)}`;
 	}
