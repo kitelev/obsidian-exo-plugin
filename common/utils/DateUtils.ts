@@ -13,14 +13,25 @@ export default class DateUtils {
 		return d1Copy.getTime() === d2Copy.getTime();
 	}
 
+	static dayBefore(d1: Date, d2: Date): boolean {
+		if (!d1) {
+			throw new Error('d1 is required');
+		}
+		if (!d2) {
+			throw new Error('d2 is required');
+		}
+		const d1Copy = new Date(d1);
+		const d2Copy = new Date(d2);
+		d1Copy.setHours(0, 0, 0, 0);
+		d2Copy.setHours(0, 0, 0, 0);
+		return d1Copy.getTime() < d2Copy.getTime();
+	}
+
 	/**
 	 * Returns true if d1 is the same day or before d2
 	 */
 	static sameDayOrBefore(d1: Date, d2: Date): boolean {
-		if (this.sameDay(d1, d2)) {
-			return true;
-		}
-		return d1.getTime() < d2.getTime();
+		return this.sameDay(d1, d2) || this.dayBefore(d1, d2);
 	}
 
 	static formatTimestamp(date: Date): string {

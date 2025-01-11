@@ -39,7 +39,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 			if (!e.plannedStart || e.isResolved()) {
 				return false;
 			}
-			return e.plannedStart.setHours(0, 0, 0, 0) < day.setHours(0, 0, 0, 0);
+			return DateUtils.dayBefore(e.plannedStart, day);
 		});
 
 		filters.set("due", e => {
