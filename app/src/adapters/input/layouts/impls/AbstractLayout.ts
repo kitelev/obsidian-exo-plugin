@@ -109,6 +109,7 @@ export enum EffortFieldEnum {
 	STATUS = "STATUS",
 	VOTES = "VOTES",
 	DUE = "DUE",
+	PLANNED_START = "PLANNED_START",
 	PLAN_TIME = "PLAN_TIME",
 	STARTED = "STARTED",
 	TIME_SPENT = "TIME_SPENT"
@@ -152,6 +153,18 @@ export class EffortField {
 						return `${e.due ? DateUtils.formatLocalDate(e.due) : "--"}`;
 					},
 					comparingFn: Comparator.reverse(Comparator.comparing((e: Effort) => e.due?.getTime() ?? 0))
+				}
+			case EffortFieldEnum.PLANNED_START:
+				return {
+					columnName: "Planed Start",
+					renderFn: (e) => {
+						if (e.plannedStart) {
+							return DateUtils.formatTimestamp(e.plannedStart);
+						} else {
+							return "--";
+						}
+					},
+					comparingFn: Comparator.comparing((e: Effort) => e.plannedStart?.getTime() ?? 0)
 				}
 			case EffortFieldEnum.PLAN_TIME:
 				return {

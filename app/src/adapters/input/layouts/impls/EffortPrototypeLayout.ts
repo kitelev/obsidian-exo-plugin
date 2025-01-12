@@ -1,6 +1,6 @@
 import ExoContext from "../../../../../../common/ExoContext";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
-import AbstractLayout from "./AbstractLayout";
+import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
 import EffortPrototype from "../../../../../../core/src/domain/ems/effort/EffortPrototype";
 import CreateEffort from "../../actions/no-context/domain/CreateEffort";
 
@@ -37,7 +37,7 @@ export default class EffortPrototypeLayout extends AbstractLayout<EffortPrototyp
 		}
 
 		el.appendChild(this.createH1("Unresolved implementations"));
-		let div = await this.dvRenderer.listKOs(impls.slice(0, 50));
-		el.appendChild(div)
+		let table = await this.createTableSuper(impls, [EffortFieldEnum.PLANNED_START], [EffortFieldEnum.PLANNED_START]);
+		el.appendChild(table);
 	}
 }
