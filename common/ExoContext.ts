@@ -40,6 +40,9 @@ import SimulacrumCreator from "../app/src/adapters/output/creators/SimulacrumCre
 import KObjectPathRulesHelper from "../app/src/helpers/KObjectPathRulesHelper";
 import {UUID} from "node:crypto";
 import Effort from "../core/src/domain/ems/effort/Effort";
+import EffortPrototypePersistenceAdapter
+	from "../app/src/adapters/output/persistence/EffortPrototypePersistenceAdapter";
+import EffortPrototypeRepository from "../core/src/ports/output/EffortPrototypeRepository";
 
 export default class ExoContext {
 	// Utils
@@ -70,6 +73,7 @@ export default class ExoContext {
 	public readonly mocRepository: MocRepository = new MocPersistenceAdapter(this);
 	public readonly simulacrumRepository: SimulacrumRepository = new SimulacrumPersistenceAdapter(this);
 	public readonly effortRepository: EffortRepository = new EffortPersistenceAdapter(this);
+	public readonly effortPrototypeRepository: EffortPrototypeRepository = new EffortPrototypePersistenceAdapter(this);
 	public readonly dailyNoteRepository: DailyNoteRepository = new DailyNotePersistenceAdapter(this);
 
 	// Domain utils

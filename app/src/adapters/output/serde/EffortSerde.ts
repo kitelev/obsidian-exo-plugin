@@ -7,7 +7,7 @@ import ExoContext from "../../../../../common/ExoContext";
 
 export default class EffortSerde {
 
-	static readonly FIELDS: Field[] = [
+	static readonly FIELDS: Field<EffortBuilder>[] = [
 		{fmPropName: "e-prototype", koPropName: "prototype", type: new KObjectFieldType()},
 		{fmPropName: "e-parent", koPropName: "parent", type: new KObjectFieldType()},
 		{fmPropName: "area", koPropName: "area", type: new KObjectFieldType()},

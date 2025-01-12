@@ -3,6 +3,7 @@ import Area from "../../../../../../core/src/domain/ems/Area";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
 import CreateEffort from "../../actions/no-context/domain/CreateEffort";
+import EffortPrototype from "../../../../../../core/src/domain/ems/effort/EffortPrototype";
 
 export default class AreaLayout extends AbstractLayout<Area> {
 	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
@@ -12,6 +13,7 @@ export default class AreaLayout extends AbstractLayout<Area> {
 	async render(ko: Area, el: HTMLElement): Promise<void> {
 		await this.createCreateEffortButton(el);
 		await this.handleChildren(ko, el);
+		await this.handleEffortPrototypes(ko, el);
 		await this.handleUnresolvedEfforts(ko, el);
 	}
 
@@ -33,6 +35,17 @@ export default class AreaLayout extends AbstractLayout<Area> {
 		el.appendChild(header);
 
 		let div = await this.dvRenderer.listKOs(children);
+		el.appendChild(div)
+	}
+
+	private async handleEffortPrototypes(ko: Area, el: HTMLElement) {
+		const prototypes: EffortPrototype[] = await this.ctx.effortPrototypeRepository.findByArea(ko);
+		if (prototypes.length === 0) return;
+
+		let header = this.createH1("Effort Prototypes");
+		el.appendChild(header);
+
+		let div = await this.dvRenderer.listKOs(prototypes);
 		el.appendChild(div)
 	}
 

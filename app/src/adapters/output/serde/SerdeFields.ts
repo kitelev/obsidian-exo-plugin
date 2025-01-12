@@ -1,11 +1,10 @@
-import {EffortBuilder} from "../../../../../core/src/domain/ems/effort/Effort";
 import ExoContext from "../../../../../common/ExoContext";
 import DateUtils from "../../../../../common/utils/DateUtils";
 import KObject from "../../../../../core/src/domain/KObject";
 
-export class Field {
+export class Field<KEYS> {
 	public readonly fmPropName: string;
-	public readonly koPropName: keyof EffortBuilder;
+	public readonly koPropName: keyof KEYS;
 	public readonly type: FieldType<any>;
 }
 
