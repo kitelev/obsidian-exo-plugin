@@ -8,19 +8,19 @@ import ExoContext from "../../../../../common/ExoContext";
 export default class EffortSerde {
 
 	static readonly FIELDS: Field[] = [
+		{fmPropName: "e-prototype", koPropName: "prototype", type: new KObjectFieldType()},
+		{fmPropName: "e-parent", koPropName: "parent", type: new KObjectFieldType()},
+		{fmPropName: "area", koPropName: "area", type: new KObjectFieldType()},
 		{
 			fmPropName: "e-status",
 			koPropName: "status",
 			type: new EnumFieldType<EffortStatus>(Object.values(EffortStatus))
 		},
-		{fmPropName: "started", koPropName: "started", type: new TimestampFieldType()},
-		{fmPropName: "ended", koPropName: "ended", type: new TimestampFieldType()},
-		{fmPropName: "e-prototype", koPropName: "prototype", type: new KObjectFieldType()},
-		{fmPropName: "e-parent", koPropName: "parent", type: new KObjectFieldType()},
-		{fmPropName: "area", koPropName: "area", type: new KObjectFieldType()},
 		{fmPropName: "planned-start", koPropName: "plannedStart", type: new TimestampFieldType()},
 		{fmPropName: "planned-end", koPropName: "plannedEnd", type: new TimestampFieldType()},
 		{fmPropName: "due", koPropName: "due", type: new TimestampFieldType()},
+		{fmPropName: "started", koPropName: "started", type: new TimestampFieldType()},
+		{fmPropName: "ended", koPropName: "ended", type: new TimestampFieldType()},
 		{fmPropName: "votes", koPropName: "votes", type: new NumberFieldType()},
 		// {fmPropName: "relates", koPropName: "relates", type: new ArrayFieldType<KObject>(new KObjectFieldType())},
 	];
