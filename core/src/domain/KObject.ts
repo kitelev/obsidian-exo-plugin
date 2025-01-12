@@ -9,6 +9,6 @@ export default class KObject {
 	}
 
 	getTitleWithoutPrefix(): string {
-		return this.title.replace(/\(.*\)/g, "");
+		return this.title.replace(/\(.*\)\s*/g, "");
 	}
 }
