@@ -74,7 +74,7 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 		});
 
 		await this.handlePlannedStartToday(efforts, el, filters);
-		await this.printEfforts(efforts, el, filters.get("plannedStartBefore")!, "Planned start before");
+		await this.handlePlannedStartBefore(efforts, el, filters);
 		await this.printEfforts(efforts, el, filters.get("due")!, "Due today or before");
 		await this.printEfforts(efforts, el, filters.get("started")!, "Started today");
 		await this.printEfforts(efforts, el, filters.get("ended")!, "Ended today");
@@ -85,6 +85,12 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 	private async handlePlannedStartToday(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
 		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.PLAN_TIME];
 		await this.printEfforts(efforts, el, filters.get("plannedStartToday")!, "Planned start today", fieldsToRender, [EffortFieldEnum.PLAN_TIME]);
+	}
+
+	private async handlePlannedStartBefore(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
+		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.STATUS, EffortFieldEnum.PLANNED_START];
+		let fieldsToSort: EffortFieldEnum[] = [EffortFieldEnum.PLANNED_START];
+		await this.printEfforts(efforts, el, filters.get("plannedStartBefore")!, "Planned start before", fieldsToRender, fieldsToSort);
 	}
 
 	private async handleDoneEfforts(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
