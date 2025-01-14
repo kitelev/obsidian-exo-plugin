@@ -78,7 +78,6 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 	protected async createTableSuper(efforts: Effort[],
 									 fieldsToRender: EffortFieldEnum[],
 									 fieldsToSort: EffortFieldEnum[] = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES]): Promise<HTMLElement> {
-		console.log("fieldsToSort", fieldsToSort);
 		const headers = ["Effort", ...fieldsToRender.map(f => EffortField.enum2Field(f).columnName)];
 
 		const comparatorSuper = Comparator.combine(fieldsToSort.map(f => EffortField.enum2Field(f).comparingFn));
