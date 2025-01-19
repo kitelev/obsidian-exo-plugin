@@ -19,6 +19,11 @@ export default class AppUtils {
 		await this.waitCacheUpdate(file);
 	}
 
+	async move(ko: KObject, folderPath: string) {
+		const file = this.getObjectFileOrThrow(ko);
+		await this.app.fileManager.renameFile(file, folderPath + "/" + ko.title + ".md");
+	}
+
 	private async waitCacheUpdate(file: TFile) {
 		const fileCachePromise = new Promise<CachedMetadata | null>((resolve) => {
 			const onCacheUpdate = (updatedFile: TFile) => {

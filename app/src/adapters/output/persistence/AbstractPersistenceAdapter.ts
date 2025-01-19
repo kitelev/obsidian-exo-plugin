@@ -41,6 +41,10 @@ export default abstract class AbstractPersistenceAdapter<KO extends KObject> imp
 
 	async save(ko: KO): Promise<void> {
 		const folderPath: string = this.ctx.koPathRulesHelper.getFolderPath(ko)
+		if (!await this.ctx.app.vault.adapter.exists(folderPath)) {
+			await this.ctx.app.vault.createFolder(folderPath);
+		}
+
 		const filePath = folderPath + "/" + ko.title + ".md";
 		const fileContent = this.serialize(ko);
 

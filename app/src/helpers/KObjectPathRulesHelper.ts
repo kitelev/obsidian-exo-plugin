@@ -8,33 +8,50 @@ export default class KObjectPathRulesHelper {
 	constructor(private ctx: ExoContext) {
 	}
 
+	/**
+	 * Returns the folder path where the given KObject should be moved to.
+	 */
 	getFolderPath(ko: KObject) {
 		if (ko instanceof Effort) {
 			const effort = ko as Effort;
 			if (effort.area !== null) {
-				return this.getRelatedObjectFolderPath(effort.area, "Area file has no parent folder");
+				let res = this.getKoFolder(effort.area, "Area file has no parent folder");
+				res += "/- E";
+				if (ko.isResolved()) {
+					res += "/- Archive"
+				}
+				return res;
 			}
 
 			if (effort.parent !== null) {
-				return this.getRelatedObjectFolderPath(effort.parent, "Effort parent file has no parent folder");
+				let res = this.getKoFolder(effort.parent, "Effort parent file has no parent folder");
+				res += "/- E";
+				if (ko.isResolved()) {
+					res += "/- Archive"
+				}
+				return res;
 			}
 
 			if (effort.prototype !== null) {
-				return this.getRelatedObjectFolderPath(effort.prototype, "Effort prototype file has no parent folder");
+				let res = this.getKoFolder(effort.prototype, "Effort prototype file has no parent folder");
+				if (ko.isResolved()) {
+					res += "/- Archive"
+				}
+				return res;
 			}
 		}
 
 		return this.INBOX_FOLDER_PATH;
 	}
 
-	private getRelatedObjectFolderPath(ko: KObject, noFolderMsg: string) {
+
+	private getKoFolder(ko: KObject, noFolderMsg: string) {
 		const areaFile = this.ctx.appUtils.getObjectFileOrThrow(ko);
-		const areaFolder = areaFile.parent;
-		if (!areaFolder) {
-			console.warn(noFolderMsg);
-			return this.INBOX_FOLDER_PATH;
+		const koFolder = areaFile.parent;
+		if (!koFolder) {
+			throw new Error(noFolderMsg);
 		}
 
-		return areaFolder.path;
+		return koFolder.path;
 	}
 }
