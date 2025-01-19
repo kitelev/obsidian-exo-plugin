@@ -6,6 +6,7 @@ import AbstractExoAction from "../../AbstractExoAction";
 import KObject from "../../../../../../../core/src/domain/KObject";
 import {ConsumerAsync} from "../../../../../../../common/fp/Consumer";
 import ModalForm, {TextField} from "../../../../../utils/modal/forms/ModalForm";
+import DateUtils from "../../../../../../../common/utils/DateUtils";
 
 export default class CreateEffort extends AbstractExoAction {
 	name = "Create Effort";
@@ -24,7 +25,7 @@ export default class CreateEffort extends AbstractExoAction {
 
 	private getPrefilledTitle(activeKo: KObject) {
 		if (activeKo instanceof EffortPrototype) {
-			return activeKo.getTitleWithoutPrefix();
+			return `${activeKo.getTitleWithoutPrefix()} ${DateUtils.formatLocalDate(new Date())}`;
 		} else {
 			return undefined;
 		}
