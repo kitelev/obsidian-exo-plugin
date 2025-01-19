@@ -15,10 +15,23 @@ export default class CreateEffortService implements CreateEffortUseCase {
 		builder.area = cmd.area;
 		builder.parent = cmd.parent;
 		builder.status = EffortStatus.DRAFT;
+
+		if (this.titleEndsWithDate(cmd.title)) {
+			builder.plannedStart = new Date(cmd.title.slice(-10));
+			builder.plannedStart.setHours(8, 0, 0, 0);
+			builder.plannedEnd = new Date(cmd.title.slice(-10));
+			builder.plannedEnd.setHours(22, 0, 0, 0);
+		}
+
 		const effort = builder.build();
 
 		await this.ctx.effortRepository.save(effort);
 
 		return effort;
+	}
+
+	private titleEndsWithDate(title: string): boolean {
+		const dateRegex = /\b\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+		return dateRegex.test(title);
 	}
 }
