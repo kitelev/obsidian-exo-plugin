@@ -12,6 +12,7 @@ export default class Effort extends KObject {
 	constructor(id: UUID,
 				title: string,
 				public status: EffortStatus,
+				public appetite: string | null,
 				public started: Date | null,
 				public ended: Date | null,
 				public plannedStart: Date | null,
@@ -83,6 +84,7 @@ export class EffortBuilder {
 	public title: string;
 	public body: string = "";
 	public status: EffortStatus = EffortStatus.DRAFT;
+	public appetite?: string;
 	public started?: Date | null;
 	public ended?: Date | null;
 	public plannedStart?: Date | null;
@@ -103,6 +105,7 @@ export class EffortBuilder {
 			this.id,
 			this.title,
 			this.status,
+			this.appetite ?? null,
 			this.started ?? null,
 			this.ended ?? null,
 			this.plannedStart ?? null,

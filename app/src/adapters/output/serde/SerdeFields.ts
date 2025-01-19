@@ -14,6 +14,16 @@ export interface FieldType<T> {
 	ser(ctx: ExoContext, value: T): string;
 }
 
+export class TextFieldType implements FieldType<string> {
+	async de(ctx: ExoContext, str: string): Promise<string> {
+		return str;
+	}
+
+	ser(ctx: ExoContext, value: string): string {
+		return value;
+	}
+}
+
 export class TimestampFieldType implements FieldType<Date> {
 	async de(ctx: ExoContext, str: string): Promise<Date> {
 		return new Date(str);

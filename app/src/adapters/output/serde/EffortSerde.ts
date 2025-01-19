@@ -1,4 +1,11 @@
-import {EnumFieldType, Field, KObjectFieldType, NumberFieldType, TimestampFieldType} from "./SerdeFields";
+import {
+	EnumFieldType,
+	Field,
+	KObjectFieldType,
+	NumberFieldType,
+	TextFieldType,
+	TimestampFieldType
+} from "./SerdeFields";
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import Effort, {EffortBuilder} from "../../../../../core/src/domain/ems/effort/Effort";
@@ -16,6 +23,7 @@ export default class EffortSerde {
 			koPropName: "status",
 			type: new EnumFieldType<EffortStatus>(Object.values(EffortStatus))
 		},
+		{fmPropName: "appetite", koPropName: "appetite", type: new TextFieldType()},
 		{fmPropName: "planned-start", koPropName: "plannedStart", type: new TimestampFieldType()},
 		{fmPropName: "planned-end", koPropName: "plannedEnd", type: new TimestampFieldType()},
 		{fmPropName: "due", koPropName: "due", type: new TimestampFieldType()},
