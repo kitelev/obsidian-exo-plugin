@@ -66,10 +66,53 @@ export default class AreaLayout extends AbstractLayout<Area> {
 			let header = this.createH1("Unresolved Efforts");
 			el.appendChild(header);
 
-			const fieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS, EffortFieldEnum.VOTES, EffortFieldEnum.DUE];
-			const fieldsToSort = [EffortFieldEnum.STATUS, EffortFieldEnum.DUE, EffortFieldEnum.VOTES, EffortFieldEnum.AREA];
+			const fieldsToRender = this.getFieldsToRender(ko);
+			const fieldsToSort = this.getFieldsToSort(ko);
 			const dvTable = await this.createTableSuper(unresolvedEfforts, fieldsToRender, fieldsToSort);
 			el.appendChild(dvTable)
+		}
+	}
+
+	private getFieldsToRender(area: Area) {
+		const defaultFieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS, EffortFieldEnum.VOTES, EffortFieldEnum.DUE]
+
+		if (!area.fieldsToRender) {
+			return defaultFieldsToRender;
+		}
+
+		let fieldsToRender: EffortFieldEnum[] = [];
+		for (let fieldName of area.fieldsToRender) {
+			fieldsToRender.push(this.toEnumField(fieldName));
+		}
+		return fieldsToRender;
+	}
+
+	private getFieldsToSort(area: Area) {
+		const defaultSort = [EffortFieldEnum.STATUS, EffortFieldEnum.DUE, EffortFieldEnum.VOTES, EffortFieldEnum.AREA];
+
+		if (!area.sortBy) {
+			return defaultSort;
+		}
+
+		let sortingFields: EffortFieldEnum[] = [];
+		for (let fieldName of area.sortBy) {
+			sortingFields.push(this.toEnumField(fieldName));
+		}
+		return sortingFields;
+	}
+
+	private toEnumField(fieldName: string): EffortFieldEnum {
+		switch (fieldName) {
+			case "area":
+				return EffortFieldEnum.AREA;
+			case "status":
+				return EffortFieldEnum.STATUS;
+			case "votes":
+				return EffortFieldEnum.VOTES;
+			case "due":
+				return EffortFieldEnum.DUE;
+			default:
+				throw new Error("Invalid field name " + fieldName);
 		}
 	}
 }

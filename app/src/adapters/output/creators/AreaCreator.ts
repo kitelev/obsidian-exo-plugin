@@ -17,6 +17,16 @@ export default class AreaCreator extends AbstractCreator<Area> {
 			parentArea = await this.create(file);
 		}
 
-		return new Area(id, title, body, parentArea)
+		let fieldsToRender: string[] | undefined;
+		if (fm["fields-to-render"]) {
+			fieldsToRender = fm["fields-to-render"];
+		}
+
+		let sortBy: string[] | undefined;
+		if (fm["sort-by"]) {
+			sortBy = fm["sort-by"];
+		}
+
+		return new Area(id, title, body, parentArea, fieldsToRender, sortBy)
 	}
 }

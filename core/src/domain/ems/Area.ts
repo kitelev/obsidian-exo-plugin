@@ -8,7 +8,9 @@ export default class Area extends KObject {
 	constructor(id: UUID,
 				title: string,
 				body: string,
-				public readonly parent: Area | null) {
+				public readonly parent: Area | null,
+				public fieldsToRender?: string[],
+				public sortBy?: string[]) {
 		super(id, Area.CLASS, title, body);
 	}
 
