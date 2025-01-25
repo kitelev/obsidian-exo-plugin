@@ -46,14 +46,15 @@ export default abstract class AbstractPersistenceAdapter<KO extends KObject> imp
 		}
 
 		const filePath = folderPath + "/" + ko.title + ".md";
-		const fileContent = this.serialize(ko);
+		const fileContent = this.serialize(ko, ko.body);
 
 		await this.ctx.appUtils.createFile(filePath, fileContent);
 	}
 
 	async update(ko: KO): Promise<void> {
 		const file = this.ctx.appUtils.getObjectFileOrThrow(ko);
-		const data = this.serialize(ko);
+		const fileBody = await this.ctx.appUtils.getFileBody(file);
+		const data = this.serialize(ko, fileBody);
 		await this.ctx.appUtils.updateFile(file, data);
 	}
 
@@ -65,7 +66,7 @@ export default abstract class AbstractPersistenceAdapter<KO extends KObject> imp
 		return "";
 	}
 
-	private serialize(ko: KO) {
+	private serialize(ko: KO, body: string) {
 		let result = "";
 		result += "---\n";
 		result += "tags:\n";
@@ -73,7 +74,7 @@ export default abstract class AbstractPersistenceAdapter<KO extends KObject> imp
 		result += "uid: " + ko.id + "\n";
 		result += this.serializeKoSpecificProps(ko);
 		result += "---\n";
-		result += ko.body;
+		result += body;
 		return result;
 	}
 }
