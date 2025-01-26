@@ -1,6 +1,7 @@
 import {App, CachedMetadata, FrontMatterCache, TFile} from "obsidian";
 import KObject from "../../../core/src/domain/KObject";
 import ExoContext from "../../../common/ExoContext";
+import Exception from "../../../common/utils/Exception";
 
 export default class AppUtils {
 	private app: App = this.ctx.app;
@@ -64,16 +65,25 @@ export default class AppUtils {
 	}
 
 	// TODO should be used only once in AbstractSerde
+	/**
+	 *
+	 * @param strLink
+	 * @throws Exception if file not found
+	 */
 	getFileFromStrLink(strLink: string): TFile {
 		let linkWithoutBrackets = strLink.replace("[[", "").replace("]]", "");
 		if (strLink.contains("|")) {
 			linkWithoutBrackets = linkWithoutBrackets.split("|")[0];
 		}
 
-		if (strLink.contains("/")) {
-			return this.getFileByPathOrThrow(linkWithoutBrackets + ".md");
-		} else {
-			return this.getFileByNameOrThrow(linkWithoutBrackets + ".md");
+		try {
+			if (strLink.contains("/")) {
+				return this.getFileByPathOrThrow(linkWithoutBrackets + ".md");
+			} else {
+				return this.getFileByNameOrThrow(linkWithoutBrackets + ".md");
+			}
+		} catch (e) {
+			throw new Exception("Error while getting file from link " + strLink, e);
 		}
 	}
 
@@ -120,7 +130,7 @@ export default class AppUtils {
 	}
 
 	getFileByPathOrThrow(filePath: string): TFile {
-		let file = this.app.vault.getFileByPath(filePath);
+		const file = this.app.vault.getFileByPath(filePath);
 		if (!file) {
 			throw new Error("File not found by path " + filePath);
 		}
@@ -137,7 +147,7 @@ export default class AppUtils {
 	}
 
 	getObjectFileOrThrow(ko: KObject): TFile {
-		let res = this.getObjectFile(ko);
+		const res = this.getObjectFile(ko);
 		if (!res) {
 			throw new Error("Object file not found for " + ko);
 		}

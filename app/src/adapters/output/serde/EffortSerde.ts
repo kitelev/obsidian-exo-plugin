@@ -11,6 +11,7 @@ import {UUID} from "node:crypto";
 import Effort, {EffortBuilder} from "../../../../../core/src/domain/ems/effort/Effort";
 import {EffortStatus} from "../../../../../core/src/domain/ems/effort/EffortStatus";
 import ExoContext from "../../../../../common/ExoContext";
+import Exception from "../../../../../common/utils/Exception";
 
 export default class EffortSerde {
 
@@ -49,11 +50,19 @@ export default class EffortSerde {
 		for (const field of EffortSerde.FIELDS) {
 			const fmValue = fm[field.fmPropName];
 			if (fmValue) {
-				(builder as any)[field.koPropName] = await field.type.de(this.ctx, fmValue);
+				(builder as any)[field.koPropName] = await this.deser(field, fmValue);
 			}
 		}
 
 		return builder.build();
+	}
+
+	private async deser(field: Field<EffortBuilder>, fmValue: any) {
+		try {
+			return await field.type.de(this.ctx, fmValue);
+		} catch (e) {
+			throw new Exception(`Error deserializing field ${field.fmPropName} with value ${fmValue}`, e);
+		}
 	}
 
 	serializeKoSpecificProps(effort: Effort): string {
