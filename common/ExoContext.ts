@@ -43,9 +43,13 @@ import Effort from "../core/src/domain/ems/effort/Effort";
 import EffortPrototypePersistenceAdapter
 	from "../app/src/adapters/output/persistence/EffortPrototypePersistenceAdapter";
 import EffortPrototypeRepository from "../core/src/ports/output/EffortPrototypeRepository";
+import {FileLogger} from "../app/src/utils/FileLogger";
+import UserFriendly from "../app/src/utils/UserFriendly";
 
 export default class ExoContext {
 	// Utils
+	public readonly fileLogger: FileLogger = new FileLogger(this, "/Logs");
+	public readonly userFriendlyWithFileLog: UserFriendly = new UserFriendly(this);
 	public readonly utils: Utils = new Utils();
 	public readonly appUtils: AppUtils = new AppUtils(this);
 	public readonly dvApiHolder: DvApiHolder = new DvApiHolder(this);

@@ -1,30 +1,30 @@
 import {Runnable, RunnableAsync} from "../../../common/fp/Runnable";
 import {Notice} from "obsidian";
+import ExoContext from "../../../common/ExoContext";
 
 export default class UserFriendly {
-	static call(runnable: Runnable): void {
-		try {
-			runnable();
-		} catch (e) {
-			this.handleError(e);
-		}
-	}
+    constructor(private ctx: ExoContext) {
+    }
 
-	static async callAsync(runnable: RunnableAsync): Promise<void> {
-		try {
-			await runnable();
-		} catch (e) {
-			this.handleError(e);
-		}
-	}
+    async call(runnable: Runnable) {
+        try {
+            runnable();
+        } catch (e) {
+            await this.handleError(e);
+        }
+    }
 
-	static handleErrorMsg(msg: string) {
-		console.error(msg);
-		new Notice(`Error: ${msg}`);
-	}
+    async callAsync(runnable: RunnableAsync): Promise<void> {
+        try {
+            await runnable();
+        } catch (e) {
+            await this.handleError(e);
+        }
+    }
 
-	private static handleError(e: Error) {
-		console.error(e);
-		new Notice(`Error: ${e.message}`);
-	}
+    private async handleError(e: Error) {
+        console.error(e);
+        new Notice(`Error: ${e.message}`);
+        await this.ctx.fileLogger.logError(e);
+    }
 }

@@ -10,16 +10,13 @@ export default class MoveToSuitableFolderAction extends AbstractExoAction {
 	}
 
 	async execute() {
-		let activeFile = this.ctx.appUtils.getActiveFileOrThrow();
-		let ko = await this.ctx.kObjectCreator.createFromFileTyped(activeFile);
+		const activeFile = this.ctx.appUtils.getActiveFileOrThrow();
+		const ko = await this.ctx.kObjectCreator.createFromFileTyped(activeFile);
 
 		const suitableFolder = this.ctx.koPathRulesHelper.getFolderPath(ko);
-		if (!await this.ctx.app.vault.adapter.exists(suitableFolder)) {
-			await this.ctx.app.vault.createFolder(suitableFolder);
-		}
+		await this.ctx.appUtils.createFolderIfNotExists(suitableFolder);
 
 		await this.ctx.appUtils.move(ko, suitableFolder);
 		new Notice(`Moved to ${suitableFolder}`);
 	}
-
 }

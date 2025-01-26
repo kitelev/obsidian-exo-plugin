@@ -38,6 +38,10 @@ export default class DateUtils {
 		return `${this.formatLocalDate(date)} ${this.formatLocalTime(date)}`;
 	}
 
+	static formatZdtWithUTC(date: Date): string {
+		return date.toISOString();
+	}
+
 	static formatLocalDate(date: Date): string {
 		const pad = (n: number) => n.toString().padStart(2, '0');
 		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;

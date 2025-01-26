@@ -8,6 +8,18 @@ export default class AppUtils {
 	constructor(private ctx: ExoContext) {
 	}
 
+	async createFolderIfNotExists(folderPath: string) {
+		if (!await this.app.vault.adapter.exists(folderPath)) {
+			await this.app.vault.createFolder(folderPath);
+		}
+	}
+
+	async createFileIfNotExists(filePath: string) {
+		if (!await this.app.vault.adapter.exists(filePath)) {
+			await this.createFile(filePath, "");
+		}
+	}
+
 	async createFile(path: string, content: string) {
 		const file = await this.app.vault.create(path, content);
 		await this.waitCacheUpdate(file);
@@ -19,25 +31,13 @@ export default class AppUtils {
 		await this.waitCacheUpdate(file);
 	}
 
+	async appendToFile(filePath: string, message: string) {
+		await this.app.vault.adapter.append(filePath, message);
+	}
+
 	async move(ko: KObject, folderPath: string) {
 		const file = this.getObjectFileOrThrow(ko);
 		await this.app.fileManager.renameFile(file, folderPath + "/" + ko.title + ".md");
-	}
-
-	private async waitCacheUpdate(file: TFile) {
-		const fileCachePromise = new Promise<CachedMetadata | null>((resolve) => {
-			const onCacheUpdate = (updatedFile: TFile) => {
-				if (updatedFile.path === file.path) {
-					const fileCache = this.app.metadataCache.getFileCache(file);
-					this.app.metadataCache.off("changed", onCacheUpdate); // Убираем подписку
-					resolve(fileCache || null); // Обрабатываем случай с null
-				}
-			};
-
-			this.app.metadataCache.on("changed", onCacheUpdate);
-		});
-
-		await fileCachePromise;
 	}
 
 	async openKObject(ko: KObject) {
@@ -63,6 +63,7 @@ export default class AppUtils {
 		return this.app.workspace.getActiveFile();
 	}
 
+	// TODO should be used only once in AbstractSerde
 	getFileFromStrLink(strLink: string): TFile {
 		let linkWithoutBrackets = strLink.replace("[[", "").replace("]]", "");
 		if (strLink.contains("|")) {
@@ -85,7 +86,7 @@ export default class AppUtils {
 	}
 
 	getFrontmatterOrThrow(file: TFile): FrontMatterCache {
-		let fileCache = this.app.metadataCache.getFileCache(file);
+		const fileCache = this.app.metadataCache.getFileCache(file);
 		if (!fileCache) {
 			throw new Error(`File cache not found for ${file.path}`);
 		}
@@ -111,7 +112,7 @@ export default class AppUtils {
 	}
 
 	getFileByNameOrThrow(parentFileName: string): TFile {
-		let tFile = this.getAllNotes().filter(f => f.name == parentFileName)[0];
+		const tFile = this.getAllNotes().filter(f => f.name == parentFileName)[0];
 		if (!tFile) {
 			throw new Error("File not found by name " + parentFileName);
 		}
@@ -163,5 +164,21 @@ export default class AppUtils {
 	async getFileBody(file: TFile): Promise<string> {
 		const content = await this.getFileContent(file);
 		return content.replace(/---[\s\S]*?---/, "").trim();
+	}
+
+	private async waitCacheUpdate(file: TFile) {
+		const fileCachePromise = new Promise<CachedMetadata | null>((resolve) => {
+			const onCacheUpdate = (updatedFile: TFile) => {
+				if (updatedFile.path === file.path) {
+					const fileCache = this.app.metadataCache.getFileCache(file);
+					this.app.metadataCache.off("changed", onCacheUpdate); // Убираем подписку
+					resolve(fileCache || null); // Обрабатываем случай с null
+				}
+			};
+
+			this.app.metadataCache.on("changed", onCacheUpdate);
+		});
+
+		await fileCachePromise;
 	}
 }

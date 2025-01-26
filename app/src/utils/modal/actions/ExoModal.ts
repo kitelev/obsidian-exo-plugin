@@ -1,4 +1,4 @@
-import {FuzzySuggestModal, Notice} from "obsidian";
+import {FuzzySuggestModal} from "obsidian";
 import ExoContext from "../../../../../common/ExoContext";
 import {ModalItem} from "./ModalItem";
 import ModalItemClickedHandler from "./ModalItemClickedHandler";
@@ -21,11 +21,8 @@ export class ExoModal extends FuzzySuggestModal<ModalItem> {
 	async onChooseItem(item: ModalItem) {
 		const modalItemHandler = new ModalItemClickedHandler(this.ctx);
 
-		try {
+		await this.ctx.userFriendlyWithFileLog.callAsync(async () => {
 			await item.visit(modalItemHandler);
-		} catch (e) {
-			console.error(e);
-			new Notice(`Error: ${e.message}`);
-		}
+		});
 	}
 }

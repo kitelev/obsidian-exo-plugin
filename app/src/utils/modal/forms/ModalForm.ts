@@ -1,10 +1,9 @@
 import {Modal} from "obsidian";
 import ExoContext from "../../../../../common/ExoContext";
 import {ConsumerAsync} from "../../../../../common/fp/Consumer";
-import UserFriendly from "../../UserFriendly";
 
 export default class ModalForm extends Modal {
-	constructor(ctx: ExoContext,
+	constructor(private ctx: ExoContext,
 				private title: string,
 				private fields: FormField<any>[],
 				private callback: ConsumerAsync<string[]>) {
@@ -26,7 +25,7 @@ export default class ModalForm extends Modal {
 				}
 			});
 		submitButton.addEventListener("click", async () => {
-			await UserFriendly.callAsync(async () => {
+			await this.ctx.userFriendlyWithFileLog.callAsync(async () => {
 				await this.submit();
 			});
 		});

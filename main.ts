@@ -76,7 +76,11 @@ export default class ExoPlugin extends Plugin {
 					return;
 				}
 
-				await TimeoutUtils.withTimeout(() => layout.render(ko, el), 10000);
+				await TimeoutUtils.withTimeout(async () => {
+					await this.ctx.userFriendlyWithFileLog.callAsync(async () => {
+						await layout.render(ko, el);
+					});
+				}, 10000);
 
 				el.appendChild(document.createElement("hr"));
 

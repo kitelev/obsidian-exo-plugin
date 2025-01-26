@@ -6,12 +6,11 @@ import {UUID} from "node:crypto";
 import GenericRepository from "../../../../../core/src/ports/output/GenericRepository";
 
 export default abstract class AbstractPersistenceAdapter<KO extends KObject> implements GenericRepository<KO> {
-	protected constructor(protected ctx: ExoContext,
-						  private koc?: KOC) {
+	protected constructor(protected ctx: ExoContext, private koc?: KOC) {
 	}
 
 	async find(filter: (ko: KO) => boolean): Promise<KO[]> {
-		let all = await this.findAll();
+		const all = await this.findAll();
 		return all.filter(filter);
 	}
 
@@ -41,9 +40,7 @@ export default abstract class AbstractPersistenceAdapter<KO extends KObject> imp
 
 	async save(ko: KO): Promise<void> {
 		const folderPath: string = this.ctx.koPathRulesHelper.getFolderPath(ko)
-		if (!await this.ctx.app.vault.adapter.exists(folderPath)) {
-			await this.ctx.app.vault.createFolder(folderPath);
-		}
+		await this.ctx.appUtils.createFolderIfNotExists(folderPath);
 
 		const filePath = folderPath + "/" + ko.title + ".md";
 		const fileContent = this.serialize(ko, ko.body);
