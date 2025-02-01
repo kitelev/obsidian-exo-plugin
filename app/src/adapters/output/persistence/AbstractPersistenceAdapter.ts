@@ -55,10 +55,6 @@ export default abstract class AbstractPersistenceAdapter<KO extends KObject> imp
 		await this.ctx.appUtils.updateFile(file, data);
 	}
 
-	protected getLinkToKO(ko: KObject): string {
-		return `[[${ko.title}]]`;
-	}
-
 	protected serializeKoSpecificProps(ko: KO): string {
 		return "";
 	}
