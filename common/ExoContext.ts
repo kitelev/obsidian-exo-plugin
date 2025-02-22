@@ -28,11 +28,6 @@ import EffortPrototypeCreator from "../app/src/adapters/output/creators/EffortPr
 import AreaRepository from "../core/src/ports/output/AreaRepository";
 import AreaPersistenceAdapter from "../app/src/adapters/output/persistence/AreaPersistenceAdapter";
 import BoardCreator from "../app/src/adapters/output/creators/BoardCreator";
-import EffortStartUseCase from "../core/src/ports/input/EffortStartUseCase";
-import EffortStartService from "../core/src/service/EffortStartService";
-import EffortEndUseCase from "../core/src/ports/input/EffortEndUseCase";
-import EffortEndService from "../core/src/service/EffortEndService";
-import EffortActionFactory from "../app/src/adapters/input/actions/effort-context/EffortActionFactory";
 import {ModalItemsFolderFactory} from "../app/src/utils/modal/actions/ModalItemsFolder";
 import SimulacrumRepository from "../core/src/ports/output/SimulacrumRepository";
 import SimulacrumPersistenceAdapter from "../app/src/adapters/output/persistence/SimulacrumPersistenceAdapter";
@@ -45,11 +40,15 @@ import EffortPrototypePersistenceAdapter
 import EffortPrototypeRepository from "../core/src/ports/output/EffortPrototypeRepository";
 import {FileLogger} from "../app/src/utils/FileLogger";
 import UserFriendly from "../app/src/utils/UserFriendly";
+import EffortService from "../core/src/service/EffortService";
 
 export default class ExoContext {
 	// Utils
 	public readonly fileLogger: FileLogger = new FileLogger(this, "/Logs");
 	public readonly userFriendlyWithFileLog: UserFriendly = new UserFriendly(this);
+	public readonly dateSupplier: { get(): Date } = {
+		get: () => new Date()
+	};
 	public readonly utils: Utils = new Utils();
 	public readonly appUtils: AppUtils = new AppUtils(this);
 	public readonly dvApiHolder: DvApiHolder = new DvApiHolder(this);
@@ -86,15 +85,12 @@ export default class ExoContext {
 	// Use Cases
 	public readonly getCurrentDailyNoteUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
 
+	public readonly effortService: EffortService = new EffortService(this);
+
 	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
-	public readonly effortStartUseCase: EffortStartUseCase = new EffortStartService(this);
-	public readonly effortEndUseCase: EffortEndUseCase = new EffortEndService(this);
 
 	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
 	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);
-
-	// Commands
-	public readonly effortCommandFactory: EffortActionFactory = new EffortActionFactory(this);
 
 	constructor(public app: App) {
 	}

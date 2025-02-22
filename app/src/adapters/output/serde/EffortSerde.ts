@@ -30,6 +30,7 @@ export default class EffortSerde {
 		{fmPropName: "due", koPropName: "due", type: new TimestampFieldType()},
 		{fmPropName: "started", koPropName: "started", type: new TimestampFieldType()},
 		{fmPropName: "ended", koPropName: "ended", type: new TimestampFieldType()},
+		{fmPropName: "holds-history", koPropName: "holdsHistory", type: new TextFieldType()},
 		{fmPropName: "votes", koPropName: "votes", type: new NumberFieldType()},
 		// {fmPropName: "relates", koPropName: "relates", type: new ArrayFieldType<KObject>(new KObjectFieldType())},
 	];

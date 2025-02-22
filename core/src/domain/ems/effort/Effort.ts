@@ -4,6 +4,7 @@ import {KOC} from "../../KOC";
 import Area from "../Area";
 import {UUID} from "node:crypto";
 import EffortPrototype from "./EffortPrototype";
+import DateUtils from "../../../../../common/utils/DateUtils";
 
 // TODO add validation - effort cannot have both prototype and (parent or area)
 export default class Effort extends KObject {
@@ -15,6 +16,7 @@ export default class Effort extends KObject {
 				public appetite: string | null,
 				public started: Date | null,
 				public ended: Date | null,
+				public holdsHistory: string | null,
 				public plannedStart: Date | null,
 				public plannedEnd: Date | null,
 				public due: Date | null,
@@ -27,12 +29,53 @@ export default class Effort extends KObject {
 		super(id, Effort.CLASS, title, body);
 	}
 
+	// TODO delete
 	start() {
-		this.started = new Date();
+		this.startWithDate(new Date());
+	}
+
+	// TODO rename to start()
+	startWithDate(startedDate: Date) {
+		const expectedStatuses = [EffortStatus.DRAFT, EffortStatus.READY, EffortStatus.BACKLOG];
+		if (expectedStatuses.indexOf(this.status) === -1) {
+			throw new Error("Effort must be in DRAFT, READY or BACKLOG status to be started");
+		}
+
+		this.started = startedDate;
 		this.status = EffortStatus.STARTED;
 	}
 
+	hold(holdDate: Date) {
+		if (this.status !== EffortStatus.STARTED) {
+			throw new Error("Effort must be started to be put on hold");
+		}
+
+		const nowStr = DateUtils.formatTimestamp(holdDate);
+
+		this.status = EffortStatus.HOLD;
+		if (!this.holdsHistory) {
+			this.holdsHistory = nowStr;
+		} else {
+			this.holdsHistory = `${this.holdsHistory}, ${nowStr}`;
+		}
+	}
+
+	resume(resumeDate: Date) {
+		if (this.status !== EffortStatus.HOLD) {
+			throw new Error("Effort must be on hold to be resumed");
+		}
+
+		const nowStr = DateUtils.formatTimestamp(resumeDate);
+
+		this.status = EffortStatus.STARTED;
+		this.holdsHistory = `${this.holdsHistory} - ${nowStr}`;
+	}
+
+	// TODO add case when effort was on hold
 	end() {
+		if (this.status !== EffortStatus.STARTED) {
+			throw new Error("Effort must be started to be ended");
+		}
 		this.ended = new Date();
 		this.status = EffortStatus.ENDED;
 	}
@@ -87,6 +130,7 @@ export class EffortBuilder {
 	public appetite?: string;
 	public started?: Date | null;
 	public ended?: Date | null;
+	public holdsHistory?: string | null;
 	public plannedStart?: Date | null;
 	public plannedEnd?: Date | null;
 	public due?: Date | null;
@@ -108,6 +152,7 @@ export class EffortBuilder {
 			this.appetite ?? null,
 			this.started ?? null,
 			this.ended ?? null,
+			this.holdsHistory ?? null,
 			this.plannedStart ?? null,
 			this.plannedEnd ?? null,
 			this.due ?? null,

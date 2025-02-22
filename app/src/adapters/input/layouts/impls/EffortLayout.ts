@@ -17,13 +17,25 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 
 	private async showAvailableActions(effort: Effort, el: HTMLElement) {
 		const startButton = this.createButton("Start", async () => {
-			await this.ctx.effortCommandFactory.createStartEffortCommand().execute(effort);
+			await this.ctx.effortService.start(effort);
 			new Notice("Effort started");
 		});
 		el.appendChild(startButton);
 
+		const holdButton = this.createButton("Hold", async () => {
+			await this.ctx.effortService.hold(effort);
+			new Notice("Effort holded");
+		});
+		el.appendChild(holdButton);
+
+		const resumeButton = this.createButton("Resume", async () => {
+			await this.ctx.effortService.resume(effort);
+			new Notice("Effort resumed");
+		});
+		el.appendChild(resumeButton);
+
 		const endButton = this.createButton("End", async () => {
-			await this.ctx.effortCommandFactory.createEndEffortCommand().execute(effort);
+			await this.ctx.effortService.end(effort);
 			new Notice("Effort ended");
 		});
 		el.appendChild(endButton);

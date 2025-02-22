@@ -22,6 +22,12 @@ export default class UserFriendly {
         }
     }
 
+	wrapAsyncFn(runnable: RunnableAsync): RunnableAsync {
+		return async () => {
+			await this.callAsync(runnable);
+		};
+	}
+
     private async handleError(e: Error) {
         console.error(e);
         new Notice(`Error: ${e.message}`);

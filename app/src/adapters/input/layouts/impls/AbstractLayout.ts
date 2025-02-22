@@ -38,7 +38,8 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 			button.style.transform = "scale(1)";
 		});
 
-		button.addEventListener("click", onClick);
+		const userFriendlyWrapped = this.ctx.userFriendlyWithFileLog.wrapAsyncFn(onClick);
+		button.addEventListener("click", userFriendlyWrapped);
 
 		return button;
 	}
