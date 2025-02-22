@@ -3,6 +3,7 @@ import DvRenderer from "../../../../utils/dv/DvRenderer";
 import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
 import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
 import {Notice} from "obsidian";
+import EffortAction from "../../../../../../core/src/domain/ems/effort/EffortAction";
 
 export default class EffortLayout extends AbstractLayout<Effort> {
 	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
@@ -16,29 +17,19 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 	}
 
 	private async showAvailableActions(effort: Effort, el: HTMLElement) {
-		const startButton = this.createButton("Start", async () => {
-			await this.ctx.effortService.start(effort);
-			new Notice("Effort started");
-		});
-		el.appendChild(startButton);
+		const actionsToShow = EffortAction.ALL.filter(a => a.availableFor(effort));
 
-		const holdButton = this.createButton("Hold", async () => {
-			await this.ctx.effortService.hold(effort);
-			new Notice("Effort holded");
-		});
-		el.appendChild(holdButton);
+		if (actionsToShow.length == 0) {
+			return;
+		}
 
-		const resumeButton = this.createButton("Resume", async () => {
-			await this.ctx.effortService.resume(effort);
-			new Notice("Effort resumed");
-		});
-		el.appendChild(resumeButton);
-
-		const endButton = this.createButton("End", async () => {
-			await this.ctx.effortService.end(effort);
-			new Notice("Effort ended");
-		});
-		el.appendChild(endButton);
+		for (let action of actionsToShow) {
+			const actionButton = this.createButton(action.name, async () => {
+				await this.ctx.effortService.execute(effort, action);
+				new Notice(`Action ${action.name} executed on effort ${effort.id}`);
+			});
+			el.appendChild(actionButton);
+		}
 	}
 
 	private async handleChildren(ko: Effort, el: HTMLElement) {

@@ -5,6 +5,7 @@ import Area from "../Area";
 import {UUID} from "node:crypto";
 import EffortPrototype from "./EffortPrototype";
 import DateUtils from "../../../../../common/utils/DateUtils";
+import EffortAction from "./EffortAction";
 
 // TODO add validation - effort cannot have both prototype and (parent or area)
 export default class Effort extends KObject {
@@ -38,19 +39,14 @@ export default class Effort extends KObject {
 
 	// TODO rename to start()
 	startWithDate(startedDate: Date) {
-		const expectedStatuses = [EffortStatus.DRAFT, EffortStatus.READY, EffortStatus.BACKLOG];
-		if (expectedStatuses.indexOf(this.status) === -1) {
-			throw new Error("Effort must be in DRAFT, READY or BACKLOG status to be started");
-		}
+		EffortAction.START.assertFunction(this);
 
 		this.started = startedDate;
 		this.status = EffortStatus.STARTED;
 	}
 
 	hold(holdDate: Date) {
-		if (this.status !== EffortStatus.STARTED) {
-			throw new Error("Effort must be started to be put on hold");
-		}
+		EffortAction.HOLD.assertFunction(this);
 
 		const nowStr = DateUtils.formatTimestamp(holdDate);
 
@@ -63,9 +59,7 @@ export default class Effort extends KObject {
 	}
 
 	resume(resumeDate: Date) {
-		if (this.status !== EffortStatus.HOLD) {
-			throw new Error("Effort must be on hold to be resumed");
-		}
+		EffortAction.RESUME.assertFunction(this);
 
 		const nowStr = DateUtils.formatTimestamp(resumeDate);
 
@@ -73,11 +67,9 @@ export default class Effort extends KObject {
 		this.holdsHistory = `${this.holdsHistory} - ${nowStr}`;
 	}
 
-	// TODO add case when effort was on hold
 	end() {
-		if (this.status !== EffortStatus.STARTED) {
-			throw new Error("Effort must be started to be ended");
-		}
+		EffortAction.COMPLETE.assertFunction(this);
+
 		this.ended = new Date();
 		this.status = EffortStatus.ENDED;
 	}

@@ -41,6 +41,7 @@ import EffortPrototypeRepository from "../core/src/ports/output/EffortPrototypeR
 import {FileLogger} from "../app/src/utils/FileLogger";
 import UserFriendly from "../app/src/utils/UserFriendly";
 import EffortService from "../core/src/service/EffortService";
+import EffortUseCases from "../core/src/ports/input/EffortUseCases";
 
 export default class ExoContext {
 	// Utils
@@ -85,7 +86,7 @@ export default class ExoContext {
 	// Use Cases
 	public readonly getCurrentDailyNoteUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
 
-	public readonly effortService: EffortService = new EffortService(this);
+	public readonly effortService: EffortUseCases = new EffortService(this);
 
 	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 

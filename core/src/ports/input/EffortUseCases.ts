@@ -1,11 +1,6 @@
 import Effort from "../../domain/ems/effort/Effort";
+import EffortAction from "../../domain/ems/effort/EffortAction";
 
 export default interface EffortUseCases {
-	start(effort: Effort): Promise<void>;
-
-	hold(effort: Effort): Promise<void>;
-
-	resume(effort: Effort): Promise<void>;
-
-	end(effort: Effort): Promise<void>;
+    execute(effort: Effort, action: EffortAction): Promise<void>;
 }
