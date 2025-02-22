@@ -9,7 +9,7 @@ export default class EffortService implements EffortUseCases {
 	}
 
 	async execute(effort: Effort, action: EffortAction): Promise<void> {
-		action.executeFunction(effort);
+		action.executeFunction(effort, []); // TODO
 
 		await this.ctx.effortRepository.update(effort);
 	}

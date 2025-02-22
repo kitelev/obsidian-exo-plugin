@@ -2,6 +2,7 @@ import Effort from "./Effort";
 import {EffortStatus} from "./EffortStatus";
 import {Consumer} from "../../../../../common/fp/Consumer";
 
+
 export default class EffortAction {
 
 	public static START = new EffortAction("Start",
@@ -49,16 +50,28 @@ export default class EffortAction {
 		}
 	);
 
+	public static VOTE = new EffortAction("Vote",
+		effort => {
+			if (effort.status === EffortStatus.ENDED) {
+				throw new Error("Effort must not be ended to be voted on");
+			}
+		},
+		effort => {
+			effort.vote();
+		}
+	);
+
 	public static readonly ALL: EffortAction[] = [
 		EffortAction.START,
 		EffortAction.HOLD,
 		EffortAction.RESUME,
-		EffortAction.COMPLETE
+		EffortAction.COMPLETE,
+		EffortAction.VOTE
 	];
 
 	constructor(public readonly name: string,
 				public readonly assertFunction: Consumer<Effort>,
-				public readonly executeFunction: Consumer<Effort>) {
+				public readonly executeFunction: (e: Effort, params: Record<string, any>) => void) {
 	}
 
 	public availableFor(effort: Effort): boolean {

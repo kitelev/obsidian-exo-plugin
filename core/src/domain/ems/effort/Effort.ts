@@ -74,6 +74,12 @@ export default class Effort extends KObject {
 		this.status = EffortStatus.ENDED;
 	}
 
+	vote() {
+		EffortAction.VOTE.assertFunction(this);
+
+		this.votes = this.votes ? this.votes + 1 : 1;
+	}
+
 	getRelatedArea(): Area | null {
 		if (this.area !== null) return this.area;
 		if (this.prototype !== null) return this.prototype.area;
