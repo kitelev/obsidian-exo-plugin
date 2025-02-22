@@ -25,6 +25,7 @@ export default class Effort extends KObject {
 				public parent: Effort | null,
 				public votes: number | null,
 				public relates: KObject[] = [],
+				public unknownProps: Record<string, any> = {},
 				body: string) {
 		super(id, Effort.CLASS, title, body);
 	}
@@ -139,6 +140,7 @@ export class EffortBuilder {
 	public parent?: Effort | null;
 	public votes?: number;
 	public relates: KObject[] = [];
+	public unknownProps: Record<string, any> = {};
 
 	constructor() {
 	}
@@ -161,6 +163,7 @@ export class EffortBuilder {
 			this.parent ?? null,
 			this.votes ?? null,
 			this.relates,
+			this.unknownProps,
 			this.body);
 	}
 }

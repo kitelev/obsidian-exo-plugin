@@ -1,9 +1,10 @@
-import {Field, KObjectFieldType} from "./SerdeFields";
+import {Field} from "./fields/Field";
 import {FrontMatterCache, TFile} from "obsidian";
 import {UUID} from "node:crypto";
 import ExoContext from "../../../../../common/ExoContext";
 import EffortSerde from "./EffortSerde";
 import EffortPrototype, {EffortPrototypeBuilder} from "../../../../../core/src/domain/ems/effort/EffortPrototype";
+import {KObjectFieldType} from "./fields/types/KObjectFieldType";
 
 export default class EffortPrototypeSerde {
 
