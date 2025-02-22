@@ -110,4 +110,8 @@ export class EffortCache {
 	public clear() {
 		this.cache.clear();
 	}
+
+	public remove(effort: Effort) {
+		this.cache.delete(effort.id);
+	}
 }

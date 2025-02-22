@@ -24,6 +24,7 @@ import CreateEffortBySelectedText from "./app/src/adapters/input/actions/no-cont
 import TimeoutUtils from "./common/utils/TimeoutUtils";
 import CacheDrop from "./app/src/adapters/input/actions/no-context/utilities/CacheDrop";
 import MoveToSuitableFolderAction from "./app/src/adapters/input/actions/ko-context/MoveToSuitableFolderAction";
+import RemoveOpenedEffortFromCache from "./app/src/adapters/input/actions/ko-context/RemoveOpenedEffortFromCache";
 
 export default class ExoPlugin extends Plugin {
 	private api: ExoApi;
@@ -94,6 +95,7 @@ export default class ExoPlugin extends Plugin {
 
 		const items: ModalItem[] = [
 			new MoveToSuitableFolderAction(this.ctx),
+			new RemoveOpenedEffortFromCache(this.ctx),
 			folderFactory.create("Domain", [
 				new CreateEmptyNoteWithinInbox(this.ctx),
 				new CreateEffort(this.ctx),
