@@ -22,6 +22,7 @@ export default class EffortSerde {
             koPropName: "status",
             type: new EnumFieldType<EffortStatus>(Object.values(EffortStatus))
         },
+        {fmPropName: "prerequisite", koPropName: "prerequisite", type: new KObjectFieldType()},
         {fmPropName: "appetite", koPropName: "appetite", type: new TextFieldType()},
         {fmPropName: "planned-start", koPropName: "plannedStart", type: new TimestampFieldType()},
         {fmPropName: "planned-end", koPropName: "plannedEnd", type: new TimestampFieldType()},

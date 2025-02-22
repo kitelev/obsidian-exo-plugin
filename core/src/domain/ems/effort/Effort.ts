@@ -12,19 +12,20 @@ export default class Effort extends KObject {
 
 	constructor(id: UUID,
 				title: string,
+				public prototype: EffortPrototype | null,
+				public parent: Effort | null,
+				public area: Area | null,
+				public prerequisite: Effort | null,
+				public relates: KObject[] = [],
 				public status: EffortStatus,
+				public votes: number | null,
 				public appetite: string | null,
+				public due: Date | null,
+				public plannedStart: Date | null,
+				public plannedEnd: Date | null,
 				public started: Date | null,
 				public ended: Date | null,
 				public holdsHistory: string | null,
-				public plannedStart: Date | null,
-				public plannedEnd: Date | null,
-				public due: Date | null,
-				public prototype: EffortPrototype | null,
-				public area: Area | null,
-				public parent: Effort | null,
-				public votes: number | null,
-				public relates: KObject[] = [],
 				public unknownProps: Record<string, any> = {},
 				body: string) {
 		super(id, Effort.CLASS, title, body);
@@ -127,19 +128,20 @@ export class EffortBuilder {
 	public id: UUID;
 	public title: string;
 	public body: string = "";
+	public prototype?: EffortPrototype | null;
+	public parent?: Effort | null;
+	public area?: Area | null;
+	public prerequisite?: Effort | null;
+	public relates: KObject[] = [];
 	public status: EffortStatus = EffortStatus.DRAFT;
+	public votes?: number;
 	public appetite?: string;
+	public due?: Date | null;
+	public plannedStart?: Date | null;
+	public plannedEnd?: Date | null;
 	public started?: Date | null;
 	public ended?: Date | null;
 	public holdsHistory?: string | null;
-	public plannedStart?: Date | null;
-	public plannedEnd?: Date | null;
-	public due?: Date | null;
-	public prototype?: EffortPrototype | null;
-	public area?: Area | null;
-	public parent?: Effort | null;
-	public votes?: number;
-	public relates: KObject[] = [];
 	public unknownProps: Record<string, any> = {};
 
 	constructor() {
@@ -150,20 +152,21 @@ export class EffortBuilder {
 		return new Effort(
 			this.id,
 			this.title,
-			this.status,
+			this.prototype ?? null,
+			this.parent ?? null,
+			this.area ?? null,
+			this.prerequisite ?? null,
+			this.relates ?? null,
+			this.status ?? null,
+			this.votes ?? null,
 			this.appetite ?? null,
+			this.due ?? null,
+			this.plannedStart ?? null,
+			this.plannedEnd ?? null,
 			this.started ?? null,
 			this.ended ?? null,
 			this.holdsHistory ?? null,
-			this.plannedStart ?? null,
-			this.plannedEnd ?? null,
-			this.due ?? null,
-			this.prototype ?? null,
-			this.area ?? null,
-			this.parent ?? null,
-			this.votes ?? null,
-			this.relates,
-			this.unknownProps,
+			this.unknownProps ?? null,
 			this.body);
 	}
 }
