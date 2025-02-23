@@ -4,6 +4,7 @@ import DvRenderer from "../../../../utils/dv/DvRenderer";
 import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
 import CreateEffort from "../../actions/no-context/domain/CreateEffort";
 import EffortPrototype from "../../../../../../core/src/domain/ems/effort/EffortPrototype";
+import CreateArea from "../../actions/no-context/domain/CreateArea";
 
 export default class AreaLayout extends AbstractLayout<Area> {
 	constructor(ctx: ExoContext, dvRenderer: DvRenderer) {
@@ -11,15 +12,25 @@ export default class AreaLayout extends AbstractLayout<Area> {
 	}
 
 	async render(ko: Area, el: HTMLElement): Promise<void> {
+		await this.createChildAreaButton(el);
 		await this.createCreateEffortButton(el);
 		await this.handleChildren(ko, el);
 		await this.handleEffortPrototypes(ko, el);
 		await this.handleUnresolvedEfforts(ko, el);
 	}
 
+	private async createChildAreaButton(el: HTMLElement) {
+		const button = this.createButton("Create child Area", async () => {
+			const createAreaAction = new CreateArea(this.ctx);
+			await createAreaAction.execute();
+		});
+
+		el.appendChild(button);
+	}
+
 	private async createCreateEffortButton(el: HTMLElement) {
 		const button = this.createButton("Create Effort", async () => {
-			let createEffortAction = new CreateEffort(this.ctx);
+			const createEffortAction = new CreateEffort(this.ctx);
 			await createEffortAction.execute();
 		});
 

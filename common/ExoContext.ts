@@ -42,6 +42,8 @@ import {FileLogger} from "../app/src/utils/FileLogger";
 import UserFriendly from "../app/src/utils/UserFriendly";
 import EffortService from "../core/src/service/EffortService";
 import EffortUseCases from "../core/src/ports/input/EffortUseCases";
+import CreateAreaUseCase from "../core/src/ports/input/CreateAreaUseCase";
+import CreateAreaService from "../core/src/service/CreateAreaService";
 
 export default class ExoContext {
 	// Utils
@@ -84,11 +86,15 @@ export default class ExoContext {
 	public readonly koPathRulesHelper: KObjectPathRulesHelper = new KObjectPathRulesHelper(this);
 
 	// Use Cases
+	//// DN
 	public readonly getCurrentDailyNoteUseCase: GetCurrentDailyNoteUseCase = new GetCurrentDailyNoteService(this);
 
+	//// Effort
+	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
 	public readonly effortService: EffortUseCases = new EffortService(this);
 
-	public readonly createEffortUseCase: CreateEffortUseCase = new CreateEffortService(this);
+	//// Area
+	public readonly createAreaUseCase: CreateAreaUseCase = new CreateAreaService(this);
 
 	public readonly layoutFactory: LayoutFactory = new LayoutFactory(this);
 	public readonly areaRepository: AreaRepository = new AreaPersistenceAdapter(this);

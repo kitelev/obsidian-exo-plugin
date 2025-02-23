@@ -8,6 +8,12 @@ export default class AreaPersistenceAdapter extends AbstractPersistenceAdapter<A
 		super(ctx, Area.CLASS);
 	}
 
+	protected serializeKoSpecificProps(ko: Area): string {
+		if (!ko.parent) return "";
+
+		return `a-parent: "[[${ko.parent.title}]]"\n`;
+	}
+
 	async findChildren(parent: Area): Promise<Area[]> {
 		return await this.find(a => {
 			if (!a.parent) return false
