@@ -78,12 +78,13 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 
 	protected async createTableSuper(efforts: Effort[],
 									 fieldsToRender: EffortFieldEnum[],
-									 fieldsToSort: EffortFieldEnum[] = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES]): Promise<HTMLElement> {
+									 fieldsToSort: EffortFieldEnum[] = [EffortFieldEnum.STATUS, EffortFieldEnum.VOTES],
+									 summaryRow: any[] = []): Promise<HTMLElement> {
 		const headers = ["Effort", ...fieldsToRender.map(f => EffortField.enum2Field(f).columnName)];
 
 		const comparatorSuper = Comparator.combine(fieldsToSort.map(f => EffortField.enum2Field(f).comparingFn));
 
-		const rows = efforts
+		let rows: any[][] = efforts
 			.sort(comparatorSuper)
 			.map(e => {
 				const cells = [];
@@ -94,6 +95,10 @@ export default abstract class AbstractLayout<KO> implements Layout<KO> {
 				});
 				return cells;
 			});
+		if (summaryRow.length > 0) {
+			rows.push(summaryRow);
+		}
+
 		return await this.dvRenderer.table(headers, rows);
 	}
 

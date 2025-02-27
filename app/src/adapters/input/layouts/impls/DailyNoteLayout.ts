@@ -95,7 +95,11 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 
 	private async handleDoneEfforts(efforts: Effort[], el: HTMLElement, filters: Map<string, (e: Effort) => boolean>) {
 		let fieldsToRender: EffortFieldEnum[] = [EffortFieldEnum.STARTED, EffortFieldEnum.TIME_SPENT];
-		await this.printEfforts(efforts, el, filters.get("e2e done")!, "Done today", fieldsToRender, [EffortFieldEnum.STARTED]);
+		let totalTimeSpent = efforts.map(e => e.getLeadTimeMinutes()) // TODO replace with getTimeSpent()
+			.filter(a => a !== null)
+			.reduce((a: number, b: number) => a + b, 0);
+		const summaryRow = ["Total", "", totalTimeSpent];
+		await this.printEfforts(efforts, el, filters.get("e2e done")!, "Done today", fieldsToRender, [EffortFieldEnum.STARTED], summaryRow);
 	}
 
 	private async printEfforts(allEfforts: Effort[],
@@ -103,13 +107,14 @@ export default class DailyNoteLayout extends AbstractLayout<DailyNote> {
 							   predicate: Predicate<Effort>,
 							   title: string,
 							   fieldsToRender = [EffortFieldEnum.AREA, EffortFieldEnum.STATUS],
-							   fieldsToSort?: EffortFieldEnum[]) {
+							   fieldsToSort?: EffortFieldEnum[],
+							   summaryRow: any[] = []): Promise<void> {
 		const efforts = allEfforts.filter(predicate);
 		if (efforts.length > 0) {
 			let header = this.createH1(title);
 			el.appendChild(header);
 
-			const dvTable = await this.createTableSuper(efforts, fieldsToRender, fieldsToSort);
+			const dvTable = await this.createTableSuper(efforts, fieldsToRender, fieldsToSort, summaryRow);
 			el.appendChild(dvTable)
 		}
 	}
