@@ -122,6 +122,8 @@ export default class AreaLayout extends AbstractLayout<Area> {
 				return EffortFieldEnum.VOTES;
 			case "due":
 				return EffortFieldEnum.DUE;
+			case "planned-start":
+				return EffortFieldEnum.PLANNED_START;
 			default:
 				throw new Error("Invalid field name " + fieldName);
 		}
