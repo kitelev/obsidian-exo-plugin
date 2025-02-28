@@ -42,10 +42,10 @@ export default class AreaLayout extends AbstractLayout<Area> {
 		if (children.length === 0) return;
 
 
-		let header = this.createH1("Child Areas");
+		const header = this.createH1("Child Areas");
 		el.appendChild(header);
 
-		let div = await this.dvRenderer.listKOs(children);
+		const div = await this.dvRenderer.listKOs(children);
 		el.appendChild(div)
 	}
 
@@ -53,10 +53,10 @@ export default class AreaLayout extends AbstractLayout<Area> {
 		const prototypes: EffortPrototype[] = await this.ctx.effortPrototypeRepository.findByArea(ko);
 		if (prototypes.length === 0) return;
 
-		let header = this.createH1("Effort Prototypes");
+		const header = this.createH1("Effort Prototypes");
 		el.appendChild(header);
 
-		let div = await this.dvRenderer.listKOs(prototypes);
+		const div = await this.dvRenderer.listKOs(prototypes);
 		el.appendChild(div)
 	}
 
@@ -74,7 +74,7 @@ export default class AreaLayout extends AbstractLayout<Area> {
 		});
 
 		if (unresolvedEfforts.length > 0) {
-			let header = this.createH1("Unresolved Efforts");
+			const header = this.createH1("Unresolved Efforts");
 			el.appendChild(header);
 
 			const fieldsToRender = this.getFieldsToRender(ko);
@@ -91,8 +91,8 @@ export default class AreaLayout extends AbstractLayout<Area> {
 			return defaultFieldsToRender;
 		}
 
-		let fieldsToRender: EffortFieldEnum[] = [];
-		for (let fieldName of area.fieldsToRender) {
+		const fieldsToRender: EffortFieldEnum[] = [];
+		for (const fieldName of area.fieldsToRender) {
 			fieldsToRender.push(this.toEnumField(fieldName));
 		}
 		return fieldsToRender;
@@ -105,8 +105,8 @@ export default class AreaLayout extends AbstractLayout<Area> {
 			return defaultSort;
 		}
 
-		let sortingFields: EffortFieldEnum[] = [];
-		for (let fieldName of area.sortBy) {
+		const sortingFields: EffortFieldEnum[] = [];
+		for (const fieldName of area.sortBy) {
 			sortingFields.push(this.toEnumField(fieldName));
 		}
 		return sortingFields;
