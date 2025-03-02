@@ -6,10 +6,14 @@ import {UUID} from "node:crypto";
 import EffortPrototype from "./EffortPrototype";
 import DateUtils from "../../../../../common/utils/DateUtils";
 import EffortAction from "./EffortAction";
+import IntervalList from "../../../../../common/IntervalList";
+import Interval from "../../../../../common/Interval";
 
 // TODO add validation - effort cannot have both prototype and (parent or area)
 export default class Effort extends KObject {
 	static readonly CLASS = KOC.EMS_EFFORT;
+	static readonly HOLD_INTERVAL_SEPARATOR = ", ";
+	static readonly HOLD_DATE_SEPARATOR = " - ";
 
 	constructor(id: UUID,
 				title: string,
@@ -54,7 +58,7 @@ export default class Effort extends KObject {
 		if (!this.holdsHistory) {
 			this.holdsHistory = nowStr;
 		} else {
-			this.holdsHistory = `${this.holdsHistory}, ${nowStr}`;
+			this.holdsHistory = `${this.holdsHistory}${Effort.HOLD_INTERVAL_SEPARATOR}${nowStr}`;
 		}
 	}
 
@@ -64,7 +68,7 @@ export default class Effort extends KObject {
 		const nowStr = DateUtils.formatTimestamp(resumeDate);
 
 		this.status = EffortStatus.STARTED;
-		this.holdsHistory = `${this.holdsHistory} - ${nowStr}`;
+		this.holdsHistory = `${this.holdsHistory}${Effort.HOLD_DATE_SEPARATOR}${nowStr}`;
 	}
 
 	end() {
@@ -119,6 +123,29 @@ export default class Effort extends KObject {
 			return null;
 		}
 		return (this.ended.getTime() - this.started.getTime()) / 1000 / 60;
+	}
+
+	getHoldsHistory(): IntervalList {
+		if (!this.holdsHistory || this.holdsHistory === "") {
+			return IntervalList.EMPTY;
+		}
+
+		const holdIntervalsStr = this.holdsHistory.split(Effort.HOLD_INTERVAL_SEPARATOR);
+		const intervals = holdIntervalsStr.map(s => this.parseInterval(s));
+
+		return new IntervalList(intervals);
+	}
+
+	private parseInterval(holdIntervalStr: string): Interval {
+		let dates = holdIntervalStr.split(Effort.HOLD_DATE_SEPARATOR);
+		const start = new Date(dates[0]);
+		let end: Date;
+		if (dates.length == 1) {
+			end = new Date();
+		} else {
+			end = new Date(dates[1]);
+		}
+		return new Interval(start, end);
 	}
 }
 

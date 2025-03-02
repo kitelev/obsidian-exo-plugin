@@ -27,6 +27,6 @@ export class ModalItemsFolderFactory {
 	}
 
 	create(name: string, items: ModalItem[]): ModalItemsFolder {
-		return new ModalItemsFolder(name, items, this.ctx);
+		return new ModalItemsFolder(`📁 ${name}`, items, this.ctx);
 	}
 }

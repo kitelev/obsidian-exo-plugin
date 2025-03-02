@@ -25,6 +25,7 @@ import TimeoutUtils from "./common/utils/TimeoutUtils";
 import CacheDrop from "./app/src/adapters/input/actions/no-context/utilities/CacheDrop";
 import MoveToSuitableFolderAction from "./app/src/adapters/input/actions/ko-context/MoveToSuitableFolderAction";
 import RemoveOpenedEffortFromCache from "./app/src/adapters/input/actions/ko-context/RemoveOpenedEffortFromCache";
+import EffortShowTimeSpent from "./app/src/adapters/input/actions/effort-context/EffortShowTimeSpent";
 
 export default class ExoPlugin extends Plugin {
 	private api: ExoApi;
@@ -97,6 +98,9 @@ export default class ExoPlugin extends Plugin {
 			new MoveToSuitableFolderAction(this.ctx),
 			new RemoveOpenedEffortFromCache(this.ctx),
 			folderFactory.create("Domain", [
+				folderFactory.create("On Opened Effort", [
+					new EffortShowTimeSpent(this.ctx)
+				]),
 				new CreateEmptyNoteWithinInbox(this.ctx),
 				new CreateEffort(this.ctx),
 				new CreateEffortBySelectedText(this.ctx),
