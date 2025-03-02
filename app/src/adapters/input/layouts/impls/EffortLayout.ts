@@ -2,7 +2,6 @@ import ExoContext from "../../../../../../common/ExoContext";
 import DvRenderer from "../../../../utils/dv/DvRenderer";
 import Effort from "../../../../../../core/src/domain/ems/effort/Effort";
 import AbstractLayout, {EffortFieldEnum} from "./AbstractLayout";
-import {Notice} from "obsidian";
 import EffortAction from "../../../../../../core/src/domain/ems/effort/EffortAction";
 
 export default class EffortLayout extends AbstractLayout<Effort> {
@@ -25,8 +24,9 @@ export default class EffortLayout extends AbstractLayout<Effort> {
 
 		for (let action of actionsToShow) {
 			const actionButton = this.createButton(action.name, async () => {
+				await this.ctx.loggingFacade.logMsg(`Executing action "${action.name}" on effort ${effort.id}...`);
 				await this.ctx.effortService.execute(effort, action);
-				new Notice(`Action ${action.name} executed on effort ${effort.id}`);
+				await this.ctx.loggingFacade.logMsg(`Action "${action.name}" executed on effort ${effort.id}`);
 			});
 			el.appendChild(actionButton);
 		}

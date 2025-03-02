@@ -1,5 +1,4 @@
 import {Runnable, RunnableAsync} from "../../../common/fp/Runnable";
-import {Notice} from "obsidian";
 import ExoContext from "../../../common/ExoContext";
 
 export default class UserFriendly {
@@ -29,8 +28,6 @@ export default class UserFriendly {
 	}
 
     private async handleError(e: Error) {
-        console.error(e);
-        new Notice(`Error: ${e.message}`);
-        await this.ctx.fileLogger.logError(e);
+		await this.ctx.loggingFacade.logError(e);
     }
 }

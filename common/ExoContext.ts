@@ -44,11 +44,14 @@ import EffortService from "../core/src/service/EffortService";
 import EffortUseCases from "../core/src/ports/input/EffortUseCases";
 import CreateAreaUseCase from "../core/src/ports/input/CreateAreaUseCase";
 import CreateAreaService from "../core/src/service/CreateAreaService";
+import LoggingFacade from "../app/src/utils/LoggingFacade";
 
 export default class ExoContext {
 	// Utils
 	public readonly fileLogger: FileLogger = new FileLogger(this, "/Logs");
 	public readonly userFriendlyWithFileLog: UserFriendly = new UserFriendly(this);
+	public readonly loggingFacade: LoggingFacade = new LoggingFacade(this);
+
 	public readonly dateSupplier: { get(): Date } = {
 		get: () => new Date()
 	};
